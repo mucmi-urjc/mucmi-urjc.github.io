@@ -1,0 +1,1382 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MUCMI · URJC</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Máster Universitario en Comunicaciones Móviles Inteligentes de la Universidad Rey Juan Carlos: 60 ECTS, más del 80% virtual, MIMO masivo distribuido, RIS, IA aplicada a redes y tecnologías de alta frecuencia para 6G.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>/* MUCMI v3 · Diseño de un solo tema, deliberado: bandas claras (gris frío) alternadas con bandas azul noche.
+   Hero a sangre con simulación de beamfocusing en canvas; plan de estudios con panel ilustrado fijo que se construye al hacer scroll. */
+:root{
+  --paper:#ffffff; --bg:#eef1f5; --surface:#ffffff; --ink:#0c1626; --muted:#546173; --line:#d8dee6;
+  --accent:#c8102e; --accent-ink:#ffffff; --accent-soft:#fbe7ea;
+  --signal:#1d5fa8; --signal-soft:#e1eaf6;
+  --p-mimo:#1d5fa8; --p-ia:#6a43b8; --p-rf:#b0620a; --p-inv:#3f4b5c;
+  --band-1:#d5e1f1; --band-2:#b9cde8; --band-3:#98b6de; --band-4:#e6d6f0; --band-5:#f2dfcc;
+  --navy:#0b1626; --navy-2:#122036; --navy-line:#24364f;
+  --f-display:"Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --wrap:1200px; --read:66ch; --r:14px; --r-s:8px;
+  color-scheme:light;
+}
+.dark{
+  --bg:#0b1626; --surface:#132238; --ink:#f1f4f8; --muted:#a3b2c5; --line:#26394f;
+  --accent:#ff4d64; --accent-ink:#ffffff; --accent-soft:#3a1720;
+  --signal:#7fb2ee; --signal-soft:#16304d;
+  --p-mimo:#7fb2ee; --p-ia:#b99cf3; --p-rf:#f2ab58; --p-inv:#a3b2c5;
+  --band-1:#183150; --band-2:#1f3d63; --band-3:#294c7a; --band-4:#30254b; --band-5:#3b2b1c;
+  background:var(--bg); color:var(--ink);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:84px}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{transition:none!important; animation:none!important} }
+body{background:var(--paper); color:var(--ink); font-family:var(--f-body); font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased}
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:40; background:#ffffff}
+a{color:var(--signal); text-underline-offset:3px}
+a:focus-visible, button:focus-visible, summary:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:6px}
+h1,h2,h3,h4{font-family:var(--f-display); line-height:1.06; text-wrap:balance; margin:0; letter-spacing:-.02em}
+h2{font-size:clamp(2rem, 1.2rem + 3vw, 3.4rem); font-weight:800}
+h2 em, h1 em{font-style:normal; color:var(--accent)}
+h3{font-size:1.3rem; font-weight:700; letter-spacing:-.01em}
+p{margin:0}
+.wrap{max-width:var(--wrap); margin:0 auto; padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px))}
+.eyebrow{font-family:var(--f-body); font-weight:700; font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; color:var(--accent)}
+.lead{font-size:1.15rem; color:var(--muted); max-width:var(--read)}
+.mono{font-family:var(--f-mono)}
+.num{font-variant-numeric:tabular-nums}
+.pending{font-family:var(--f-mono); font-size:.8rem; padding:2px 8px; border:1px dashed currentColor; border-radius:4px; color:var(--accent); white-space:nowrap}
+
+/* Botones píldora */
+.pill{display:inline-flex; align-items:center; justify-content:center; gap:8px; font-family:var(--f-body); font-weight:600; font-size:.92rem; padding:10px 20px; border-radius:999px; text-decoration:none; border:1.5px solid var(--line); background:var(--surface); color:var(--ink); cursor:pointer; line-height:1.15; white-space:nowrap; transition:border-color .15s, background .15s, transform .15s}
+.pill:hover{border-color:var(--ink)}
+.pill.red{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
+.pill.red:hover{filter:brightness(1.08)}
+.pill.ink{background:var(--ink); border-color:var(--ink); color:var(--paper)}
+.dark .pill.ink{color:var(--bg)}
+.pill.ghost{background:transparent}
+.pill.cur{border-color:var(--accent); color:var(--accent)}
+
+/* Cabecera */
+.topbar{position:sticky; top:env(safe-area-inset-top,0px); z-index:30; background:rgba(255,255,255,.94); backdrop-filter:saturate(1.4) blur(10px); -webkit-backdrop-filter:saturate(1.4) blur(10px); border-bottom:1px solid #e3e8ee}
+.topbar .wrap{display:flex; align-items:center; gap:10px; min-height:66px}
+.brand{font-family:var(--f-display); font-weight:800; font-size:1.3rem; color:#0c1626; text-decoration:none; letter-spacing:-.01em; margin-right:auto}
+.brand b{color:#c8102e; font-weight:800}
+.topnav{display:flex; align-items:center; gap:8px}
+.topnav .pill{padding:8px 16px; font-size:.88rem; background:#fff; color:#0c1626; border-color:#e1e6ec}
+.topnav .pill.red{background:#c8102e; border-color:#c8102e; color:#fff}
+.topnav .pill.cur{border-color:#c8102e; color:#c8102e}
+@media (max-width:760px){ .topnav .hide-s{display:none} }
+.explore{position:relative}
+.explore summary{list-style:none}
+.explore summary::-webkit-details-marker{display:none}
+.explore .menu{position:absolute; right:0; top:calc(100% + 10px); width:min(320px, calc(100vw - 32px)); background:#fff; border:1px solid #e1e6ec; border-radius:var(--r); box-shadow:0 18px 50px rgba(12,22,38,.16); padding:10px; display:grid; gap:2px; max-height:70vh; overflow:auto}
+.explore .menu p{font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; font-weight:700; color:#c8102e; padding:10px 12px 4px}
+.explore .menu a{display:block; padding:8px 12px; border-radius:8px; color:#0c1626; text-decoration:none; font-size:.94rem}
+.explore .menu a:hover{background:#eef1f5}
+.burger{display:inline-grid; gap:3px}
+.burger i{display:block; width:14px; height:2px; background:currentColor; border-radius:2px}
+
+/* Hero */
+.hero{position:relative; overflow:hidden; background:#0b1626; color:#f1f4f8; isolation:isolate}
+.hero canvas{position:absolute; inset:0; width:100%; height:100%; z-index:-2; display:block}
+.hero::after{content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg, rgba(11,22,38,.96) 0%, rgba(11,22,38,.82) 38%, rgba(11,22,38,.25) 70%, rgba(11,22,38,.05) 100%), linear-gradient(0deg, rgba(11,22,38,.85) 0%, rgba(11,22,38,0) 35%)}
+@media (max-width:820px){ .hero::after{background:linear-gradient(0deg, rgba(11,22,38,.97) 0%, rgba(11,22,38,.78) 55%, rgba(11,22,38,.45) 100%)} }
+.hero .wrap{min-height:calc(100svh - 66px - env(safe-area-inset-top,0px)); padding-block:clamp(28px, 6vh, 80px) clamp(20px, 4vh, 44px); display:grid; gap:clamp(12px, 2.3vh, 26px); grid-template-columns:minmax(0,1fr); align-content:end}
+.hero .eyebrow{color:#ff6b7f}
+.hero h1{font-size:clamp(2.2rem, min(1.2rem + 5vw, 10vh), 5.4rem); font-weight:800; letter-spacing:-.035em; line-height:.98; max-width:24ch}
+.hero h1 b{color:#ff3f58; font-weight:800}
+.hero .thesis{font-size:clamp(1.05rem, min(1rem + .45vw, 2.4vh), 1.3rem); max-width:60ch; color:#c9d4e2}
+.chips{display:flex; flex-wrap:wrap; gap:10px; list-style:none; margin:0; padding:0}
+.chips li{font-size:.86rem; font-weight:600; padding:10px 18px; border-radius:999px; border:1.5px solid rgba(241,244,248,.28); background:rgba(11,22,38,.55); color:#f1f4f8; backdrop-filter:blur(6px)}
+.chips li.red{background:#c8102e; border-color:#c8102e}
+.hero .ctas{display:flex; flex-wrap:wrap; gap:12px}
+.hero .pill{background:#f1f4f8; color:#0c1626; border-color:#f1f4f8}
+.hero .pill.red{background:#c8102e; border-color:#c8102e; color:#fff}
+.hero .pill.ghost{background:transparent; color:#f1f4f8; border-color:rgba(241,244,248,.4)}
+.hero .simcap{justify-self:end; font-family:var(--f-mono); font-size:.76rem; color:#9fb0c4; max-width:46ch; text-align:right; display:flex; align-items:center; gap:10px}
+.hero .simcap button{font:inherit; color:#f1f4f8; background:transparent; border:1px solid rgba(241,244,248,.35); border-radius:999px; padding:3px 10px; cursor:pointer}
+@media (max-width:820px){ .hero .simcap{justify-self:start; text-align:left} }
+
+/* Bandas */
+section{padding-block:clamp(64px, 8vw, 110px)}
+.band-grey{background:#eef1f5}
+.band-white{background:#ffffff}
+.sec-head{display:grid; gap:14px; margin-bottom:44px; max-width:780px}
+.split-head{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:24px 56px; align-items:end; margin-bottom:48px}
+@media (max-width:860px){ .split-head{grid-template-columns:1fr} }
+
+/* Datos rápidos */
+.facts-row{display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:0; border-top:2px solid var(--accent)}
+.facts-row div{padding:18px 18px 18px 0; border-bottom:1px solid var(--line); font-weight:600; font-size:.98rem}
+.facts-row div span{display:block; font-weight:400; color:var(--muted); font-size:.9rem}
+@media (max-width:760px){ .facts-row{grid-template-columns:1fr 1fr} }
+.glance{margin-top:6px; border-bottom:1px solid var(--line)}
+.glance summary{list-style:none; cursor:pointer; display:flex; justify-content:space-between; align-items:center; padding:20px 0; font-family:var(--f-display); font-weight:700; font-size:1.15rem}
+.glance summary::-webkit-details-marker{display:none}
+.plus{width:30px; height:30px; border-radius:50%; border:1.5px solid var(--line); display:inline-grid; place-items:center; color:var(--accent); font-family:var(--f-mono); font-size:1.1rem; flex:none; transition:transform .2s, background .2s}
+details[open] > summary .plus{transform:rotate(45deg); background:var(--accent); color:#fff; border-color:var(--accent)}
+.glance .inner{padding-bottom:24px}
+
+/* Barras de ECTS */
+.ects-bars{display:grid; gap:14px}
+.ects-row{display:grid; grid-template-columns:120px 1fr; gap:14px; align-items:center}
+.ects-row .lbl{font-family:var(--f-mono); font-size:.85rem; color:var(--muted)}
+.bar{display:flex; height:34px; border-radius:8px; overflow:hidden; gap:3px}
+.bar span{background:var(--pc); color:#fff; font-family:var(--f-mono); font-size:.76rem; display:flex; align-items:center; justify-content:center; min-width:0; overflow:hidden; white-space:nowrap}
+.legend{display:flex; flex-wrap:wrap; gap:8px 20px; font-size:.88rem; color:var(--muted); list-style:none; margin:4px 0 0; padding:0}
+.legend li{display:flex; align-items:center; gap:8px}
+.legend i{width:12px; height:12px; border-radius:3px; background:var(--pc); display:inline-block}
+@media (max-width:520px){ .ects-row{grid-template-columns:1fr; gap:6px} }
+.pc-mimo{--pc:var(--p-mimo)} .pc-ia{--pc:var(--p-ia)} .pc-rf{--pc:var(--p-rf)} .pc-inv{--pc:var(--p-inv)} .pc-sig{--pc:var(--signal)}
+
+/* Contexto */
+.trends{display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:14px}
+@media (max-width:980px){ .trends{grid-template-columns:repeat(auto-fit, minmax(170px,1fr))} }
+.trend{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:22px; display:grid; gap:8px; align-content:start}
+.trend .tag{font-family:var(--f-display); font-weight:800; font-size:2rem; color:var(--accent); line-height:1}
+.trend p{font-size:.95rem; color:var(--muted)}
+.challenges{display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:28px; margin-top:56px}
+.challenge{display:grid; gap:8px; border-top:2px solid var(--ink); padding-top:16px}
+.challenge p{color:var(--muted); font-size:.95rem}
+
+/* Pilares (banda oscura) */
+.pillars{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:18px}
+@media (max-width:900px){ .pillars{grid-template-columns:1fr} }
+.pillar{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:28px; display:grid; gap:12px; align-content:start; position:relative; overflow:hidden}
+.pillar .n{font-family:var(--f-display); font-weight:800; font-size:4.2rem; line-height:.8; color:var(--pc); opacity:.9}
+.pillar p{color:var(--muted); font-size:.96rem}
+.pillar .subs{display:flex; flex-wrap:wrap; gap:6px; margin-top:4px}
+.tag-s{font-size:.78rem; padding:4px 10px; border-radius:999px; border:1px solid var(--line); color:var(--ink)}
+
+/* Espectro */
+.spectrum{margin-top:56px; padding:24px; border:1px solid var(--line); border-radius:var(--r); background:var(--surface)}
+.spectrum-scroll{overflow-x:auto}
+.spectrum svg{display:block; width:100%; min-width:640px; height:auto}
+.spectrum text{font-family:var(--f-mono); fill:var(--muted); font-size:12px}
+.spectrum .bl{fill:var(--ink); font-size:12.5px}
+.spectrum .lab{fill:var(--accent); font-weight:500; font-size:13px}
+.spectrum .axis{stroke:var(--line)} .spectrum .tick{stroke:var(--muted)}
+.spectrum .mk{stroke:var(--accent); stroke-width:1.5} .spectrum .dot{fill:var(--accent)}
+.b1{fill:var(--band-1)} .b2{fill:var(--band-2)} .b3{fill:var(--band-3)} .b4{fill:var(--band-4)} .b5{fill:var(--band-5)}
+.spectrum-legend{display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:10px 24px; margin:16px 0 0; padding:0; list-style:none; font-size:.9rem; color:var(--muted)}
+.spectrum-legend b{font-family:var(--f-mono); font-weight:500; color:var(--accent)}
+
+/* Plan: scrollytelling */
+.story{display:grid; grid-template-columns:minmax(0,5fr) minmax(0,6fr); gap:48px; align-items:start}
+@media (max-width:900px){ .story{grid-template-columns:1fr; gap:24px} }
+.stage{position:sticky; top:92px; display:grid; gap:16px}
+@media (max-width:900px){ .stage{position:relative; top:0} }
+.stage-card{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:18px; box-shadow:0 10px 40px rgba(12,22,38,.06)}
+.scene{display:block; width:100%; height:auto}
+.scene .g{transition:opacity .4s, color .4s}
+.scene .g{color:#0c1626}
+.scene.js .g{opacity:.16}
+.scene.js .g.seen{opacity:.9}
+.scene.js .g.on{opacity:1; color:#c8102e}
+.scene .gr{stroke:#c9d1dc}
+.stage-cap{display:flex; justify-content:space-between; align-items:baseline; gap:12px; padding:12px 4px 0; border-top:1px solid var(--line); margin-top:10px}
+.stage-cap b{font-family:var(--f-display); font-size:1.05rem}
+.stage-cap span{font-family:var(--f-mono); font-size:.82rem; color:var(--muted)}
+.steps{display:flex; flex-wrap:wrap; gap:8px}
+.steps a{font-size:.84rem; font-weight:600; padding:8px 14px; border-radius:999px; border:1.5px solid var(--line); text-decoration:none; color:var(--ink); background:var(--surface)}
+.steps a b{color:var(--accent); font-family:var(--f-mono); font-weight:500; margin-right:6px}
+.steps a.on{background:var(--accent); border-color:var(--accent); color:#fff}
+.steps a.on b{color:#fff}
+@media (max-width:900px){ .stage .stage-card{display:none} }
+
+.cards{display:grid; gap:18px}
+.sem-bar{display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 20px; border-left:4px solid var(--accent); background:var(--navy); color:#fff; border-radius:0 var(--r-s) var(--r-s) 0; font-weight:700; letter-spacing:.1em; text-transform:uppercase; font-size:.86rem; margin-top:18px}
+.sem-bar:first-child{margin-top:0}
+.sem-bar span{font-family:var(--f-mono); letter-spacing:.04em}
+.sem-intro{margin:6px 0 4px; display:grid; gap:8px}
+.sem-intro h3{font-size:clamp(1.6rem, 1.2rem + 1.4vw, 2.2rem); font-weight:800}
+.sem-intro p{color:var(--muted)}
+.card{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); box-shadow:0 2px 0 rgba(12,22,38,.02); transition:box-shadow .2s, border-color .2s}
+.card:hover{box-shadow:0 14px 40px rgba(12,22,38,.09)}
+.card.on{border-color:color-mix(in srgb, var(--pc) 55%, var(--line))}
+.card summary{list-style:none; cursor:pointer; padding:22px 24px; display:grid; gap:12px}
+.card summary::-webkit-details-marker{display:none}
+.card .top{display:flex; justify-content:space-between; align-items:center; gap:12px}
+.card .kind{font-size:.78rem; font-weight:700; color:var(--accent); letter-spacing:.02em}
+.card .kind i{font-style:normal; color:var(--pc); font-weight:600}
+.ects-pill{font-family:var(--f-mono); font-size:.8rem; font-weight:500; background:var(--ink); color:var(--surface); border-radius:999px; padding:5px 12px; white-space:nowrap}
+.card h4{font-size:clamp(1.25rem, 1.05rem + .7vw, 1.6rem); font-weight:800; line-height:1.12}
+.card .desc{color:var(--muted); font-size:1rem; max-width:60ch}
+.card .temas{display:flex; flex-wrap:wrap; gap:8px; list-style:none; margin:0; padding:0}
+.card .temas li{font-size:.84rem; padding:5px 12px; border-radius:999px; background:color-mix(in srgb, var(--pc) 10%, var(--surface)); border:1px solid color-mix(in srgb, var(--pc) 30%, transparent)}
+.card .foot{display:flex; justify-content:space-between; align-items:center; gap:12px; border-top:1px solid var(--line); padding-top:12px; font-size:.86rem; color:var(--muted)}
+.card .more{padding:0 24px 24px; display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:22px}
+@media (max-width:640px){ .card .more{grid-template-columns:1fr} }
+.card .more h5{margin:0 0 6px; font-size:.74rem; letter-spacing:.12em; text-transform:uppercase; color:var(--accent)}
+.card .more ul{margin:0; padding-left:18px; color:var(--muted); font-size:.95rem}
+.card .more p{color:var(--muted); font-size:.95rem}
+.card .more .side{display:grid; gap:16px; align-content:start}
+
+/* Recorrido */
+.diagram{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:18px; margin-bottom:36px}
+.diagram-top{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:10px}
+.diagram-scroll{overflow-x:auto}
+.journey{display:block; width:100%; min-width:760px; height:auto}
+.journey text{font-family:var(--f-body); fill:var(--ink); font-size:13.5px}
+.journey .sub{font-family:var(--f-mono); fill:var(--muted); font-size:11px}
+.journey .colh{font-family:var(--f-mono); fill:var(--muted); font-size:11.5px; letter-spacing:.06em}
+.journey .colh-n{fill:var(--accent)}
+.journey .colbg{fill:var(--bg)}
+.journey .node{fill:var(--surface); stroke-width:1.6}
+.journey .edge{fill:none; stroke-width:1.6; opacity:.8}
+dialog.zoom{border:1px solid var(--line); border-radius:var(--r); background:var(--surface); color:var(--ink); padding:0; width:min(1200px, 96vw); max-height:92vh}
+dialog.zoom::backdrop{background:rgba(8,12,18,.65)}
+dialog.zoom .zhead{display:flex; justify-content:space-between; align-items:center; gap:12px; padding:12px 16px; border-bottom:1px solid var(--line)}
+dialog.zoom .zbody{padding:16px; overflow:auto}
+dialog.zoom .journey{min-width:1000px}
+.path{display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:18px; counter-reset:step; list-style:none; margin:0; padding:0}
+.path li{display:grid; gap:8px; align-content:start; padding:20px; border-radius:var(--r); background:var(--surface); border:1px solid var(--line)}
+.path li::before{counter-increment:step; content:counter(step, decimal-leading-zero); font-family:var(--f-display); font-weight:800; font-size:1.6rem; color:var(--accent); line-height:1}
+.path p{color:var(--muted); font-size:.95rem}
+@media (max-width:860px){ .path{grid-template-columns:1fr 1fr} }
+@media (max-width:480px){ .path{grid-template-columns:1fr} }
+
+/* Resultados */
+.outcomes{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:18px}
+@media (max-width:860px){ .outcomes{grid-template-columns:1fr 1fr} }
+@media (max-width:520px){ .outcomes{grid-template-columns:1fr} }
+.outcome{display:grid; gap:10px; padding:24px; border-radius:var(--r); background:var(--surface); border:1px solid var(--line); align-content:start}
+.outcome b{font-family:var(--f-display); font-weight:800; font-size:1.5rem; letter-spacing:-.01em; color:var(--accent)}
+.outcome span{color:var(--muted)}
+
+/* Modalidad / horario (oscuro) */
+.big-split{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:56px; align-items:start}
+@media (max-width:860px){ .big-split{grid-template-columns:1fr; gap:36px} }
+.hour{border-top:2px solid var(--accent); padding-top:20px; display:grid; gap:10px}
+.hour .when{font-size:1.05rem; color:var(--muted)}
+.hour .huge{font-family:var(--f-display); font-weight:800; font-size:clamp(3rem, 2rem + 4.5vw, 5.4rem); letter-spacing:-.04em; line-height:.95}
+.hour p{color:var(--muted); max-width:52ch}
+.split{display:flex; height:60px; border-radius:999px; overflow:hidden; margin-block:4px 6px; border:1px solid var(--line)}
+.split .v{flex:80; background:var(--signal); color:#0b1626; display:flex; align-items:center; padding-inline:22px; font-family:var(--f-mono); font-weight:500}
+.split .p{flex:20; background:var(--accent); color:#fff; display:flex; align-items:center; justify-content:center; font-family:var(--f-mono); font-weight:500}
+.plist{display:grid; gap:14px; margin:28px 0 0; padding:0; list-style:none}
+.plist li{display:grid; gap:2px; padding-left:16px; border-left:2px solid var(--line)}
+.plist li b{font-weight:600}
+.plist li span{color:var(--muted); font-size:.95rem}
+
+/* Herramientas */
+.tools-grid{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:18px}
+@media (max-width:900px){ .tools-grid{grid-template-columns:1fr 1fr} }
+@media (max-width:560px){ .tools-grid{grid-template-columns:1fr} }
+.tool{display:grid; gap:10px; align-content:start; padding:24px; border:1px solid var(--line); border-radius:var(--r); background:var(--surface)}
+.tool .k{font-size:.74rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--accent)}
+.tool p{color:var(--muted); font-size:.95rem}
+.stack{display:flex; flex-wrap:wrap; gap:6px; margin-top:4px}
+.chip{font-family:var(--f-mono); font-size:.74rem; padding:3px 9px; border-radius:999px; background:var(--bg); color:var(--muted); border:1px solid var(--line)}
+.callout{margin-top:32px; padding:26px 28px; border-radius:var(--r); background:var(--navy); color:#f1f4f8; display:grid; grid-template-columns:auto 1fr; gap:6px 24px; align-items:center}
+.callout h3{color:#fff}
+.callout p{color:#c4cfdd}
+.callout .ic{grid-row:1/3; width:56px; height:56px; border-radius:50%; background:#c8102e; display:grid; place-items:center}
+@media (max-width:560px){ .callout{grid-template-columns:1fr} .callout .ic{grid-row:auto} }
+
+/* Laboratorios */
+.labs{display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:18px}
+@media (max-width:980px){ .labs{grid-template-columns:1fr 1fr} }
+@media (max-width:520px){ .labs{grid-template-columns:1fr} }
+.lab{border-radius:var(--r); padding:26px; background:var(--surface); border:1px solid var(--line); display:grid; gap:10px; align-content:start}
+.lab .big{font-family:var(--f-display); font-size:2.6rem; font-weight:800; color:var(--accent); line-height:1; letter-spacing:-.03em}
+.lab p{color:var(--muted); font-size:.95rem}
+
+/* CTA */
+.cta{background:#c8102e; color:#fff}
+.cta .wrap{padding-block:clamp(64px, 8vw, 104px); display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:28px 56px; align-items:end}
+@media (max-width:860px){ .cta .wrap{grid-template-columns:1fr} }
+.cta .eyebrow{color:#ffd2d8}
+.cta h2{color:#fff; margin-top:10px}
+.cta p{color:#ffe3e7; max-width:52ch}
+.cta .row{display:flex; flex-wrap:wrap; gap:12px; margin-top:6px}
+.cta .pill{background:#fff; color:#c8102e; border-color:#fff}
+.cta .pill.ghost{background:transparent; color:#fff; border-color:rgba(255,255,255,.6)}
+
+footer{background:#0b1626; color:#a3b2c5}
+footer .wrap{padding-block:44px; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:20px 40px; align-items:end; font-size:.9rem}
+@media (max-width:760px){ footer .wrap{grid-template-columns:1fr} }
+footer .fb{font-family:var(--f-display); font-weight:800; font-size:1.6rem; color:#fff}
+footer .fb b{color:#ff3f58}
+footer a{color:#dbe3ee}
+footer nav{display:flex; flex-wrap:wrap; gap:8px 18px}
+
+/* Página de información */
+.ihero{background:#eef1f5}
+.ihero .wrap{padding-block:clamp(56px, 7vw, 96px); display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr); gap:40px; align-items:center}
+@media (max-width:860px){ .ihero .wrap{grid-template-columns:1fr} }
+.ihero h1{font-size:clamp(2.6rem, 1.4rem + 4.6vw, 5rem); font-weight:800; letter-spacing:-.035em; line-height:.98; margin-top:12px}
+.ihero .lead{margin-top:18px}
+.quick{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:10px; list-style:none; margin:28px 0 0; padding:0; max-width:640px}
+@media (max-width:520px){ .quick{grid-template-columns:1fr 1fr} }
+.quick .pill{width:100%}
+.statcard{background:#fff; border-radius:var(--r); padding:28px; box-shadow:0 18px 50px rgba(12,22,38,.1); display:grid; gap:18px}
+.statcard .big{font-family:var(--f-display); font-weight:800; font-size:4.4rem; line-height:.85; color:#c8102e; letter-spacing:-.04em}
+.statcard .big small{font-size:1rem; letter-spacing:.12em; margin-left:6px; vertical-align:middle}
+.statcard dl{display:grid; grid-template-columns:1fr 1fr; gap:14px 18px; margin:0; border-top:1px solid var(--line); padding-top:18px}
+.statcard dt{font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); font-weight:700}
+.statcard dd{margin:2px 0 0; font-weight:600}
+
+.access{display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); gap:48px}
+@media (max-width:860px){ .access{grid-template-columns:1fr} }
+.routes{display:grid; gap:16px; margin:0; padding:0; list-style:none}
+.route{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:24px; display:grid; gap:10px}
+.route .k{font-size:.74rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--accent)}
+.route ul{margin:0; padding-left:18px; color:var(--muted); font-size:.96rem}
+.weights{display:grid; gap:16px; margin-top:16px}
+.w{display:grid; gap:8px}
+.w .row{display:flex; justify-content:space-between; gap:12px; font-size:.95rem}
+.w .row b{font-family:var(--f-display); font-weight:800; font-size:1.2rem; color:var(--accent)}
+.w .track{height:10px; background:var(--line); border-radius:999px; overflow:hidden}
+.w .fill{height:100%; background:var(--accent); border-radius:999px}
+.note{font-size:.9rem; color:var(--muted); margin-top:16px}
+.tablewrap{overflow-x:auto; border:1px solid var(--line); border-radius:var(--r); background:var(--surface)}
+table.cf{border-collapse:collapse; width:100%; min-width:560px; font-size:.95rem}
+table.cf th, table.cf td{padding:14px 16px; text-align:left; vertical-align:top; border-bottom:1px solid var(--line)}
+table.cf thead th{font-size:.74rem; letter-spacing:.12em; text-transform:uppercase; color:#fff; background:var(--navy); font-weight:700}
+table.cf tr:last-child td{border-bottom:0}
+table.cf td.c{font-family:var(--f-display); font-weight:800; font-size:1.2rem; color:var(--accent)}
+.urjc{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.3fr); gap:32px; margin-top:44px; padding:30px; border-radius:var(--r); background:var(--navy); color:#f1f4f8}
+@media (max-width:820px){ .urjc{grid-template-columns:1fr} }
+.urjc .eyebrow{color:#ff6b7f}
+.urjc h3{color:#fff; margin-top:8px; font-size:1.6rem}
+.urjc p, .urjc ul{color:#c4cfdd}
+.urjc ul{margin:0; padding-left:18px}
+.team-stats{display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:14px; margin-bottom:32px}
+@media (max-width:900px){ .team-stats{grid-template-columns:repeat(auto-fit, minmax(150px,1fr))} }
+.team-stats div{background:var(--surface); padding:22px; border-radius:var(--r); border:1px solid var(--line); display:grid; gap:6px}
+.team-stats b{font-family:var(--f-display); font-weight:800; font-size:2.6rem; line-height:.9; color:var(--accent); letter-spacing:-.03em}
+.team-stats span{font-size:.88rem; color:var(--muted)}
+.profiles{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:18px}
+@media (max-width:900px){ .profiles{grid-template-columns:1fr} }
+.profile{padding:24px; border-radius:var(--r); background:var(--surface); border:1px solid var(--line); border-top:4px solid var(--pc); display:grid; gap:10px; align-content:start}
+.profile .k{font-size:.74rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--pc)}
+.profile ul{margin:0; padding-left:18px; font-size:.94rem; color:var(--muted); display:grid; gap:6px}
+.roles{display:flex; flex-wrap:wrap; gap:10px; margin:0 0 44px; padding:0; list-style:none}
+.roles li{font-weight:600; font-size:.92rem; padding:10px 18px; border-radius:999px; border:1.5px solid var(--line); background:var(--surface)}
+.sectors{display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:18px}
+@media (max-width:900px){ .sectors{grid-template-columns:1fr 1fr} }
+@media (max-width:520px){ .sectors{grid-template-columns:1fr} }
+.sector{display:grid; gap:8px; padding:24px; border-radius:var(--r); background:var(--surface); border:1px solid var(--line); align-content:start}
+.sector .n{font-family:var(--f-display); font-weight:800; color:var(--accent); font-size:1.4rem}
+.sector p{color:var(--muted); font-size:.95rem}
+.phd{display:grid; grid-template-columns:auto minmax(0,1fr); gap:20px 40px; align-items:center; padding:34px; border-radius:var(--r); background:var(--surface); border:1px solid var(--line)}
+@media (max-width:760px){ .phd{grid-template-columns:1fr} }
+.phd .sum{font-family:var(--f-display); font-weight:800; font-size:clamp(2.2rem, 1.6rem + 2.4vw, 3.6rem); letter-spacing:-.03em; line-height:1; white-space:nowrap}
+.phd .sum em{font-style:normal; color:var(--accent)}
+.phd p{color:var(--muted)}
+.faq{display:grid; max-width:880px; border-top:2px solid var(--ink)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer; list-style:none; padding:20px 0; display:flex; justify-content:space-between; align-items:center; gap:16px; font-family:var(--f-display); font-weight:700; font-size:1.12rem}
+.faq summary::-webkit-details-marker{display:none}
+.faq details p{padding:0 48px 22px 0; color:var(--muted); max-width:var(--read)}
+.contact-grid{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:18px; margin-bottom:44px}
+@media (max-width:760px){ .contact-grid{grid-template-columns:1fr} }
+.contact-card{padding:28px; border-radius:var(--r); background:var(--surface); border:1px solid var(--line); display:grid; gap:12px; align-content:start}
+.contact-card.red{background:#c8102e; border-color:#c8102e; color:#fff}
+.contact-card.red p{color:#ffe3e7}
+.contact-card.red .pill{background:#fff; color:#c8102e; border-color:#fff}
+.contact-card code{font-family:var(--f-mono); font-size:1rem; user-select:all}
+.contact-card p{color:var(--muted); font-size:.96rem}
+.copyrow{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+.links{display:grid; list-style:none; margin:0; padding:0; border-top:2px solid var(--ink); max-width:880px}
+.links li{border-bottom:1px solid var(--line)}
+.links a{display:flex; justify-content:space-between; gap:16px; padding:16px 2px; text-decoration:none; color:var(--ink); font-weight:600}
+.links a span{color:var(--muted); font-size:.9rem; font-weight:400}
+.links a:hover{color:var(--accent)}
+@media (max-width:600px){
+  .hero .simcap{display:none}
+  .chips{gap:8px}
+  .chips li{font-size:.8rem; padding:7px 13px}
+  .hero .eyebrow{font-size:.7rem}
+}
+/* Cabecera de Información práctica a pantalla completa: la banda siguiente empieza bajo el pliegue */
+.ihero .wrap{min-height:calc(100svh - 66px - env(safe-area-inset-top,0px)); padding-block:clamp(24px, 5vh, 72px)}
+.ihero h1{font-size:clamp(2.3rem, min(1.4rem + 4.6vw, 11vh), 5rem)}
+@media (max-width:860px){
+  .ihero .wrap{gap:18px; align-content:center}
+  .ihero .lead{margin-top:10px; font-size:1rem}
+  .quick{margin-top:16px; gap:8px}
+  .quick .pill{padding:8px 10px; font-size:.84rem}
+  .statcard{padding:16px 18px; gap:10px; box-shadow:0 8px 26px rgba(12,22,38,.08)}
+  .statcard .big{font-size:2.6rem}
+  .statcard dl{gap:8px 14px; padding-top:10px}
+  .statcard dd{font-size:.9rem}
+}
+/* Cada sección del menú Explorar ocupa al menos una pantalla y arranca justo bajo la cabecera */
+html{scroll-padding-top:calc(66px + env(safe-area-inset-top,0px))}
+main > section:not(#resumen){min-height:calc(100svh - 66px - env(safe-area-inset-top,0px)); display:flex; flex-direction:column; justify-content:center}
+main > section:not(#resumen) > .wrap{width:100%}
+
+/* ===== Secciones que caben en una pantalla (escritorio y tablet) ===== */
+@media (min-width:900px){
+  main > section:not(#resumen){padding-block:clamp(28px, 6vh, 80px)}
+  h2{font-size:clamp(1.8rem, min(1.1rem + 2.6vw, 6vh), 3.2rem)}
+  .split-head{margin-bottom:clamp(18px, 4vh, 44px); gap:16px 56px}
+  .sec-head{gap:10px; margin-bottom:clamp(18px, 4vh, 40px)}
+  .lead{font-size:clamp(.98rem, 2.1vh, 1.12rem)}
+  /* contexto */
+  .trend{padding:clamp(14px, 2.4vh, 22px)}
+  .trend .tag{font-size:clamp(1.4rem, 3.6vh, 2rem)}
+  .challenges{margin-top:clamp(20px, 4.5vh, 48px); gap:24px}
+  .challenge{padding-top:12px; gap:4px}
+  /* pilares */
+  .pillar{padding:clamp(18px, 3vh, 28px); gap:10px}
+  .pillar .n{font-size:clamp(2.4rem, 6vh, 4rem)}
+  /* recorrido */
+  .diagram{padding:14px; margin-bottom:0}
+  .diagram .journey{max-height:calc(100svh - 66px - 330px); min-height:300px}
+  /* modalidad */
+  .hour{padding-top:14px; gap:6px}
+  .hour .huge{font-size:clamp(2.6rem, min(2rem + 3.6vw, 10vh), 5rem)}
+  .big-split{gap:28px 56px}
+  .big-split > div[style]{gap:clamp(18px, 4vh, 40px)!important}
+  .plist{margin-top:clamp(14px, 3vh, 28px); gap:10px}
+  .split{height:clamp(44px, 7vh, 60px)}
+  /* herramientas */
+  .tools-grid{gap:14px}
+  .tool{padding:clamp(14px, 2.4vh, 22px); gap:6px}
+  .tool p{font-size:.92rem}
+  .callout{margin-top:clamp(14px, 3vh, 28px); padding:clamp(14px, 2.6vh, 24px) 26px}
+  /* laboratorios */
+  #laboratorios .spectrum{margin:0 0 clamp(14px, 3vh, 24px); padding:clamp(12px, 2vh, 20px) 20px}
+  #laboratorios .spectrum svg{max-height:22vh}
+  #laboratorios .spectrum-legend{display:none}
+  .lab{padding:clamp(14px, 2.4vh, 24px); gap:6px}
+  .lab .big{font-size:clamp(1.6rem, 4vh, 2.4rem)}
+  .lab p{font-size:.9rem}
+  /* resultados */
+  .outcome{padding:clamp(14px, 2.6vh, 24px); gap:6px}
+  /* información práctica */
+  .route{padding:clamp(14px, 2.4vh, 22px); gap:6px}
+  .route ul{font-size:.92rem}
+  .weights{gap:10px; margin-top:10px}
+  table.cf th, table.cf td{padding:clamp(8px, 1.6vh, 14px) 14px; font-size:.92rem}
+  .urjc{padding:clamp(16px, 3vh, 28px) 28px; gap:24px}
+  .urjc ul{font-size:.92rem}
+  .team-stats{margin-bottom:clamp(14px, 3vh, 28px)}
+  .team-stats div{padding:clamp(12px, 2.2vh, 20px)}
+  .team-stats b{font-size:clamp(1.8rem, 4.6vh, 2.6rem)}
+  .profile{padding:clamp(14px, 2.6vh, 22px)}
+  .roles{margin-bottom:clamp(16px, 4vh, 40px)}
+  .sector{padding:clamp(14px, 2.6vh, 22px)}
+  .faq{grid-template-columns:1fr 1fr; column-gap:48px; max-width:none; border-top:0}
+  .faq details{border-top:1px solid var(--line); border-bottom:0}
+  .faq summary{padding:clamp(10px, 1.8vh, 16px) 0; font-size:1rem}
+  .contact-grid{margin-bottom:clamp(16px, 3.5vh, 36px)}
+  .contact-card{padding:clamp(16px, 3vh, 26px)}
+  .links{grid-template-columns:1fr 1fr; column-gap:40px; max-width:none; border-top:0}
+  .links li{border-top:1px solid var(--line); border-bottom:0}
+  .links a{padding:clamp(8px, 1.6vh, 14px) 2px; font-size:.95rem}
+  .note{margin-top:10px}
+}
+@media (min-width:900px){
+  .tool h3{font-size:1.12rem}
+  .tool .stack{margin-top:0}
+  .hour .huge{font-size:clamp(2.4rem, min(2rem + 3.2vw, 8.5vh), 4.6rem)}
+  .hour p, .plist li span{font-size:.92rem}
+  #modalidad .lead{display:none}
+  #laboratorios .spectrum svg{max-height:17vh}
+  .labs{gap:14px}
+  .lab h3{font-size:1.1rem}
+  .urjc ul{columns:2; column-gap:28px}
+  .urjc ul li{break-inside:avoid; margin-bottom:4px}
+  .urjc{grid-template-columns:minmax(0,.8fr) minmax(0,2fr)}
+  .profile ul{gap:3px; font-size:.9rem}
+  .profiles{gap:14px}
+  #equipo .note{display:none}
+  .contact-card p{font-size:.92rem}
+  .team-stats b{font-size:clamp(1.6rem, 4vh, 2.4rem)}
+}
+table.cf td .chip{display:inline-block; margin-top:6px}
+@media (min-width:900px){
+  table.cf td:first-child{width:34%}
+  #complementos .urjc h3{font-size:1.3rem}
+  #complementos .urjc p{font-size:.92rem}
+  #laboratorios .split-head .lead{font-size:.95rem}
+  .contact-card h3{font-size:1.15rem}
+}
+.comp-grid{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:20px; align-items:start}
+@media (max-width:900px){ .comp-grid{grid-template-columns:1fr} }
+.top-row{display:flex; justify-content:space-between; align-items:center; gap:10px}
+.route .ects-pill{background:var(--ink); color:var(--surface)}
+.comp-grid .urjc{grid-template-columns:1fr!important; gap:14px}
+.comp-grid .urjc ul{columns:1!important; font-size:.92rem}
+.comp-grid .route h3{font-size:1.12rem}
+@media (min-width:900px){
+  main > section:not(#resumen){padding-block:clamp(20px, 4.5vh, 80px)}
+  #laboratorios .spectrum svg{max-height:15vh}
+  .comp-grid .urjc ul{font-size:.88rem}
+  .comp-grid .urjc{padding:18px 24px}
+  .comp-grid .route{padding:14px 18px}
+  .links a{padding:clamp(7px, 1.3vh, 12px) 2px}
+  .contact-grid{gap:14px}
+}
+@media (min-width:900px) and (max-height:740px){
+  .lead{font-size:.95rem}
+  .split-head{margin-bottom:16px}
+  .comp-grid .urjc p{font-size:.88rem}
+  .contact-card{gap:8px}
+}
+.hero canvas{transition:opacity .45s ease}
+.hero .simcap{max-width:62ch}
+.sc-dots{display:inline-flex; gap:6px; flex:none}
+.sc-dots button{width:22px; height:6px; border-radius:3px; border:0; padding:0; background:rgba(241,244,248,.3); cursor:pointer}
+.sc-dots button[aria-current="true"]{background:#ff3f58; width:34px}
+#scene-cap{min-width:0}
+.hero .simcap{width:min(62ch, 100%)}
+#scene-cap{flex:1}
+.hero .simcap{width:min(96ch, 100%); max-width:none}
+</style>
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html#inicio" aria-label="MUCMI, inicio"><b>MUC</b>MI</a>
+    <nav class="topnav" aria-label="Principal">
+      <a class="pill hide-s cur" href="index.html">El máster</a>
+      <a class="pill hide-s" href="informacion.html">Información práctica</a>
+      <details class="explore">
+        <summary class="pill">Explorar <span class="burger" aria-hidden="true"><i></i><i></i><i></i></span></summary>
+        <div class="menu">
+          <p>El máster</p>
+          <a href="#contexto">Contexto y retos</a>
+          <a href="#nucleo">Tres pilares</a>
+          <a href="#plan">Plan de estudios</a>
+          <a href="#recorrido">Recorrido</a>
+          <a href="#modalidad">Modalidad</a>
+          <a href="#herramientas">Herramientas transversales</a>
+          <a href="#laboratorios">Laboratorios</a>
+          <p>Información práctica</p>
+          <a href="informacion.html#horario">Horario</a>
+          <a href="informacion.html#acceso">Acceso y admisión</a>
+          <a href="informacion.html#complementos">Complementos formativos</a>
+          <a href="informacion.html#equipo">Equipo docente</a>
+          <a href="informacion.html#salidas">Salidas</a>
+          <a href="informacion.html#doctorado">Doctorado</a>
+          <a href="informacion.html#preguntas">Preguntas frecuentes</a>
+          <a href="informacion.html#contacto">Contacto</a>
+        </div>
+      </details>
+      <a class="pill red" href="informacion.html#contacto">Contacto</a>
+    </nav>
+  </div>
+</header>
+<main id="inicio">
+  <div class="hero">
+    <canvas id="beam" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <p class="eyebrow">Universidad Rey Juan Carlos · Escuela de Ingeniería de Fuenlabrada</p>
+      <h1><b>M</b>áster <b>U</b>niversitario en <b>C</b>omunicaciones <b>M</b>óviles <b>I</b>nteligentes</h1>
+      <p class="thesis">Diseña las redes que conectarán la inteligencia artificial, la robótica, la realidad virtual y extendida y las ciudades del mañana.</p>
+      <ul class="chips" aria-label="Datos clave">
+        <li>60 ECTS · orientación investigadora</li>
+        <li>20 plazas</li>
+        <li>Más del 80% virtual · en español</li>
+        <li>Tardes · 16:00–20:00</li>
+        <li class="red">Curso 2027/28</li>
+      </ul>
+      <div class="ctas">
+        <a class="pill red" href="#plan">Ver el plan de estudios</a>
+        <a class="pill ghost" href="informacion.html">Información práctica</a>
+      </div>
+      <div class="simcap"><span class="sc-dots" id="scene-dots" aria-label="Escenas de la simulación"></span><span id="scene-cap" aria-live="polite">MIMO masivo · un array de 16 antenas enfoca la señal en cada usuario (beamfocusing)</span><button type="button" id="beam-toggle">Pausar</button></div>
+    </div>
+  </div>
+
+  <section class="band-grey" id="resumen" style="padding-block:56px">
+    <div class="wrap">
+      <div class="facts-row">
+        <div>60 ECTS<span>un curso académico</span></div>
+        <div>48 obligatorios + TFM de 12<span>9 asignaturas, sin optativas</span></div>
+        <div>Más del 80% virtual<span>en español, tardes de 16:00 a 20:00</span></div>
+        <div>EIF · Fuenlabrada<span>una semana presencial por cuatrimestre</span></div>
+      </div>
+      <details class="glance">
+        <summary>El plan de estudios, de un vistazo <span class="plus" aria-hidden="true">+</span></summary>
+        <div class="inner">
+          <div class="ects-bars" aria-label="Reparto de créditos por semestre">
+            <div class="ects-row"><span class="lbl">Semestre 1 · 30</span>
+              <div class="bar">
+                <span class="pc-inv" style="flex:3" title="Metodología de la investigación · 3 ECTS">3</span>
+                <span class="pc-mimo" style="flex:3" title="Teoría de la información · 3 ECTS">3</span>
+                <span class="pc-mimo" style="flex:6" title="Sistemas MIMO · 6 ECTS">6</span>
+                <span class="pc-rf" style="flex:6" title="Alta frecuencia · 6 ECTS">6</span>
+                <span class="pc-ia" style="flex:6" title="Aprendizaje automático · 6 ECTS">6</span>
+                <span class="pc-rf" style="flex:6" title="Antenas · 6 ECTS">6</span>
+              </div></div>
+            <div class="ects-row"><span class="lbl">Semestre 2 · 30</span>
+              <div class="bar">
+                <span class="pc-ia" style="flex:6" title="IA en redes · 6 ECTS">6</span>
+                <span class="pc-mimo" style="flex:6" title="D-mMIMO con RIS · 6 ECTS">6</span>
+                <span style="flex:6; background:linear-gradient(90deg, var(--p-mimo), var(--p-ia), var(--p-rf))" title="Tecnologías habilitadoras · 6 ECTS">6</span>
+                <span class="pc-inv" style="flex:12" title="Trabajo Fin de Máster · 12 ECTS">TFM · 12</span>
+              </div></div>
+            <ul class="legend">
+              <li class="pc-mimo"><i></i>MIMO masivo y RIS</li>
+              <li class="pc-ia"><i></i>IA y aprendizaje automático</li>
+              <li class="pc-rf"><i></i>Alta frecuencia y antenas</li>
+              <li class="pc-inv"><i></i>Investigación y TFM</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section class="band-white" id="contexto">
+    <div class="wrap">
+      <div class="split-head">
+        <div class="sec-head" style="margin:0">
+          <p class="eyebrow">La próxima década</p>
+          <h2>La red tendrá que <em>percibir, aprender y optimizarse</em></h2>
+        </div>
+        <p class="lead">Más dispositivos, menos energía y menor latencia, a la vez. Las oportunidades profesionales más interesantes aparecen justo donde la conectividad se vuelve inteligente.</p>
+      </div>
+      <div class="trends">
+        <div class="trend"><span class="tag">IA</span><h3>IA aplicada a redes</h3><p>Gestión, predicción y optimización automática.</p></div>
+        <div class="trend"><span class="tag">IoT</span><h3>Conectividad masiva</h3><p>Miles de millones de dispositivos conectados.</p></div>
+        <div class="trend"><span class="tag">V2X</span><h3>Vehículo conectado</h3><p>Comunicación entre vehículos e infraestructura.</p></div>
+        <div class="trend"><span class="tag">6G</span><h3>Redes inteligentes</h3><p>Nuevas bandas, arquitecturas y servicios.</p></div>
+        <div class="trend"><span class="tag">XR</span><h3>Realidad extendida</h3><p>Experiencias inmersivas con latencia mínima.</p></div>
+      </div>
+      <div class="challenges">
+        <div class="challenge"><h3>Conectividad masiva</h3><p>Servicio fiable para un número enorme de dispositivos IoT.</p></div>
+        <div class="challenge"><h3>Latencia casi instantánea</h3><p>Respuesta suficiente para control y automatización.</p></div>
+        <div class="challenge"><h3>Eficiencia energética</h3><p>Más capacidad con menor consumo.</p></div>
+        <div class="challenge"><h3>IA integrada en la red</h3><p>La red aprende mientras da servicio.</p></div>
+        <div class="challenge"><h3>Transición hacia 6G</h3><p>Ondas milimétricas, terahercios y arquitecturas distribuidas.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="dark" id="nucleo">
+    <div class="wrap">
+      <div class="split-head">
+        <div class="sec-head" style="margin:0">
+          <p class="eyebrow">Núcleo técnico</p>
+          <h2>Tres pilares para las redes <em>B5G/6G</em></h2>
+        </div>
+        <p class="lead">El máster se organiza alrededor de las tecnologías habilitadoras que hoy definen la investigación en comunicaciones móviles, y las integra en un mismo sistema.</p>
+      </div>
+      <div class="pillars">
+        <article class="pillar pc-mimo"><span class="n">01</span><h3>MIMO masivo distribuido y RIS</h3>
+          <p>Modelado, análisis de prestaciones y optimización de infraestructuras D-mMIMO (cell-free) y superficies reconfigurables inteligentes, desde la teoría de la información hasta la simulación.</p>
+          <div class="subs"><span class="tag-s">Teoría de la Información</span><span class="tag-s">Sistemas MIMO</span><span class="tag-s">D-mMIMO con RIS</span></div></article>
+        <article class="pillar pc-ia"><span class="n">02</span><h3>IA y aprendizaje automático en redes</h3>
+          <p>Algoritmos de aprendizaje para detección, predicción, gestión y optimización de redes móviles, incluido el aprendizaje por refuerzo y los modelos subrogados.</p>
+          <div class="subs"><span class="tag-s">Aprendizaje automático</span><span class="tag-s">IA en redes</span></div></article>
+        <article class="pillar pc-rf"><span class="n">03</span><h3>Alta frecuencia y antenas</h3>
+          <p>Dispositivos de RF, generación de señal en milimétricas y terahercios y diseño avanzado de antenas: reflectarrays, transmitarrays y phased arrays.</p>
+          <div class="subs"><span class="tag-s">Alta frecuencia</span><span class="tag-s">Antenas avanzadas</span></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band-grey" id="plan">
+    <div class="wrap">
+      <div class="split-head">
+        <div class="sec-head" style="margin:0">
+          <p class="eyebrow">Plan de estudios</p>
+          <h2>De los fundamentos a <em>un sistema 6G completo</em></h2>
+        </div>
+        <p class="lead">Nueve asignaturas obligatorias y un TFM de 12 ECTS. A medida que avanzas, el esquema de la izquierda se completa con cada pieza de la red. Abre cada ficha para ver contenidos, herramientas y cómo encaja.</p>
+      </div>
+      <div class="story">
+        <aside class="stage" aria-label="Progreso en el recorrido">
+          <div class="stage-card">
+            <svg class="scene" id="scene" viewBox="0 0 420 330" role="img" aria-label="Ilustración de una red 6G que se completa a medida que avanzas por las asignaturas: lupa de investigación, red neuronal, satélite, puntos de acceso distribuidos con sus ondas, edificio con superficie reconfigurable, torre con array de antenas y documento del TFM." fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <g class="gr" stroke-width="1"><path d="M10 292 H410"/><path d="M10 300 H410" stroke-dasharray="2 6"/></g>
+  <!-- usuarios (neutros) -->
+  <g stroke="#94a1b2" stroke-width="1.6"><rect x="236" y="268" width="11" height="19" rx="2.5"/><rect x="300" y="270" width="11" height="19" rx="2.5"/><rect x="186" y="272" width="11" height="17" rx="2.5"/></g>
+  <!-- metodología: lupa -->
+  <g class="g" data-g="met" stroke="currentColor" stroke-width="2.4"><circle cx="52" cy="54" r="19"/><path d="M66 68 L84 86"/><path d="M42 52 h20 M42 60 h13" stroke-width="1.6"/></g>
+  <!-- aprendizaje automático: red neuronal -->
+  <g class="g" data-g="ml" stroke="currentColor" stroke-width="1.4">
+    <path d="M150 40 L195 40 M150 40 L195 70 M150 40 L195 100 M150 70 L195 40 M150 70 L195 70 M150 70 L195 100 M150 100 L195 40 M150 100 L195 70 M150 100 L195 100 M195 40 L240 55 M195 70 L240 55 M195 100 L240 55 M195 40 L240 85 M195 70 L240 85 M195 100 L240 85"/>
+    <g fill="#ffffff" stroke-width="2"><circle cx="150" cy="40" r="6"/><circle cx="150" cy="70" r="6"/><circle cx="150" cy="100" r="6"/><circle cx="195" cy="40" r="6"/><circle cx="195" cy="70" r="6"/><circle cx="195" cy="100" r="6"/><circle cx="240" cy="55" r="6"/><circle cx="240" cy="85" r="6"/></g>
+  </g>
+  <!-- IA en redes: bucle de aprendizaje por refuerzo -->
+  <g class="g" data-g="ia" stroke="currentColor" stroke-width="2.2"><path d="M252 30 C285 30 285 112 248 112"/><path d="M138 112 C108 112 108 30 140 26"/><path d="M134 20 L142 26 L134 33"/><path d="M256 106 L248 112 L256 119"/></g>
+  <!-- satélite (NTN) -->
+  <g class="g" data-g="sat" stroke="currentColor" stroke-width="2"><rect x="344" y="44" width="18" height="18" rx="2"/><rect x="314" y="48" width="24" height="10"/><rect x="368" y="48" width="24" height="10"/><path d="M353 62 V70"/><path d="M353 76 L360 146" stroke-dasharray="3 5" stroke-width="1.6"/><path d="M340 84 C330 92 330 104 340 112" stroke-width="1.4"/></g>
+  <!-- edificio con RIS -->
+  <g class="g" data-g="ris" stroke="currentColor" stroke-width="2">
+    <path d="M22 292 V150 H100 V292"/>
+    <g stroke-width="1.4"><rect x="34" y="166" width="9" height="9"/><rect x="47" y="166" width="9" height="9" fill="currentColor"/><rect x="60" y="166" width="9" height="9"/><rect x="73" y="166" width="9" height="9" fill="currentColor"/>
+      <rect x="34" y="179" width="9" height="9" fill="currentColor"/><rect x="47" y="179" width="9" height="9"/><rect x="60" y="179" width="9" height="9" fill="currentColor"/><rect x="73" y="179" width="9" height="9"/>
+      <rect x="34" y="192" width="9" height="9"/><rect x="47" y="192" width="9" height="9" fill="currentColor"/><rect x="60" y="192" width="9" height="9"/><rect x="73" y="192" width="9" height="9" fill="currentColor"/>
+      <rect x="34" y="205" width="9" height="9" fill="currentColor"/><rect x="47" y="205" width="9" height="9"/><rect x="60" y="205" width="9" height="9" fill="currentColor"/><rect x="73" y="205" width="9" height="9"/></g>
+    <path d="M40 240 h14 v20 h-14z M66 240 h14 v20 h-14z" stroke-width="1.4"/>
+    <path d="M100 196 L186 270" stroke-dasharray="4 5" stroke-width="1.6"/>
+  </g>
+  <!-- TFM: documento -->
+  <g class="g" data-g="tfm" stroke="currentColor" stroke-width="2"><path d="M114 146 H140 L150 156 V196 H114 Z"/><path d="M140 146 V156 H150"/><path d="M121 166 h20 M121 174 h20 M121 182 h12" stroke-width="1.4"/><path d="M132 188 l5 5 l10 -12" stroke-width="2.4"/></g>
+  <!-- puntos de acceso distribuidos (cell-free) -->
+  <g class="g" data-g="mimo" stroke="currentColor" stroke-width="2"><path d="M165 292 V246 M225 292 V246 M285 292 V246"/><rect x="157" y="236" width="16" height="10" rx="2"/><rect x="217" y="236" width="16" height="10" rx="2"/><rect x="277" y="236" width="16" height="10" rx="2"/></g>
+  <!-- teoría de la información: ondas -->
+  <g class="g" data-g="ti" stroke="currentColor" stroke-width="1.6"><path d="M157 226 Q165 218 173 226 M151 220 Q165 206 179 220"/><path d="M217 226 Q225 218 233 226 M211 220 Q225 206 239 220"/><path d="M277 226 Q285 218 293 226 M271 220 Q285 206 299 220"/></g>
+  <!-- alta frecuencia: torre y cadena RF -->
+  <g class="g" data-g="rf" stroke="currentColor" stroke-width="2"><path d="M344 292 L356 178 M376 292 L364 178"/><path d="M347 262 L373 250 M349 238 L371 228 M351 214 L369 204 M347 262 L371 228 M349 238 L369 204" stroke-width="1.3"/><rect x="384" y="270" width="24" height="16" rx="2"/><path d="M388 278 h4 l2 -4 l3 8 l2 -4 h5" stroke-width="1.3"/></g>
+  <!-- antenas: panel array y haces -->
+  <g class="g" data-g="ant" stroke="currentColor" stroke-width="2"><rect x="350" y="150" width="20" height="28" rx="2"/><g fill="currentColor" stroke="none"><circle cx="356" cy="156" r="1.6"/><circle cx="364" cy="156" r="1.6"/><circle cx="356" cy="164" r="1.6"/><circle cx="364" cy="164" r="1.6"/><circle cx="356" cy="172" r="1.6"/><circle cx="364" cy="172" r="1.6"/></g><path d="M348 160 C320 168 306 196 302 262" stroke-width="1.4"/><path d="M348 168 C330 190 320 230 310 266" stroke-width="1.4"/></g>
+</svg>
+
+            <div class="stage-cap"><b id="stage-name">Metodología científica</b><span id="stage-count">1 / 10 · S1</span></div>
+          </div>
+          <nav class="steps" aria-label="Etapas">
+            <a href="#a-metodologia" data-step="1"><b>01</b>Fundamentos</a>
+            <a href="#a-mimo" data-step="2"><b>02</b>Tres pilares</a>
+            <a href="#a-ia" data-step="3"><b>03</b>Profundización</a>
+            <a href="#a-tfm" data-step="4"><b>04</b>TFM</a>
+          </nav>
+        </aside>
+        <div class="cards">
+          <div class="sem-bar">Primer semestre <span>30 ECTS</span></div>
+          <div class="sem-intro"><h3>Métodos, fundamentos y <em style="font-style:normal;color:var(--accent)">tres pilares en paralelo</em></h3></div>
+          <details class="card pc-inv" id="a-metodologia" data-short="Metodología científica" data-sem="S1" data-i="1">
+  <summary>
+    <div class="top"><span class="kind">Obligatoria · <i>Investigación</i></span><span class="ects-pill">3 ECTS</span></div>
+    <h4>Metodología de la Investigación Científica en Comunicaciones Móviles Inteligentes</h4>
+    <p class="desc">Cómo se plantea, se ejecuta y se comunica una investigación en comunicaciones móviles.</p>
+    <ul class="temas" aria-label="Temas seleccionados"><li>Hipótesis y objetivos</li><li>Revisión bibliográfica</li><li>Diseño de experimentos</li></ul>
+    <div class="foot"><span>Docencia en remoto · examen presencial</span><span class="plus" aria-hidden="true">+</span></div>
+  </summary>
+  <div class="more">
+    <div><h5>Contenidos</h5><ul><li>Métodos de investigación científica: tema, objetivos, hipótesis, método y recursos.</li><li>Búsqueda de información, fuentes y revisión bibliográfica.</li><li>Diseño de experimentos y análisis estadístico de resultados.</li><li>Aplicación a proyectos de comunicaciones móviles inteligentes.</li></ul></div>
+    <div class="side"><div><h5>Cómo encaja en el recorrido</h5><p>Da el método que se aplica en el resto de asignaturas y que culmina en el TFM.</p></div></div>
+  </div>
+</details>
+<details class="card pc-mimo" id="a-teoria" data-short="Teoría de la Información" data-sem="S1" data-i="2">
+  <summary>
+    <div class="top"><span class="kind">Obligatoria · <i>MIMO masivo y RIS</i></span><span class="ects-pill">3 ECTS</span></div>
+    <h4>Teoría de la Información en Comunicaciones Móviles Emergentes</h4>
+    <p class="desc">Los límites fundamentales de lo que puede transmitir una red móvil multiusuario.</p>
+    <ul class="temas" aria-label="Temas seleccionados"><li>Capacidad de canal</li><li>Eficiencia espectral multiusuario</li><li>Comunicaciones semánticas</li></ul>
+    <div class="foot"><span>Docencia en remoto · examen presencial</span><span class="plus" aria-hidden="true">+</span></div>
+  </summary>
+  <div class="more">
+    <div><h5>Contenidos</h5><ul><li>Teoría de la información en comunicaciones multiusuario.</li><li>Teoría de la información en MIMO masivo y redes emergentes.</li><li>Capacidad de canal y límites de transmisión.</li><li>Comunicaciones semánticas.</li></ul></div>
+    <div class="side"><div><h5>Herramientas</h5><p>MATLAB (licencia Campus).</p></div><div><h5>Cómo encaja en el recorrido</h5><p>Fija las métricas con las que se evalúan los sistemas MIMO y D-mMIMO de las asignaturas siguientes.</p></div></div>
+  </div>
+</details>
+<details class="card pc-mimo" id="a-mimo" data-short="Sistemas MIMO" data-sem="S1" data-i="3">
+  <summary>
+    <div class="top"><span class="kind">Obligatoria · <i>MIMO masivo y RIS</i></span><span class="ects-pill">6 ECTS</span></div>
+    <h4>Modelado y Prestaciones de Sistemas MIMO en Comunicaciones Móviles</h4>
+    <p class="desc">Del canal multiantena al MIMO masivo: modelar, estimar y optimizar.</p>
+    <ul class="temas" aria-label="Temas seleccionados"><li>Modelado de canal MIMO</li><li>Estimación de canal</li><li>Asignación de recursos</li></ul>
+    <div class="foot"><span>Incluye laboratorio en la semana presencial</span><span class="plus" aria-hidden="true">+</span></div>
+  </summary>
+  <div class="more">
+    <div><h5>Contenidos</h5><ul><li>Fundamentos matemáticos para modelado, optimización y análisis.</li><li>Modelado de canales MIMO y capacidad.</li><li>Motivación y modelado de redes con MIMO masivo.</li><li>Estimación de canal y análisis de prestaciones.</li><li>Optimización de la asignación de recursos.</li></ul></div>
+    <div class="side"><div><h5>Herramientas</h5><p>MATLAB con toolboxes de comunicaciones inalámbricas y procesamiento de señal.</p></div><div><h5>Cómo encaja en el recorrido</h5><p>Prepara directamente MIMO masivo distribuido con superficies reconfigurables, en el segundo semestre.</p></div></div>
+  </div>
+</details>
+<details class="card pc-rf" id="a-altafrecuencia" data-short="Alta frecuencia" data-sem="S1" data-i="4">
+  <summary>
+    <div class="top"><span class="kind">Obligatoria · <i>Alta frecuencia y antenas</i></span><span class="ects-pill">6 ECTS</span></div>
+    <h4>Tecnologías de Alta Frecuencia en Comunicaciones Móviles Emergentes</h4>
+    <p class="desc">Los dispositivos que hacen posibles las bandas milimétricas y de terahercios.</p>
+    <ul class="temas" aria-label="Temas seleccionados"><li>Filtros y acopladores</li><li>Amplificadores y mezcladores</li><li>Generación fotónica de señal</li></ul>
+    <div class="foot"><span>Incluye laboratorio en la semana presencial</span><span class="plus" aria-hidden="true">+</span></div>
+  </summary>
+  <div class="more">
+    <div><h5>Contenidos</h5><ul><li>Tecnologías de alta frecuencia y procesos de fabricación.</li><li>Dispositivos pasivos: resonadores, filtros, acopladores, divisores y atenuadores.</li><li>Dispositivos activos: amplificadores, desfasadores, mezcladores y conmutación.</li><li>Generación de señal en alta frecuencia con radiofrecuencia y fotónica.</li></ul></div>
+    <div class="side"><div><h5>Herramientas</h5><p>MATLAB y AWR Microwave Office. Cámara anecoica y laboratorio de microondas.</p></div><div><h5>Cómo encaja en el recorrido</h5><p>Aporta la visión hardware de las bandas mmWave y THz que se integra en Tecnologías Habilitadoras.</p></div></div>
+  </div>
+</details>
+<details class="card pc-ia" id="a-aprendizaje" data-short="Aprendizaje automático" data-sem="S1" data-i="5">
+  <summary>
+    <div class="top"><span class="kind">Obligatoria · <i>IA y aprendizaje automático</i></span><span class="ects-pill">6 ECTS</span></div>
+    <h4>Aprendizaje Automático en Sistemas de Comunicaciones Móviles Emergentes</h4>
+    <p class="desc">Fundamentos de aprendizaje automático trabajados con problemas propios de las telecomunicaciones.</p>
+    <ul class="temas" aria-label="Temas seleccionados"><li>Detección y clasificación</li><li>Reducción de la dimensionalidad</li><li>Generalización y <i>overfitting</i></li></ul>
+    <div class="foot"><span>Incluye laboratorio en la semana presencial</span><span class="plus" aria-hidden="true">+</span></div>
+  </summary>
+  <div class="more">
+    <div><h5>Contenidos</h5><ul><li>Aprendizaje automático desde la perspectiva de las telecomunicaciones.</li><li>Optimización y búsqueda de soluciones.</li><li>Teoría de la detección y clasificación.</li><li><i>Clustering</i> y reducción de la dimensionalidad.</li><li>Estructuras de aprendizaje, generalización y <i>overfitting</i>.</li></ul></div>
+    <div class="side"><div><h5>Herramientas</h5><p>MATLAB y Python: NumPy, SciPy, scikit-learn, Keras, TensorFlow y Jupyter.</p></div><div><h5>Cómo encaja en el recorrido</h5><p>Es la base del pilar de IA y continúa en Inteligencia Artificial en Redes.</p></div></div>
+  </div>
+</details>
+<details class="card pc-rf" id="a-antenas" data-short="Antenas avanzadas" data-sem="S1" data-i="6">
+  <summary>
+    <div class="top"><span class="kind">Obligatoria · <i>Alta frecuencia y antenas</i></span><span class="ects-pill">6 ECTS</span></div>
+    <h4>Diseño Avanzado de Antenas para Comunicaciones Móviles Emergentes</h4>
+    <p class="desc">Diseño, síntesis y medida de las antenas de estaciones base y terminales.</p>
+    <ul class="temas" aria-label="Temas seleccionados"><li>Reflectarrays y transmitarrays</li><li>Phased arrays</li><li>Medida en cámara anecoica</li></ul>
+    <div class="foot"><span>Incluye laboratorio en la semana presencial</span><span class="plus" aria-hidden="true">+</span></div>
+  </summary>
+  <div class="more">
+    <div><h5>Contenidos</h5><ul><li>Antenas para enlaces punto a punto, estaciones base y terminales.</li><li><i>Reflectarrays</i>, <i>transmitarrays</i>, <i>phased arrays</i>, parches avanzados y antenas integradas.</li><li>Síntesis, optimización y miniaturización.</li><li>Caracterización y medida de antenas.</li></ul></div>
+    <div class="side"><div><h5>Herramientas</h5><p>MATLAB y Altair FEKO. Medida en cámara anecoica.</p></div><div><h5>Cómo encaja en el recorrido</h5><p>Las superficies reflectantes enlazan con las RIS, y el diseño de arrays con la integración hardware del segundo semestre.</p></div></div>
+  </div>
+</details>
+          <div class="sem-bar">Segundo semestre <span>30 ECTS</span></div>
+          <div class="sem-intro"><h3>Profundizar, integrar y <em style="font-style:normal;color:var(--accent)">investigar</em></h3></div>
+          <details class="card pc-ia" id="a-ia" data-short="IA en redes" data-sem="S2" data-i="7">
+  <summary>
+    <div class="top"><span class="kind">Obligatoria · <i>IA y aprendizaje automático</i></span><span class="ects-pill">6 ECTS</span></div>
+    <h4>Inteligencia Artificial en Redes de Comunicaciones Móviles Emergentes</h4>
+    <p class="desc">Técnicas avanzadas de IA para que la red decida, prediga y se optimice.</p>
+    <ul class="temas" aria-label="Temas seleccionados"><li>Aprendizaje por refuerzo</li><li>Modelos subrogados</li><li>Seguridad en IA</li></ul>
+    <div class="foot"><span>Incluye laboratorio en la semana presencial</span><span class="plus" aria-hidden="true">+</span></div>
+  </summary>
+  <div class="more">
+    <div><h5>Contenidos</h5><ul><li>Estructuras avanzadas de aprendizaje automático.</li><li>Aplicaciones avanzadas de clasificación y predicción.</li><li>Optimización de sistemas móviles mediante modelos subrogados.</li><li>Aprendizaje por transferencia y seguridad en IA.</li><li>Sistemas de decisión y aprendizaje por refuerzo.</li></ul></div>
+    <div class="side"><div><h5>Herramientas</h5><p>MATLAB y Python con bibliotecas de aprendizaje automático.</p></div><div><h5>Cómo encaja en el recorrido</h5><p>Lleva el pilar de IA a la gestión de la red, y se combina con el resto en Tecnologías Habilitadoras.</p></div></div>
+  </div>
+</details>
+<details class="card pc-mimo" id="a-dmmimo" data-short="D-mMIMO con RIS" data-sem="S2" data-i="8">
+  <summary>
+    <div class="top"><span class="kind">Obligatoria · <i>MIMO masivo y RIS</i></span><span class="ects-pill">6 ECTS</span></div>
+    <h4>Modelado y Prestaciones en MIMO Masivo Distribuido con Superficies Reconfigurables</h4>
+    <p class="desc">Arquitecturas cell-free y superficies reconfigurables: modelado y optimización conjunta.</p>
+    <ul class="temas" aria-label="Temas seleccionados"><li>MIMO masivo cell-free</li><li>Modelado de RIS</li><li>Optimización conjunta</li></ul>
+    <div class="foot"><span>Incluye laboratorio en la semana presencial</span><span class="plus" aria-hidden="true">+</span></div>
+  </summary>
+  <div class="more">
+    <div><h5>Contenidos</h5><ul><li>Modelado de sistemas MIMO masivo distribuido (cell-free).</li><li>Evaluación de rendimiento en distintos escenarios.</li><li>Técnicas de optimización y diseño.</li><li>Modelado de superficies reconfigurables inteligentes (RIS).</li><li>Prestaciones de MIMO masivo celular y distribuido asistido por RIS.</li><li>Optimización conjunta de MIMO masivo y RIS.</li></ul></div>
+    <div class="side"><div><h5>Herramientas</h5><p>MATLAB para modelado de canales multiantena y optimización numérica.</p></div><div><h5>Cómo encaja en el recorrido</h5><p>Es el núcleo del pilar 1 y un punto de partida habitual para el TFM.</p></div></div>
+  </div>
+</details>
+<details class="card pc-sig" id="a-habilitadoras" data-short="Tecnologías habilitadoras" data-sem="S2" data-i="9">
+  <summary>
+    <div class="top"><span class="kind">Obligatoria · <i>Integración de los tres pilares</i></span><span class="ects-pill">6 ECTS</span></div>
+    <h4>Tecnologías Habilitadoras para Comunicaciones Móviles Emergentes</h4>
+    <p class="desc">Cómo encajan todas las piezas en una arquitectura 6G.</p>
+    <ul class="temas" aria-label="Temas seleccionados"><li>Comunicación y sensado (ISAC)</li><li>Redes terrestres y satelitales</li><li>Terahercios y óptica</li></ul>
+    <div class="foot"><span>Incluye laboratorio en la semana presencial</span><span class="plus" aria-hidden="true">+</span></div>
+  </summary>
+  <div class="more">
+    <div><h5>Contenidos</h5><ul><li>Arquitectura física con MIMO masivo distribuido asistida por RIS.</li><li>Comunicaciones en ondas milimétricas y en terahercios.</li><li>Comunicaciones ópticas avanzadas.</li><li>Integración de comunicaciones y sensado (ISAC).</li><li>Integración de redes terrestres y satelitales (NTN).</li><li>Integración de IA y aprendizaje automático en la red.</li></ul></div>
+    <div class="side"><div><h5>Herramientas</h5><p>MATLAB y Altair FEKO, aulas con software especializado.</p></div><div><h5>Cómo encaja en el recorrido</h5><p>Integra los tres pilares en un mismo sistema justo antes del TFM.</p></div></div>
+  </div>
+</details>
+<details class="card pc-inv" id="a-tfm" data-short="Trabajo Fin de Máster" data-sem="S2" data-i="10">
+  <summary>
+    <div class="top"><span class="kind">Trabajo Fin de Máster · <i>Investigación</i></span><span class="ects-pill">12 ECTS</span></div>
+    <h4>Trabajo Fin de Máster</h4>
+    <p class="desc">Una pregunta de investigación propia, resultados reproducibles y una defensa pública.</p>
+    <ul class="temas" aria-label="Temas seleccionados"><li>Estado del arte</li><li>Modelado, simulación o experimentación</li><li>Sostenibilidad e impacto</li></ul>
+    <div class="foot"><span>Defensa pública ante tribunal</span><span class="plus" aria-hidden="true">+</span></div>
+  </summary>
+  <div class="more">
+    <div><h5>Contenidos</h5><ul><li>Trabajo de investigación original e individual: problema, estado del arte y contexto científico.</li><li>Metodología adecuada: modelado, simulación, experimentación o análisis de datos.</li><li>Memoria científica con planteamiento, resultados y conclusiones.</li><li>Análisis de sostenibilidad: eficiencia energética de las redes e impacto de las infraestructuras.</li><li>Presentación y defensa pública ante un tribunal académico.</li></ul></div>
+    <div class="side"><div><h5>Cómo encaja en el recorrido</h5><p>Reúne los tres pilares en una contribución propia y es el paso natural hacia un <a href="informacion.html#doctorado">doctorado</a>.</p></div></div>
+  </div>
+</details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band-white" id="recorrido">
+    <div class="wrap">
+      <div class="split-head">
+        <div class="sec-head" style="margin:0">
+          <p class="eyebrow">El recorrido</p>
+          <h2>Las piezas <em>se conectan</em></h2>
+        </div>
+        <p class="lead">Cada pilar avanza en su propio carril durante el primer semestre, se profundiza en el segundo y converge en Tecnologías Habilitadoras y en el TFM.</p>
+      </div>
+      <figure class="diagram">
+        <div class="diagram-top">
+          <p class="eyebrow">Cómo se conectan las asignaturas</p>
+          <button class="pill" type="button" id="zoom-open">Ampliar el esquema</button>
+        </div>
+        <div class="diagram-scroll"><svg class="journey" id="journey" viewBox="0 0 1000 392" role="img" aria-label="Esquema del recorrido: Teoría de la Información lleva a Sistemas MIMO y luego a D-mMIMO con RIS; Aprendizaje Automático lleva a IA en redes; Alta Frecuencia y Antenas avanzadas, junto con D-mMIMO con RIS e IA en redes, convergen en Tecnologías Habilitadoras, que desemboca en el TFM. Metodología científica conecta directamente con el TFM."></svg></div>
+      </figure>
+    </div>
+  </section>
+
+  <dialog class="zoom" id="zoom" aria-labelledby="zoom-title">
+    <div class="zhead"><h3 id="zoom-title">Recorrido del MUCMI</h3><button class="pill" type="button" id="zoom-close">Cerrar</button></div>
+    <div class="zbody"><svg class="journey" id="journey-zoom" viewBox="0 0 1000 392" role="img" aria-label="Esquema ampliado del recorrido del máster."></svg></div>
+  </dialog>
+
+  <section class="band-grey" id="aprenderas">
+    <div class="wrap">
+      <div class="split-head">
+        <div class="sec-head" style="margin:0">
+          <p class="eyebrow">Resultados de aprendizaje</p>
+          <h2>De la teoría <em>a la validación</em></h2>
+        </div>
+        <p class="lead">Al terminar podrás abordar un sistema móvil avanzado completo, desde su modelo matemático hasta su evaluación experimental.</p>
+      </div>
+      <div class="outcomes">
+        <div class="outcome"><b>Analizar</b><span>Comunicaciones móviles actuales (5G) y arquitecturas 6G emergentes.</span></div>
+        <div class="outcome"><b>Dominar</b><span>D-mMIMO, RIS e IA/ML aplicada a redes.</span></div>
+        <div class="outcome"><b>Investigar</b><span>Problemas de comunicaciones móviles con metodología científica.</span></div>
+        <div class="outcome"><b>Aplicar</b><span>El marco regulatorio, las especificaciones y los estándares del sector.</span></div>
+        <div class="outcome"><b>Diseñar</b><span>Modelos y sistemas avanzados de comunicaciones móviles.</span></div>
+        <div class="outcome"><b>Evaluar</b><span>El impacto social, económico y medioambiental de las soluciones.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="dark" id="modalidad">
+    <div class="wrap big-split">
+      <div class="sec-head" style="margin:0">
+        <p class="eyebrow">Modalidad</p>
+        <h2>Pensado para compatibilizar <em>estudio y trabajo</em></h2>
+        <p class="lead">La docencia es virtual. Lo presencial se reserva para lo que solo puede hacerse en un laboratorio y para los exámenes.</p>
+        <div class="split" role="img" aria-label="Más del 80% virtual, menos del 20% presencial" style="margin-top:12px"><span class="v">+80% virtual</span><span class="p">&lt;20%</span></div>
+        <ul class="plist">
+          <li><b>Trabajo guiado asíncrono</b><span>Foros, vídeos del profesorado y retroalimentación en Aula Virtual (Moodle).</span></li>
+          <li><b>Prácticas desde casa</b><span>Software de la titulación en MyApps, sin instalaciones, más licencia Campus de MATLAB.</span></li>
+          <li><b>Tiempo completo o parcial</b><span>Entre 48 y 60 ECTS, o entre 24 y 47 a tiempo parcial.</span></li>
+        </ul>
+      </div>
+      <div style="display:grid; gap:40px">
+        <div class="hour">
+          <span class="when">Lunes a viernes · clases síncronas en remoto</span>
+          <span class="huge num">16:00–20:00</span>
+          <p>Lecciones, casos y resolución de problemas en directo por videoconferencia.</p>
+        </div>
+        <div class="hour">
+          <span class="when">Al final de cada cuatrimestre</span>
+          <span class="huge">1 semana</span>
+          <p>Laboratorios y exámenes agrupados en la Escuela de Ingeniería de Fuenlabrada: solo te desplazas dos veces en todo el curso. <a href="informacion.html#horario">Horario y calendario</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band-white" id="herramientas">
+    <div class="wrap">
+      <div class="split-head">
+        <div class="sec-head" style="margin:0">
+          <p class="eyebrow">Herramientas transversales</p>
+          <h2>Las herramientas de <em>la investigación y la industria</em></h2>
+        </div>
+        <p class="lead">No son una asignatura aparte: se trabajan dentro de los créditos de cada materia y se repiten a lo largo del curso, de modo que al llegar al TFM ya forman parte de tu forma de trabajar. Lo que se simula en MATLAB o FEKO se contrasta después en el laboratorio.</p>
+      </div>
+      <div class="tools-grid">
+        <article class="tool"><span class="k">Simulación numérica</span><h3>Modelado de sistemas multiantena</h3><p>Canales MIMO de gran dimensión, optimización numérica y análisis de capacidad y eficiencia espectral.</p><div class="stack"><span class="chip">MATLAB</span><span class="chip">Toolboxes de comunicaciones</span></div></article>
+        <article class="tool"><span class="k">Aprendizaje automático</span><h3>Del cuaderno al modelo entrenado</h3><p>Desarrollo y evaluación de algoritmos de aprendizaje sobre datos simulados y medidos.</p><div class="stack"><span class="chip">Python</span><span class="chip">NumPy · SciPy</span><span class="chip">scikit-learn</span><span class="chip">Keras · TensorFlow</span><span class="chip">Jupyter</span></div></article>
+        <article class="tool"><span class="k">Electromagnetismo y RF</span><h3>Diseño de antenas y circuitos</h3><p>Simulación electromagnética de antenas y superficies y diseño de circuitos de radiofrecuencia.</p><div class="stack"><span class="chip">Altair FEKO</span><span class="chip">AWR Microwave Office</span></div></article>
+        <article class="tool"><span class="k">Especificaciones y normas</span><h3>Leer y aplicar estándares</h3><p>Manejo de especificaciones técnicas, reglamentos y normas de obligado cumplimiento en proyectos de comunicaciones móviles.</p></article>
+        <article class="tool"><span class="k">Investigación reproducible</span><h3>Del experimento al artículo</h3><p>Diseño de experimentos, análisis de datos, revisión bibliográfica y comunicación de resultados ante públicos especializados.</p></article>
+        <article class="tool"><span class="k">Entorno virtual</span><h3>Todo accesible en remoto</h3><p>Aula Virtual, videoconferencia, MyApps para usar el software sin instalarlo y recursos electrónicos de la biblioteca.</p><div class="stack"><span class="chip">Moodle</span><span class="chip">Teams</span><span class="chip">MyApps</span></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band-grey" id="laboratorios">
+    <div class="wrap">
+      <div class="split-head">
+        <div class="sec-head" style="margin:0">
+          <p class="eyebrow">Por qué en la URJC</p>
+          <h2>Infraestructura de medida y <em>un entorno investigador en 6G</em></h2>
+        </div>
+        <p class="lead">El profesorado acredita publicaciones, sexenios vivos y contratos con empresas del sector, con líneas propias en D-mMIMO, RIS e IA aplicada a comunicaciones móviles. <a href="informacion.html#equipo">Conoce al equipo</a></p>
+      </div>
+      <figure class="spectrum" aria-labelledby="spec-cap">
+        <p class="eyebrow" id="spec-cap">Del sub-6 GHz a los terahercios · equipamiento de medida de la EIF sobre el espectro</p>
+        <div class="spectrum-scroll" style="margin-top:12px">
+          <svg id="spec" viewBox="-24 0 1048 150" role="img" aria-label="Regla logarítmica de frecuencias de 1 GHz a 10 THz con las bandas FR1, FR3, FR2 (ondas milimétricas), sub-THz y THz, y marcas en 40 GHz, 67 GHz, 110 GHz y 2 THz correspondientes al equipamiento de laboratorio."></svg>
+        </div>
+        <ul class="spectrum-legend">
+          <li><b>40 GHz</b> · medida de antenas y RCS en cámara anecoica</li>
+          <li><b>67 GHz</b> · analizador vectorial de redes</li>
+          <li><b>110 GHz</b> · medida de antenas con brazo robótico</li>
+          <li><b>2 THz</b> · espectrómetro en el dominio de la frecuencia</li>
+        </ul>
+      </figure>
+      <div class="labs">
+        <article class="lab"><span class="big num">110 GHz</span><h3>Sala anecoica</h3><p>Rango esférico hasta 40 GHz y brazo robótico hasta 110 GHz para medida de antenas y RCS. Sala de fabricación con impresión 3D.</p></article>
+        <article class="lab"><span class="big num">2 THz</span><h3>Terahercios y óptica</h3><p>Espectrómetro en el dominio de la frecuencia y equipamiento de comunicaciones ópticas: láseres, fotodetectores y fibra.</p></article>
+        <article class="lab"><span class="big num">67 GHz</span><h3>Microondas y RF</h3><p>Analizador vectorial de redes, generadores de señal, bancos de microondas, arrays de antenas y analizadores de espectro.</p></article>
+        <article class="lab"><span class="big num">24/7</span><h3>Cálculo y software</h3><p>Puestos accesibles en remoto, aulas con MATLAB, FEKO y AWR, y laboratorio de radio definida por software con USRP.</p></article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="cta" id="contacto">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Curso 2027/28 · 60 ECTS · más del 80% virtual</p>
+      <h2>¿Te interesa el MUCMI?</h2>
+    </div>
+    <div style="display:grid; gap:16px">
+      <p>Si quieres diseñar las redes que conectarán la IA, la robótica, la realidad extendida y las ciudades inteligentes, este es el entorno para hacerlo.</p>
+      <div class="row">
+        <a class="pill" href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=6sSEXw03nkuDDHVvi_G1H6xl-s59oQ1Imx7OEpjxxu5URFU4OVNDVEw2SlFEWUwzVThONkdMSk45NC4u" target="_blank" rel="noopener">Recibir novedades</a>
+        <a class="pill ghost" href="informacion.html">Ver información práctica</a>
+      </div>
+    </div>
+  </div>
+</div>
+<footer>
+  <div class="wrap">
+    <div style="display:grid; gap:10px">
+      <span class="fb"><b>MUC</b>MI</span>
+      <span>Máster Universitario en Comunicaciones Móviles Inteligentes<br>Escuela de Ingeniería de Fuenlabrada · Universidad Rey Juan Carlos</span>
+      <span>master.mucmi@urjc.es</span>
+    </div>
+    <nav aria-label="Pie"><a href="index.html">El máster</a><a href="informacion.html">Información práctica</a><a href="https://www.urjc.es/proteccion-de-datos" target="_blank" rel="noopener">Protección de datos URJC</a><a href="#inicio">Volver arriba ↑</a></nav>
+  </div>
+</footer>
+<script>(function(){
+  var NS='http://www.w3.org/2000/svg';
+  function mk(svg,n,a,t){ var e=document.createElementNS(NS,n); for(var k in a){ if(k==='style') e.setAttribute('style',a[k]); else e.setAttribute(k,a[k]); } if(t) e.textContent=t; svg.appendChild(e); return e; }
+
+  // Regla de frecuencias: escala logarítmica de 1 GHz (x=0) a 10 THz (x=1000)
+  var spec=document.getElementById('spec');
+  if(spec){
+    var W=1000, G=1e9, T=1e12, y0=58, h=34;
+    var x=function(f){ return (Math.log10(f)-9)/4*W; };
+    [[1*G,7.125*G,'b1','FR1 · sub-6 GHz'],[7.125*G,24.25*G,'b2','FR3'],[24.25*G,71*G,'b3','FR2 · mmWave'],[100*G,300*G,'b4','sub-THz'],[300*G,10*T,'b5','THz']].forEach(function(b){
+      var a=x(b[0]), c=x(b[1]);
+      mk(spec,'rect',{x:a,y:y0,width:c-a,height:h,'class':b[2],fill:'#cfdcee'});
+      mk(spec,'text',{x:(a+c)/2,y:y0+h/2+4,'text-anchor':'middle','class':'bl'},b[3]);
+    });
+    mk(spec,'line',{x1:0,x2:W,y1:y0+h+8,y2:y0+h+8,'class':'axis',stroke:'#999'});
+    [[1*G,'1 GHz','start'],[10*G,'10 GHz','middle'],[100*G,'100 GHz','middle'],[1*T,'1 THz','middle'],[10*T,'10 THz','end']].forEach(function(t){
+      var p=x(t[0]); mk(spec,'line',{x1:p,x2:p,y1:y0+h+4,y2:y0+h+12,'class':'tick',stroke:'#999'});
+      mk(spec,'text',{x:p,y:y0+h+28,'text-anchor':t[2]},t[1]);
+    });
+    [[40*G,'40 GHz',18,'end'],[67*G,'67 GHz',38,'middle'],[110*G,'110 GHz',18,'start'],[2*T,'2 THz',18,'middle']].forEach(function(m){
+      var p=x(m[0]);
+      mk(spec,'line',{x1:p,x2:p,y1:m[2]+6,y2:y0+h,'class':'mk',stroke:'#b0122d'});
+      mk(spec,'circle',{cx:p,cy:m[2]+6,r:3,'class':'dot',fill:'#b0122d'});
+      var dx=m[3]==='end'?-6:(m[3]==='start'?6:0);
+      mk(spec,'text',{x:p+dx,y:m[2]+(m[3]==='middle'?0:10),'text-anchor':m[3],'class':'lab'},m[1]);
+    });
+  }
+
+  // Esquema del recorrido
+  var COL={mimo:'var(--p-mimo)',ia:'var(--p-ia)',rf:'var(--p-rf)',inv:'var(--p-inv)',sig:'var(--signal)'};
+  var cols=[[20,210,'01','MÉTODO Y FUNDAMENTOS'],[245,445,'02','TRES PILARES · S1'],[475,675,'03','PROFUNDIZACIÓN · S2'],[740,980,'04','INTEGRACIÓN Y TFM']];
+  var N={
+    ti:{x:20,y:46,w:190,p:'mimo',t:'Teoría de la Información',s:'3 ECTS · S1',h:'#a-teoria'},
+    met:{x:20,y:320,w:190,p:'inv',t:'Metodología científica',s:'3 ECTS · S1',h:'#a-metodologia'},
+    mimo:{x:250,y:46,w:190,p:'mimo',t:'Sistemas MIMO',s:'6 ECTS · S1',h:'#a-mimo'},
+    ml:{x:250,y:124,w:190,p:'ia',t:'Aprendizaje automático',s:'6 ECTS · S1',h:'#a-aprendizaje'},
+    af:{x:250,y:202,w:190,p:'rf',t:'Alta frecuencia',s:'6 ECTS · S1',h:'#a-altafrecuencia'},
+    ant:{x:250,y:256,w:190,p:'rf',t:'Antenas avanzadas',s:'6 ECTS · S1',h:'#a-antenas'},
+    dm:{x:480,y:46,w:190,p:'mimo',t:'D-mMIMO con RIS',s:'6 ECTS · S2',h:'#a-dmmimo'},
+    ia:{x:480,y:124,w:190,p:'ia',t:'IA en redes',s:'6 ECTS · S2',h:'#a-ia'},
+    th:{x:760,y:160,w:200,p:'sig',t:'Tecnologías habilitadoras',s:'6 ECTS · S2 · integración',h:'#a-habilitadoras'},
+    tfm:{x:760,y:320,w:200,p:'inv',t:'Trabajo Fin de Máster',s:'12 ECTS · S2',h:'#a-tfm'}
+  };
+  var H=46;
+  var E=[['ti','mimo'],['mimo','dm'],['ml','ia'],['dm','th'],['ia','th'],['af','th'],['ant','th'],['met','tfm'],['th','tfm','v']];
+  function draw(svg){
+    if(!svg) return;
+    cols.forEach(function(c){
+      mk(svg,'rect',{x:c[0]-8,y:30,width:c[1]-c[0]+16,height:352,rx:6,'class':'colbg',fill:'#f4f6f9'});
+      var t=mk(svg,'text',{x:c[0],y:20,'class':'colh'});
+      var a=document.createElementNS(NS,'tspan'); a.setAttribute('class','colh-n'); a.textContent=c[2]+'  '; t.appendChild(a);
+      var b=document.createElementNS(NS,'tspan'); b.textContent=c[3]; t.appendChild(b);
+    });
+    E.forEach(function(e){
+      var a=N[e[0]], b=N[e[1]], col=COL[a.p], d;
+      if(e[2]==='v'){ var cx=b.x+b.w/2; d='M'+cx+' '+(a.y+H)+' L'+cx+' '+(b.y-4); mk(svg,'path',{d:d,'class':'edge',stroke:'#888',style:'stroke:'+col}); mk(svg,'circle',{cx:cx,cy:b.y-4,r:3.5,fill:'#888',style:'fill:'+col}); return; }
+      var x1=a.x+a.w, y1=a.y+H/2, x2=b.x-4, y2=b.y+H/2, m=(x1+x2)/2;
+      d='M'+x1+' '+y1+' C'+m+' '+y1+' '+m+' '+y2+' '+x2+' '+y2;
+      mk(svg,'path',{d:d,'class':'edge',stroke:'#888',style:'stroke:'+col});
+      mk(svg,'circle',{cx:x2,cy:y2,r:3.5,fill:'#888',style:'fill:'+col});
+    });
+    Object.keys(N).forEach(function(k){
+      var n=N[k], col=COL[n.p];
+      var g=document.createElementNS(NS,'a'); g.setAttribute('href',n.h); svg.appendChild(g);
+      var r=document.createElementNS(NS,'rect'); [['x',n.x],['y',n.y],['width',n.w],['height',H],['rx',5],['class','node'],['fill','#fff'],['stroke','#888'],['style','stroke:'+col]].forEach(function(p){r.setAttribute(p[0],p[1]);}); g.appendChild(r);
+      var t1=document.createElementNS(NS,'text'); t1.setAttribute('x',n.x+12); t1.setAttribute('y',n.y+20); t1.textContent=n.t; g.appendChild(t1);
+      var t2=document.createElementNS(NS,'text'); t2.setAttribute('x',n.x+12); t2.setAttribute('y',n.y+36); t2.setAttribute('class','sub'); t2.textContent=n.s; g.appendChild(t2);
+      g.addEventListener('click',function(ev){ var el=document.querySelector(n.h); if(el&&el.tagName==='DETAILS'){ el.open=true; } var dl=document.getElementById('zoom'); if(dl&&dl.open){ dl.close(); } });
+    });
+  }
+  draw(document.getElementById('journey'));
+  draw(document.getElementById('journey-zoom'));
+
+  var dlg=document.getElementById('zoom'), op=document.getElementById('zoom-open'), cl=document.getElementById('zoom-close');
+  if(dlg&&op){
+    if(typeof dlg.showModal!=='function'){ op.hidden=true; }
+    op.addEventListener('click',function(){ try{ dlg.showModal(); }catch(e){} });
+    if(cl) cl.addEventListener('click',function(){ dlg.close(); });
+    dlg.addEventListener('click',function(e){ if(e.target===dlg) dlg.close(); });
+  }
+
+  // Abrir la ficha si se llega con un ancla de asignatura
+  function openHash(){ var h=location.hash; if(h&&h.indexOf('#a-')===0){ var el=document.querySelector(h); if(el&&el.tagName==='DETAILS') el.open=true; } }
+  openHash(); window.addEventListener('hashchange',openHash);
+
+  // Copiar correo
+  Array.prototype.forEach.call(document.querySelectorAll('button.copy'),function(btn){
+    var src=document.getElementById(btn.getAttribute('data-target')); if(!src) return;
+    var label=btn.textContent;
+    btn.addEventListener('click',function(){
+      function sel(){ try{ var r=document.createRange(); r.selectNodeContents(src); var s=getSelection(); s.removeAllRanges(); s.addRange(r);}catch(e){} btn.textContent='Selecciónalo y cópialo'; }
+      try{ navigator.clipboard.writeText(src.textContent).then(function(){ btn.textContent='Correo copiado'; setTimeout(function(){ btn.textContent=label; },2000); }, sel); }catch(e){ sel(); }
+    });
+  });
+})();
+
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---------- Plan de estudios: el esquema se construye al hacer scroll ----------
+  var scene = document.getElementById('scene');
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.card[data-i]'));
+  if (scene && cards.length) {
+    var MAP = {'a-metodologia': ['met'], 'a-teoria': ['ti'], 'a-mimo': ['mimo', 'ti'], 'a-altafrecuencia': ['rf'], 'a-aprendizaje': ['ml'],
+      'a-antenas': ['ant'], 'a-ia': ['ia', 'ml'], 'a-dmmimo': ['ris', 'mimo'], 'a-habilitadoras': ['sat', 'ant', 'rf', 'mimo', 'ris', 'ia'],
+      'a-tfm': ['tfm', 'met', 'ti', 'mimo', 'rf', 'ml', 'ant', 'ia', 'ris', 'sat']};
+    var groups = Array.prototype.slice.call(scene.querySelectorAll('.g'));
+    var nameEl = document.getElementById('stage-name'), countEl = document.getElementById('stage-count');
+    var steps = Array.prototype.slice.call(document.querySelectorAll('.steps a'));
+    scene.classList.add('js');
+    var cur = -1;
+    function setActive(idx) {
+      if (idx === cur) return; cur = idx;
+      var seen = {}, on = {};
+      cards.forEach(function (c, i) { (MAP[c.id] || []).forEach(function (g) { if (i <= idx) seen[g] = 1; if (i === idx) on[g] = 1; }); c.classList.toggle('on', i === idx); });
+      groups.forEach(function (g) { var n = g.getAttribute('data-g'); g.classList.toggle('seen', !!seen[n]); g.classList.toggle('on', !!on[n]); });
+      var c = cards[idx];
+      if (nameEl) nameEl.textContent = c.getAttribute('data-short');
+      if (countEl) countEl.textContent = (idx + 1) + ' / ' + cards.length + ' · ' + c.getAttribute('data-sem');
+      var st = idx < 2 ? 1 : idx < 6 ? 2 : idx < 9 ? 3 : 4;
+      steps.forEach(function (s) { s.classList.toggle('on', +s.getAttribute('data-step') === st); });
+    }
+    setActive(0);
+    function pick() {
+      var mid = window.innerHeight * 0.45, best = 0, bd = 1e9;
+      cards.forEach(function (c, i) { var r = c.getBoundingClientRect(); var d = r.top > mid ? r.top - mid : (r.bottom < mid ? mid - r.bottom : 0); if (d < bd) { bd = d; best = i; } });
+      setActive(best);
+    }
+    var tk = false;
+    window.addEventListener('scroll', function () { if (!tk) { tk = true; requestAnimationFrame(function () { tk = false; pick(); }); } }, {passive: true});
+    pick();
+  }
+
+  // ---------- Menú Explorar: cerrar al elegir o al pulsar fuera ----------
+  var ex = document.querySelector('.explore');
+  if (ex) {
+    ex.addEventListener('click', function (e) { if (e.target.closest('.menu a')) ex.open = false; });
+    document.addEventListener('click', function (e) { if (ex.open && !ex.contains(e.target)) ex.open = false; });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') ex.open = false; });
+  }
+})();
+
+(function(){
+  // ---------- Portada: cinco escenas que se alternan (MIMO, RIS, cell-free, constelación, IA) ----------
+  var cv = document.getElementById('beam');
+  if (!cv || !cv.getContext) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var ctx = cv.getContext('2d');
+  var W = 0, H = 0, dpr = 1, narrow = false;
+  var RED = '#ff3f58', WHITE = '#f1f4f8', BLUE = '#7fb2ee';
+
+  function size() {
+    var w = cv.clientWidth || 1200, h = cv.clientHeight || 700;
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+    W = cv.width; H = cv.height; narrow = w < 820;
+  }
+  function bg() { ctx.fillStyle = '#0b1626'; ctx.fillRect(0, 0, W, H); }
+  function dot(x, y, r, c) { ctx.beginPath(); ctx.arc(x, y, r, 0, 6.2832); ctx.fillStyle = c; ctx.fill(); }
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function ease(t) { t = Math.max(0, Math.min(1, t)); return t * t * (3 - 2 * t); }
+
+  // ---- Motor de campo: suma coherente de fuentes puntuales en una rejilla de baja resolución ----
+  function Field(geom) {
+    var off = document.createElement('canvas'), octx = off.getContext('2d');
+    var GW, GH, img, kc, ks, NA, el, users, target, from, to, ui, tSw, lam = 7, k = 2 * Math.PI / lam, g;
+    this.init = function () {
+      var res = narrow ? 3.2 : 4.2;
+      GW = Math.max(80, Math.round(W / dpr / res)); GH = Math.max(60, Math.round(H / dpr / res));
+      off.width = GW; off.height = GH; img = octx.createImageData(GW, GH);
+      g = geom(GW, GH, lam); el = g.elems; NA = el.length; users = g.users;
+      var n = GW * GH; kc = new Float32Array(n * NA); ks = new Float32Array(n * NA);
+      for (var y = 0; y < GH; y++) for (var x = 0; x < GW; x++) {
+        var p = (y * GW + x) * NA;
+        for (var j = 0; j < NA; j++) { var dx = x - el[j].x, dy = y - el[j].y, r = Math.sqrt(dx * dx + dy * dy) + 1, a = 1 / Math.sqrt(r);
+          kc[p + j] = Math.cos(k * r) * a; ks[p + j] = Math.sin(k * r) * a; }
+      }
+      ui = 0; target = {x: users[0].x, y: users[0].y}; from = target; to = target; tSw = -1;
+    };
+    this.draw = function (t) {
+      if (tSw < 0) tSw = t;
+      if (t - tSw > 1700 && users.length > 1) { ui = (ui + 1) % users.length; from = {x: target.x, y: target.y}; to = users[ui]; tSw = t; }
+      var a = ease((t - tSw) / 800); target = {x: lerp(from.x, to.x, a), y: lerp(from.y, to.y, a)};
+      var cph = new Float32Array(NA), sph = new Float32Array(NA), wt = t * 0.006;
+      for (var j = 0; j < NA; j++) { var dx = target.x - el[j].x, dy = target.y - el[j].y, ph = k * (Math.sqrt(dx * dx + dy * dy) + 1) + wt; cph[j] = Math.cos(ph); sph[j] = Math.sin(ph); }
+      var d = img.data, n = GW * GH, norm = 1 / (NA * 0.085), mask = g.mask;
+      for (var i = 0, p = 0; i < n; i++, p += NA) {
+        var s = 0; for (var q = 0; q < NA; q++) s += kc[p + q] * cph[q] + ks[p + q] * sph[q];
+        var v = s * norm, e = v * v; if (e > 1.4) e = 1.4;
+        if (mask && mask(i % GW, (i / GW) | 0)) e *= 0.12;
+        var o = i * 4, r = 11 + 70 * e + (v > 0 ? 120 * e * e : 0), gg = 22 + 120 * e + 40 * e * e, b = 38 + 190 * e;
+        d[o] = r > 255 ? 255 : r; d[o + 1] = gg > 255 ? 255 : gg; d[o + 2] = b > 255 ? 255 : b; d[o + 3] = 255;
+      }
+      octx.putImageData(img, 0, 0); ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(off, 0, 0, W, H);
+      var sx = W / GW, sy = H / GH;
+      if (g.overlay) g.overlay(sx, sy, t);
+      ctx.fillStyle = RED;
+      for (var m = 0; m < NA; m++) ctx.fillRect(el[m].x * sx - sx * .7, el[m].y * sy - sy * .7, sx * 1.4, sy * 1.4);
+      users.forEach(function (u, idx) { dot(u.x * sx, u.y * sy, (idx === ui ? 6 : 4) * dpr, idx === ui ? WHITE : 'rgba(241,244,248,.45)'); });
+    };
+  }
+
+  // Escena 1 · beamfocusing con un array lineal
+  var sBeam = new Field(function (GW, GH, lam) {
+    var el = [], N = 16, ax = narrow ? GW * 0.5 : GW * 0.93, ay = narrow ? GH * 0.97 : GH * 0.5;
+    for (var i = 0; i < N; i++) { var o = (i - (N - 1) / 2) * lam / 2; el.push(narrow ? {x: ax + o, y: ay} : {x: ax, y: ay + o}); }
+    var us = narrow ? [[.3, .55], [.75, .45], [.5, .7], [.85, .62]] : [[.62, .28], [.52, .62], [.75, .78], [.7, .45]];
+    return {elems: el, users: us.map(function (u) { return {x: u[0] * GW, y: u[1] * GH}; })};
+  });
+
+  // Escena 2 · RIS: la estación base no ve al usuario; la superficie redirige la señal
+  var sRis = new Field(function (GW, GH, lam) {
+    var el = [], N = 18, cx = narrow ? GW * 0.5 : GW * 0.74, ry = GH * 0.1;
+    for (var i = 0; i < N; i++) el.push({x: cx + (i - (N - 1) / 2) * lam / 2, y: ry});
+    var bx0 = narrow ? GW * 0.58 : GW * 0.8, bx1 = narrow ? GW * 0.7 : GW * 0.86, by0 = GH * 0.45;
+    var us = narrow ? [[.3, .62], [.45, .82]] : [[.6, .66], [.68, .86], [.55, .45]];
+    return {elems: el, users: us.map(function (u) { return {x: u[0] * GW, y: u[1] * GH}; }),
+      mask: function (x, y) { return x > bx0 && x < bx1 && y > by0; },
+      overlay: function (sx, sy, t) {
+        var bsx = (narrow ? GW * 0.92 : GW * 0.96) * sx, bsy = GH * 0.92 * sy;
+        ctx.fillStyle = '#16263d'; ctx.fillRect(bx0 * sx, by0 * sy, (bx1 - bx0) * sx, H - by0 * sy);
+        ctx.strokeStyle = 'rgba(241,244,248,.25)'; ctx.lineWidth = dpr; ctx.strokeRect(bx0 * sx, by0 * sy, (bx1 - bx0) * sx, H - by0 * sy);
+        ctx.save(); ctx.setLineDash([6 * dpr, 6 * dpr]); ctx.lineDashOffset = -t * 0.05 * dpr; ctx.strokeStyle = 'rgba(255,63,88,.8)'; ctx.lineWidth = 1.6 * dpr;
+        ctx.beginPath(); ctx.moveTo(bsx, bsy); ctx.lineTo(cx * sx, ry * sy); ctx.stroke(); ctx.restore();
+        ctx.fillStyle = RED; ctx.fillRect(bsx - 5 * dpr, bsy - 12 * dpr, 10 * dpr, 24 * dpr);
+        ctx.fillStyle = 'rgba(255,63,88,.25)'; ctx.fillRect((cx - N * lam / 4 - 2) * sx, (ry - 2) * sy, (N * lam / 2 + 4) * sx, 4 * sy);
+      }};
+  });
+
+  // Escena 3 · MIMO masivo distribuido (cell-free): cada usuario servido por varios puntos de acceso
+  var sCell = {
+    init: function () {
+      this.aps = []; var cols = narrow ? 3 : 4, rows = 3, x0 = narrow ? .12 : .6, x1 = narrow ? .88 : .97;
+      for (var r = 0; r < rows; r++) for (var c = 0; c < cols; c++) {
+        var jx = Math.sin(r * 7.1 + c * 3.3) * .03, jy = Math.cos(r * 2.7 + c * 5.1) * .05;
+        this.aps.push({x: (lerp(x0, x1, (c + .5) / cols) + jx) * W, y: ((r + .5) / rows * .86 + .07 + jy) * H});
+      }
+      this.us = [0, 1, 2, 3, 4].map(function (i) { return {ph: i * 1.7, sp: .00011 + i * .00002}; });
+    },
+    draw: function (t) {
+      bg(); var self = this, x0 = narrow ? .1 : .58, x1 = narrow ? .9 : .97;
+      ctx.fillStyle = 'rgba(127,178,238,.07)';
+      for (var gx = 0; gx < W; gx += 28 * dpr) for (var gy = 0; gy < H; gy += 28 * dpr) ctx.fillRect(gx, gy, dpr, dpr);
+      this.us.forEach(function (u, i) {
+        var ux = lerp(x0, x1, .5 + .45 * Math.sin(t * u.sp + u.ph)) * W, uy = (.5 + .4 * Math.sin(t * u.sp * 1.6 + u.ph * 2)) * H;
+        var near = self.aps.map(function (a) { var dx = a.x - ux, dy = a.y - uy; return {a: a, d: Math.sqrt(dx * dx + dy * dy)}; }).sort(function (p, q) { return p.d - q.d; }).slice(0, 3);
+        near.forEach(function (n, k) {
+          var al = .55 - k * .14; ctx.strokeStyle = 'rgba(127,178,238,' + al + ')'; ctx.lineWidth = (2.2 - k * .5) * dpr;
+          ctx.beginPath(); ctx.moveTo(n.a.x, n.a.y); ctx.lineTo(ux, uy); ctx.stroke();
+          var f = ((t * .0009 + i * .21 + k * .33) % 1); dot(lerp(n.a.x, ux, f), lerp(n.a.y, uy, f), 2.4 * dpr, 'rgba(241,244,248,.9)');
+        });
+        dot(ux, uy, 9 * dpr, 'rgba(241,244,248,.12)'); dot(ux, uy, 4.5 * dpr, WHITE);
+      });
+      this.aps.forEach(function (a) {
+        dot(a.x, a.y, 16 * dpr, 'rgba(255,63,88,.08)');
+        ctx.fillStyle = RED; ctx.fillRect(a.x - 6 * dpr, a.y - 4 * dpr, 12 * dpr, 8 * dpr);
+      });
+    }
+  };
+
+  // Escena 4 · constelación 16-QAM con ruido variable
+  var sQam = {
+    init: function () { this.pts = []; this.last = 0; },
+    draw: function (t) {
+      bg(); var R = Math.min(H * .34, W * (narrow ? .36 : .2)), cx = (narrow ? .5 : .74) * W, cy = (narrow ? .52 : .5) * H;
+      var snr = 14 + 7 * Math.sin(t * .0006), sigma = Math.pow(10, -snr / 20) * .9;
+      for (var n = 0; n < 14; n++) {
+        var ix = [-3, -1, 1, 3][(Math.random() * 4) | 0], qy = [-3, -1, 1, 3][(Math.random() * 4) | 0];
+        var g1 = Math.sqrt(-2 * Math.log(Math.random() + 1e-9)) * Math.cos(6.2832 * Math.random()), g2 = Math.sqrt(-2 * Math.log(Math.random() + 1e-9)) * Math.sin(6.2832 * Math.random());
+        this.pts.push({x: ix / 3 + g1 * sigma, y: qy / 3 + g2 * sigma, b: t});
+      }
+      if (this.pts.length > 1400) this.pts.splice(0, this.pts.length - 1400);
+      ctx.strokeStyle = 'rgba(241,244,248,.18)'; ctx.lineWidth = dpr;
+      ctx.beginPath(); ctx.moveTo(cx - R * 1.35, cy); ctx.lineTo(cx + R * 1.35, cy); ctx.moveTo(cx, cy - R * 1.35); ctx.lineTo(cx, cy + R * 1.35); ctx.stroke();
+      ctx.strokeStyle = 'rgba(127,178,238,.12)';
+      for (var a = -2; a <= 2; a += 2) { ctx.beginPath(); ctx.moveTo(cx + a / 3 * R, cy - R * 1.3); ctx.lineTo(cx + a / 3 * R, cy + R * 1.3); ctx.moveTo(cx - R * 1.3, cy + a / 3 * R); ctx.lineTo(cx + R * 1.3, cy + a / 3 * R); ctx.stroke(); }
+      for (var i = 0; i < this.pts.length; i++) { var p = this.pts[i], age = (t - p.b) / 3000, al = Math.max(0, .85 - age); if (al <= 0) continue;
+        ctx.fillStyle = 'rgba(127,178,238,' + al + ')'; ctx.fillRect(cx + p.x * R - dpr, cy - p.y * R - dpr, 2.2 * dpr, 2.2 * dpr); }
+      for (var x = -3; x <= 3; x += 2) for (var y = -3; y <= 3; y += 2) { ctx.strokeStyle = RED; ctx.lineWidth = 1.6 * dpr; ctx.beginPath(); ctx.arc(cx + x / 3 * R, cy - y / 3 * R, 5 * dpr, 0, 6.2832); ctx.stroke(); }
+      ctx.fillStyle = 'rgba(241,244,248,.7)'; ctx.font = (12 * dpr) + 'px "IBM Plex Mono", monospace';
+      ctx.fillText('I', cx + R * 1.38, cy + 4 * dpr); ctx.fillText('Q', cx - 4 * dpr, cy - R * 1.4);
+      ctx.fillText('16-QAM · SNR ' + snr.toFixed(1) + ' dB', cx - R * 1.3, cy + R * 1.55);
+    }
+  };
+
+  // Escena 5 · red neuronal: las medidas entran por la izquierda y la decisión sale por la derecha
+  var sNN = {
+    init: function () {
+      var L = [6, 9, 9, 4], x0 = narrow ? .14 : .66, x1 = narrow ? .88 : .95; this.L = [];
+      for (var l = 0; l < L.length; l++) { var col = []; for (var i = 0; i < L[l]; i++) col.push({x: lerp(x0, x1, l / (L.length - 1)) * W, y: ((i + .5) / L[l] * .76 + .12) * H}); this.L.push(col); }
+    },
+    draw: function (t) {
+      bg(); var Ls = this.L, wave = (t * .00045) % 1.6;
+      for (var l = 0; l < Ls.length - 1; l++) {
+        var fl = l / (Ls.length - 1), act = Math.max(0, 1 - Math.abs(wave - fl - .15) * 4);
+        Ls[l].forEach(function (a, i) { Ls[l + 1].forEach(function (b, j) {
+          var w = Math.sin(i * 1.7 + j * 2.3 + l), al = .12 + .4 * act * Math.abs(w);
+          ctx.strokeStyle = (w > 0 ? 'rgba(127,178,238,' : 'rgba(255,63,88,') + al + ')'; ctx.lineWidth = (0.6 + act * Math.abs(w) * 1.6) * dpr;
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); }); });
+      }
+      Ls.forEach(function (col, l) { var act = Math.max(0, 1 - Math.abs(wave - l / (Ls.length - 1) - .15) * 4);
+        col.forEach(function (n, i) { var on = act * (.5 + .5 * Math.sin(i * 2.1 + l + t * .002));
+          dot(n.x, n.y, (9 + 6 * on) * dpr, 'rgba(127,178,238,' + (.08 + .18 * on) + ')');
+          dot(n.x, n.y, 5 * dpr, l === Ls.length - 1 && on > .5 ? RED : WHITE); }); });
+      // espectro de entrada
+      var first = Ls[0], bx = first[0].x - 70 * dpr;
+      first.forEach(function (n, i) { var v = .4 + .6 * Math.abs(Math.sin(t * .003 + i)); ctx.fillStyle = 'rgba(127,178,238,.6)'; ctx.fillRect(bx, n.y - 3 * dpr, 50 * dpr * v, 6 * dpr); });
+    }
+  };
+
+  var scenes = [
+    {s: sBeam, cap: 'MIMO masivo · un array de 16 antenas enfoca la señal en cada usuario (beamfocusing)'},
+    {s: sRis, cap: 'RIS · una superficie reconfigurable lleva la señal a usuarios sin visión directa de la estación base'},
+    {s: sCell, cap: 'MIMO masivo distribuido · varios puntos de acceso atienden a cada usuario a la vez (cell-free)'},
+    {s: sQam, cap: 'Señal · símbolos 16-QAM recibidos con ruido: la calidad del enlace se lee en la constelación'},
+    {s: sNN, cap: 'IA en redes · una red neuronal aprende de las medidas del canal para tomar decisiones'}
+  ];
+  var cur = 0, running = !reduce, raf = 0, last = 0, start = 0, DUR = 5000, t0 = performance.now();
+  var capEl = document.getElementById('scene-cap'), dotsEl = document.getElementById('scene-dots'), tg = document.getElementById('beam-toggle');
+  function setCap() {
+    if (capEl) capEl.textContent = scenes[cur].cap;
+    if (dotsEl) Array.prototype.forEach.call(dotsEl.children, function (b, i) { b.setAttribute('aria-current', i === cur ? 'true' : 'false'); });
+  }
+  function go(i) {
+    cur = (i + scenes.length) % scenes.length; start = performance.now();
+    try { scenes[cur].s.init(); scenes[cur].s.draw(start - t0); } catch (e) {}
+    cv.style.opacity = '1'; setCap();
+  }
+  function loop(now) {
+    if (!running) return;
+    if (now - last > 33) {
+      last = now;
+      var el = now - start;
+      if (el > DUR) { cv.style.opacity = '0'; if (el > DUR + 450) go(cur + 1); }
+      else { try { scenes[cur].s.draw(now - t0); } catch (e) {} }
+    }
+    raf = requestAnimationFrame(loop);
+  }
+  if (dotsEl) scenes.forEach(function (sc, i) {
+    var b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', 'Escena ' + (i + 1) + ': ' + sc.cap.split(' · ')[0]);
+    b.addEventListener('click', function () { go(i); }); dotsEl.appendChild(b);
+  });
+  size(); go(0);
+  if (running) raf = requestAnimationFrame(loop);
+  if (tg) { tg.textContent = running ? 'Pausar' : 'Reproducir';
+    tg.addEventListener('click', function () { running = !running; tg.textContent = running ? 'Pausar' : 'Reproducir'; if (running) { start = performance.now() - 0; cancelAnimationFrame(raf); raf = requestAnimationFrame(loop); } }); }
+  var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { size(); go(cur); }, 200); });
+  document.addEventListener('visibilitychange', function () { if (!document.hidden && running) { start = performance.now() - 1000; cancelAnimationFrame(raf); raf = requestAnimationFrame(loop); } });
+})();
+</script>
+
+</body>
+</html>
