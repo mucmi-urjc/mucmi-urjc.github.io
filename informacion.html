@@ -533,6 +533,21 @@ table.cf td .chip{display:inline-block; margin-top:6px}
 .hero .simcap{width:min(62ch, 100%)}
 #scene-cap{flex:1}
 .hero .simcap{width:min(96ch, 100%); max-width:none}
+
+/* Fondos animados en las bandas oscuras y en la portada de Información práctica */
+.has-sim, .dark-hero{position:relative; isolation:isolate; overflow:hidden}
+.bgsim{position:absolute; inset:0; width:100%; height:100%; z-index:-2; display:block; pointer-events:none}
+.has-sim::before, .dark-hero::before{content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
+  background:linear-gradient(90deg, rgba(11,22,38,.9) 0%, rgba(11,22,38,.78) 45%, rgba(11,22,38,.5) 100%)}
+.dark-hero{background:#0b1626; color:#f1f4f8}
+.dark-hero h1{color:#f1f4f8}
+.dark-hero h1 em{color:#ff3f58}
+.dark-hero .eyebrow{color:#ff6b7f}
+.dark-hero .lead{color:#c9d4e2}
+.dark-hero .quick .pill:not(.red){background:rgba(11,22,38,.55); color:#f1f4f8; border-color:rgba(241,244,248,.3)}
+.dark-hero .quick .pill:not(.red):hover{border-color:#f1f4f8}
+@media (max-width:860px){ .has-sim::before, .dark-hero::before{background:rgba(11,22,38,.82)} }
+.dark-hero .statcard{color:#0c1626}
 </style>
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
@@ -570,7 +585,8 @@ table.cf td .chip{display:inline-block; margin-top:6px}
   </div>
 </header>
 <main id="inicio">
-  <div class="ihero">
+  <div class="ihero dark-hero">
+    <canvas class="bgsim" data-scene="ris" aria-hidden="true"></canvas>
     <div class="wrap">
       <div>
         <p class="eyebrow">MUCMI · Información práctica</p>
@@ -597,7 +613,8 @@ table.cf td .chip{display:inline-block; margin-top:6px}
     </div>
   </div>
 
-  <section class="dark" id="horario">
+  <section class="dark has-sim" id="horario">
+    <canvas class="bgsim" data-scene="beam" aria-hidden="true"></canvas>
     <div class="wrap big-split">
       <div class="sec-head" style="margin:0">
         <p class="eyebrow">Planifica el curso</p>
@@ -760,7 +777,8 @@ table.cf td .chip{display:inline-block; margin-top:6px}
     </div>
   </section>
 
-  <section class="dark" id="salidas">
+  <section class="dark has-sim" id="salidas">
+    <canvas class="bgsim" data-scene="nn" aria-hidden="true"></canvas>
     <div class="wrap">
       <div class="split-head">
         <div class="sec-head" style="margin:0">
@@ -1009,14 +1027,13 @@ table.cf td .chip{display:inline-block; margin-top:6px}
 })();
 
 (function(){
-  // ---------- Portada: cinco escenas que se alternan (MIMO, RIS, cell-free, constelación, IA) ----------
-  var cv = document.getElementById('beam');
-  if (!cv || !cv.getContext) return;
+  // ---------- Simulaciones en canvas: portada (rotan) y fondos de las bandas oscuras (una escena fija) ----------
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function Stage(cv, mode, only) {
+  if (!cv || !cv.getContext) return;
   var ctx = cv.getContext('2d');
   var W = 0, H = 0, dpr = 1, narrow = false;
   var RED = '#ff3f58', WHITE = '#f1f4f8', BLUE = '#7fb2ee';
-
   function size() {
     var w = cv.clientWidth || 1200, h = cv.clientHeight || 700;
     dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -1047,7 +1064,7 @@ table.cf td .chip{display:inline-block; margin-top:6px}
     };
     this.draw = function (t) {
       if (tSw < 0) tSw = t;
-      if (t - tSw > 2600 && users.length > 1) { ui = (ui + 1) % users.length; from = {x: target.x, y: target.y}; to = users[ui]; tSw = t; }
+      if (t - tSw > 1700 && users.length > 1) { ui = (ui + 1) % users.length; from = {x: target.x, y: target.y}; to = users[ui]; tSw = t; }
       var a = ease((t - tSw) / 800); target = {x: lerp(from.x, to.x, a), y: lerp(from.y, to.y, a)};
       var cph = new Float32Array(NA), sph = new Float32Array(NA), wt = t * 0.006;
       for (var j = 0; j < NA; j++) { var dx = target.x - el[j].x, dy = target.y - el[j].y, ph = k * (Math.sqrt(dx * dx + dy * dy) + 1) + wt; cph[j] = Math.cos(ph); sph[j] = Math.sin(ph); }
@@ -1178,13 +1195,30 @@ table.cf td .chip{display:inline-block; margin-top:6px}
   };
 
   var scenes = [
-    {s: sBeam, cap: 'MIMO masivo · un array de 16 antenas enfoca la señal en cada usuario (beamfocusing)'},
-    {s: sRis, cap: 'RIS · una superficie reconfigurable lleva la señal a usuarios sin visión directa de la estación base'},
-    {s: sCell, cap: 'MIMO masivo distribuido · varios puntos de acceso atienden a cada usuario a la vez (cell-free)'},
-    {s: sQam, cap: 'Señal · símbolos 16-QAM recibidos con ruido: la calidad del enlace se lee en la constelación'},
-    {s: sNN, cap: 'IA en redes · una red neuronal aprende de las medidas del canal para tomar decisiones'}
+    {k: 'beam', s: sBeam, cap: 'MIMO masivo · un array de 16 antenas enfoca la señal en cada usuario (beamfocusing)'},
+    {k: 'ris', s: sRis, cap: 'RIS · una superficie reconfigurable lleva la señal a usuarios sin visión directa de la estación base'},
+    {k: 'cell', s: sCell, cap: 'MIMO masivo distribuido · varios puntos de acceso atienden a cada usuario a la vez (cell-free)'},
+    {k: 'nn', s: sNN, cap: 'IA en redes · una red neuronal aprende de las medidas del canal para tomar decisiones'}
   ];
-  var cur = 0, running = !reduce, raf = 0, last = 0, start = 0, DUR = 8000, t0 = performance.now();
+  var t0 = performance.now(), raf = 0, last = 0, vis = true;
+  var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { size(); if (mode === 'rotate') go(cur); else { one.init(); one.draw(performance.now() - t0); } }, 200); });
+
+  if (mode !== 'rotate') {
+    var one = (scenes.filter(function (x) { return x.k === only; })[0] || scenes[0]).s;
+    var on = !reduce;
+    var tick = function (now) {
+      if (!on || !vis) { raf = 0; return; }
+      if (now - last > 40) { last = now; try { one.draw(now - t0); } catch (e) {} }
+      raf = requestAnimationFrame(tick);
+    };
+    size(); try { one.init(); one.draw(0); } catch (e) {}
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) { vis = es[0].isIntersecting; if (vis && on && !raf) raf = requestAnimationFrame(tick); }).observe(cv);
+    } else if (on) raf = requestAnimationFrame(tick);
+    return;
+  }
+
+  var cur = 0, running = !reduce, start = 0, DUR = 5000;
   var capEl = document.getElementById('scene-cap'), dotsEl = document.getElementById('scene-dots'), tg = document.getElementById('beam-toggle');
   function setCap() {
     if (capEl) capEl.textContent = scenes[cur].cap;
@@ -1212,9 +1246,11 @@ table.cf td .chip{display:inline-block; margin-top:6px}
   size(); go(0);
   if (running) raf = requestAnimationFrame(loop);
   if (tg) { tg.textContent = running ? 'Pausar' : 'Reproducir';
-    tg.addEventListener('click', function () { running = !running; tg.textContent = running ? 'Pausar' : 'Reproducir'; if (running) { start = performance.now() - 0; cancelAnimationFrame(raf); raf = requestAnimationFrame(loop); } }); }
-  var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { size(); go(cur); }, 200); });
+    tg.addEventListener('click', function () { running = !running; tg.textContent = running ? 'Pausar' : 'Reproducir'; if (running) { start = performance.now(); cancelAnimationFrame(raf); raf = requestAnimationFrame(loop); } }); }
   document.addEventListener('visibilitychange', function () { if (!document.hidden && running) { start = performance.now() - 1000; cancelAnimationFrame(raf); raf = requestAnimationFrame(loop); } });
+  }
+  Stage(document.getElementById('beam'), 'rotate');
+  Array.prototype.forEach.call(document.querySelectorAll('canvas.bgsim'), function (c) { Stage(c, 'single', c.getAttribute('data-scene')); });
 })();
 </script>
 
