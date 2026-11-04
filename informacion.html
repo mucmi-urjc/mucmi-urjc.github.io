@@ -665,6 +665,36 @@ table.gl tbody td:nth-child(2){width:240px}
 .hero-tabs .ht:hover{filter:brightness(1.12)}
 .topbar.on-hero .topnav .nav-plan, .topbar.on-hero .topnav .nav-info{display:none}
 @media (max-width:600px){ .hero-tabs{gap:10px} .hero-tabs .ht{flex:1 1 100%; justify-content:space-between; padding:12px 18px} }
+
+/* ===== Cabecera en móvil: accesos compactos fuera de la portada ===== */
+.topnav .l-short{display:none}
+@media (max-width:760px){
+  .topnav .pill.nav-plan, .topnav .pill.nav-info{display:inline-flex; padding:7px 12px; font-size:.84rem}
+  .topbar.on-hero .topnav .nav-plan, .topbar.on-hero .topnav .nav-info{display:none}
+  .topnav .l-long{display:none} .topnav .l-short{display:inline}
+  .topbar:not(.on-hero) .explore .ex-lbl{display:none}
+  .topbar:not(.on-hero) .explore summary{padding:7px 11px}
+  .topnav{gap:6px}
+}
+
+/* ===== Plan detallado en móvil: barra fija con todas las asignaturas ===== */
+.mini-plan .mp-short{display:none}
+@media (max-width:900px){
+  .story .stage{order:-1; position:sticky; top:calc(66px + env(safe-area-inset-top,0px)); z-index:6; max-height:none; overflow:visible; margin:0 -16px; padding:8px 16px; background:color-mix(in srgb, var(--bg) 94%, transparent); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); border-bottom:1px solid var(--line)}
+  .stage .stage-card.mini-plan{display:flex!important; align-items:center; gap:6px; overflow-x:auto; padding:2px 0; background:transparent; border:0; box-shadow:none; scrollbar-width:none}
+  .mini-plan::-webkit-scrollbar{display:none}
+  .mini-plan .mp-title{display:none}
+  .mini-plan .mp-sem{margin:0; flex:none; font-size:.66rem; padding:0 2px}
+  .mini-plan .mp-sem span{display:none}
+  .mini-plan ol{display:flex; gap:6px; flex:none}
+  .mini-plan a{display:inline-flex; align-items:center; gap:7px; white-space:nowrap; padding:7px 12px; border-radius:999px; border:1px solid var(--line); border-left:1px solid var(--line); background:var(--surface); font-size:.82rem}
+  .mini-plan a i{margin-top:0}
+  .mini-plan a b{display:none}
+  .mini-plan .mp-long{display:none} .mini-plan .mp-short{display:inline}
+  .mini-plan a.on{border-color:var(--pc); background:color-mix(in srgb, var(--pc) 14%, var(--surface))}
+  .card{scroll-margin-top:136px}
+}
+@media (max-width:900px){ .story{grid-template-columns:minmax(0,1fr)} .story > *{min-width:0} .stage .stage-card.mini-plan{min-width:0; max-width:100%} }
 </style>
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
@@ -675,10 +705,10 @@ table.gl tbody td:nth-child(2){width:240px}
     <span class="brand-sep" aria-hidden="true"></span>
     <a class="brand" href="index.html#inicio" aria-label="MUCMI, inicio"><b>MUC</b>MI</a>
     <nav class="topnav" aria-label="Principal">
-      <a class="pill hide-s nav-plan" href="index.html#resumen">Plan de estudios</a>
-      <a class="pill hide-s nav-info cur" href="informacion.html">Información práctica</a>
+      <a class="pill hide-s nav-plan" href="index.html#resumen"><span class="l-long">Plan de estudios</span><span class="l-short">Plan</span></a>
+      <a class="pill hide-s nav-info cur" href="informacion.html"><span class="l-long">Información práctica</span><span class="l-short">Info</span></a>
       <details class="explore">
-        <summary class="pill">Explorar <span class="burger" aria-hidden="true"><i></i><i></i><i></i></span></summary>
+        <summary class="pill" aria-label="Explorar"><span class="ex-lbl">Explorar</span> <span class="burger" aria-hidden="true"><i></i><i></i><i></i></span></summary>
         <div class="menu">
           <p>El máster</p>
           <a href="index.html#resumen">El plan de un vistazo</a>
@@ -1114,6 +1144,11 @@ table.gl tbody td:nth-child(2){width:240px}
       cards.forEach(function (c, i) { c.classList.toggle('on', i === idx); });
       var id = cards[idx].id;
       mp.forEach(function (a) { var on = a.getAttribute('data-mp') === id; a.classList.toggle('on', on); if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+      var box = document.querySelector('.mini-plan'), act = document.querySelector('[data-mp].on');
+      if (box && act && box.scrollWidth > box.clientWidth + 4) {
+        var x = act.offsetLeft - (box.clientWidth - act.offsetWidth) / 2;
+        box.scrollTo({left: Math.max(0, x), behavior: reduce ? 'auto' : 'smooth'});
+      }
     }
     function pick() {
       var mid = window.innerHeight * 0.45, best = 0, bd = 1e9;
