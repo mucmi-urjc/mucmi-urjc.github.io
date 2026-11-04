@@ -656,6 +656,15 @@ table.gl tbody td:nth-child(2){width:240px}
 .gl-hint{margin-top:0}
 .glance-plan .legend{margin-top:8px}
 @media (max-width:600px){ .glance-plan .legend{gap:4px 14px; font-size:.82rem} }
+
+/* ===== Portada: accesos grandes bajo el título ===== */
+.hero-tabs{display:flex; flex-wrap:wrap; gap:14px; margin:clamp(2px,.8vh,8px) 0}
+.hero-tabs .ht{display:inline-flex; align-items:center; gap:14px; font-family:var(--f-display); font-weight:800; font-size:clamp(1.1rem, .9rem + .8vw, 1.55rem); letter-spacing:-.01em; padding:14px 26px; border-radius:14px; text-decoration:none; color:#fff; transition:filter .15s}
+.hero-tabs .ht-plan{background:#9e0b24}
+.hero-tabs .ht-info{background:#c8102e}
+.hero-tabs .ht:hover{filter:brightness(1.12)}
+.topbar.on-hero .topnav .nav-plan, .topbar.on-hero .topnav .nav-info{display:none}
+@media (max-width:600px){ .hero-tabs{gap:10px} .hero-tabs .ht{flex:1 1 100%; justify-content:space-between; padding:12px 18px} }
 </style>
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
@@ -702,6 +711,10 @@ table.gl tbody td:nth-child(2){width:240px}
     <div class="wrap">
       <h1><b>M</b>áster <b>U</b>niversitario en <b>C</b>omunicaciones <b>M</b>óviles <b>I</b>nteligentes</h1>
       <p class="thesis">Diseña las redes que conectarán la inteligencia artificial, la robótica, la realidad virtual y extendida y las ciudades del mañana.</p>
+      <nav class="hero-tabs" aria-label="Accesos principales">
+        <a class="ht ht-plan" href="#resumen">Plan de estudios <span aria-hidden="true">→</span></a>
+        <a class="ht ht-info" href="informacion.html">Información práctica <span aria-hidden="true">→</span></a>
+      </nav>
       <div class="keyfacts">
         <ul aria-label="Datos clave">
           <li><b>Online</b></li>
@@ -1213,6 +1226,13 @@ table.gl tbody td:nth-child(2){width:240px}
     if (openCard(a.getAttribute('data-open'), true)) { e.preventDefault(); try { history.replaceState(null, '', '#' + a.getAttribute('data-open')); } catch (err) {} }
   });
   if (location.hash && /^#a-/.test(location.hash)) setTimeout(function () { openCard(location.hash.slice(1), false); }, 60);
+
+  // ---------- Portada: los accesos de la cabecera aparecen al dejar atrás la portada ----------
+  var heroTabs = document.querySelector('.hero-tabs'), topbar = document.querySelector('.topbar');
+  if (heroTabs && topbar && 'IntersectionObserver' in window) {
+    topbar.classList.add('on-hero');
+    new IntersectionObserver(function (es) { topbar.classList.toggle('on-hero', es[0].isIntersecting); }, {rootMargin: '-66px 0px 0px 0px'}).observe(heroTabs);
+  }
 
   // ---------- Menú Explorar: cerrar al elegir o al pulsar fuera ----------
   var ex = document.querySelector('.explore');
