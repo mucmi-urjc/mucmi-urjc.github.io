@@ -582,6 +582,80 @@ table.cf td .chip{display:inline-block; margin-top:6px}
 .urjc-logo .lg-sym{display:none}
 @media (max-width:560px){ .urjc-logo .lg-full{display:none} .urjc-logo .lg-sym{display:block; height:30px} }
 @media (max-width:400px){ .brand-sep, .brand{display:inline-flex} .brand-sep{display:block} }
+
+/* ===== Portada simplificada (propuesta del compañero) ===== */
+.topnav .pill.nav-plan{background:#9e0b24; border-color:#9e0b24; color:#fff}
+.topnav .pill.nav-info{background:#c8102e; border-color:#c8102e; color:#fff}
+.topnav .pill.nav-plan:hover, .topnav .pill.nav-info:hover{filter:brightness(1.1); border-color:inherit}
+.topnav .pill.nav-info.cur{box-shadow:0 0 0 2px #fff, 0 0 0 4px #c8102e}
+.keyfacts{display:flex; flex-wrap:wrap; align-items:center; gap:18px 28px; margin-top:clamp(4px, 1.5vh, 14px)}
+.keyfacts ul{display:flex; flex-wrap:wrap; list-style:none; margin:0; padding:0}
+.keyfacts li{font-family:var(--f-display); font-weight:700; font-size:clamp(1.35rem, 1rem + 1.2vw, 1.9rem); letter-spacing:-.02em; color:#f1f4f8; padding:6px 28px; border-left:1px solid rgba(241,244,248,.28); line-height:1.1}
+.keyfacts li:first-child{padding-left:0; border-left:0}
+.keyfacts li b{color:#ff3f58; font-weight:800}
+.hero .pill.big-cta{font-family:var(--f-display); font-weight:800; font-size:clamp(1.05rem, .9rem + .5vw, 1.3rem); padding:16px 30px; background:#fff; color:#0c1626; border-color:#fff; gap:12px}
+.hero .pill.big-cta:hover{background:#ffe3e7; border-color:#ffe3e7}
+@media (max-width:600px){
+  .keyfacts{gap:16px}
+  .keyfacts ul{gap:4px 20px}
+  .keyfacts li{padding:0; border-left:0; font-size:1.25rem}
+  .hero .pill.big-cta{width:100%}
+}
+
+/* ===== Plan de un vistazo: tablas por semestre ===== */
+#resumen{padding-block:clamp(36px, 6vh, 64px)!important}
+.glance-plan{margin-top:clamp(22px, 4vh, 40px); padding-top:clamp(18px, 3vh, 28px); border-top:1px solid var(--line)}
+.gl-head{display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px 28px}
+.gl-title{font-size:clamp(1.5rem, 1.1rem + 1.4vw, 2.2rem)!important}
+.gl-hint{color:var(--muted); font-size:.9rem; margin-top:6px}
+.gl-grid{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:24px; margin-top:clamp(14px, 2.5vh, 22px)}
+@media (max-width:1100px){ .gl-grid{grid-template-columns:1fr} }
+.gl-sem h3{font-size:1.1rem; margin-bottom:8px}
+.gl-wrap{border-radius:var(--r); overflow:hidden; background:var(--surface); border:1px solid var(--line)}
+table.gl{width:100%; border-collapse:collapse; font-size:.92rem}
+table.gl th{font-family:var(--f-mono); font-weight:500; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); text-align:left; padding:9px 14px; background:var(--surface)}
+table.gl td{padding:10px 14px; border-top:2px solid var(--surface); vertical-align:middle; line-height:1.3}
+table.gl tbody tr{background:var(--pc); color:#fff}
+table.gl tbody tr.pc-sig{background:linear-gradient(90deg, var(--p-mimo), var(--p-ia) 55%, var(--p-rf))}
+table.gl tbody td + td{border-left:1px solid rgba(255,255,255,.22)}
+table.gl tbody td:nth-child(2){font-size:.84rem; white-space:nowrap; opacity:.92}
+table.gl .n{text-align:right; font-family:var(--f-mono); width:56px; white-space:nowrap}
+table.gl tbody a{color:#fff; text-decoration:none; font-weight:600}
+table.gl tbody a::after{content:" →"; opacity:0; transition:opacity .15s}
+table.gl tbody tr:hover a{text-decoration:underline}
+table.gl tbody tr:hover a::after{opacity:1}
+table.gl tbody tr:hover{filter:brightness(1.08)}
+table.gl tfoot td{font-weight:700; padding:10px 14px; color:var(--ink)}
+@media (max-width:640px){ table.gl td:nth-child(2), table.gl th:nth-child(2){display:none} }
+.legend li.pc-inv i{background:var(--p-inv)}
+
+/* ===== Plan detallado: plan completo fijo a la derecha ===== */
+.story{grid-template-columns:minmax(0,7fr) minmax(0,4fr)}
+.story .stage{order:2}
+.mini-plan{padding:16px 18px}
+.mini-plan .mp-title{font-family:var(--f-display); font-weight:800; font-size:1.1rem}
+.mini-plan .mp-sem{display:flex; justify-content:space-between; font-size:.72rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); margin:14px 0 6px}
+.mini-plan .mp-sem span{color:var(--muted); font-family:var(--f-mono); letter-spacing:.04em}
+.mini-plan ol{list-style:none; margin:0; padding:0; display:grid; gap:2px}
+.mini-plan a{display:grid; grid-template-columns:10px 1fr auto; gap:10px; align-items:start; padding:7px 8px; border-radius:8px; color:var(--ink); text-decoration:none; font-size:.84rem; line-height:1.3; border-left:3px solid transparent}
+.mini-plan a i{width:10px; height:10px; border-radius:3px; background:var(--pc); margin-top:4px}
+.mini-plan li.pc-sig a i{background:linear-gradient(90deg, var(--p-mimo), var(--p-ia), var(--p-rf))}
+.mini-plan a b{font-family:var(--f-mono); font-weight:500; font-size:.78rem; color:var(--muted)}
+.mini-plan a:hover{background:var(--bg)}
+.mini-plan a.on{background:color-mix(in srgb, var(--pc) 12%, var(--surface)); border-left-color:var(--pc); font-weight:600}
+.mini-plan li.pc-sig a.on{border-left-color:var(--p-ia)}
+.stage{max-height:calc(100svh - 110px); overflow:auto}
+.gl-grid{grid-template-columns:1fr; gap:clamp(12px, 2.2vh, 20px)}
+table.gl td{padding:7px 14px}
+table.gl th{padding:7px 14px}
+table.gl tbody td:nth-child(2){width:240px}
+.gl-sem h3{font-size:1rem; margin-bottom:6px}
+@media (min-width:900px){ #resumen .facts-row div{padding-block:12px} .glance-plan{margin-top:18px; padding-top:18px} }
+.glance-plan{border-top:0!important; padding-top:0!important}
+.gl-head{align-items:baseline}
+.gl-hint{margin-top:0}
+.glance-plan .legend{margin-top:8px}
+@media (max-width:600px){ .glance-plan .legend{gap:4px 14px; font-size:.82rem} }
 </style>
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
@@ -592,17 +666,18 @@ table.cf td .chip{display:inline-block; margin-top:6px}
     <span class="brand-sep" aria-hidden="true"></span>
     <a class="brand" href="index.html#inicio" aria-label="MUCMI, inicio"><b>MUC</b>MI</a>
     <nav class="topnav" aria-label="Principal">
-      <a class="pill hide-s cur" href="index.html">El máster</a>
-      <a class="pill hide-s" href="informacion.html">Información práctica</a>
+      <a class="pill hide-s nav-plan" href="#resumen">Plan de estudios</a>
+      <a class="pill hide-s nav-info" href="informacion.html">Información práctica</a>
       <details class="explore">
         <summary class="pill">Explorar <span class="burger" aria-hidden="true"><i></i><i></i><i></i></span></summary>
         <div class="menu">
           <p>El máster</p>
-          <a href="#contexto">Contexto y retos</a>
-          <a href="#nucleo">Tres pilares</a>
-          <a href="#plan">Plan de estudios</a>
-          <a href="#recorrido">Recorrido</a>
+          <a href="#resumen">El plan de un vistazo</a>
           <a href="#modalidad">Modalidad</a>
+          <a href="#contexto">Contexto y retos</a>
+          <a href="#plan">Plan de estudios detallado</a>
+          <a href="#nucleo">Tres pilares</a>
+          <a href="#recorrido">Recorrido</a>
           <a href="#herramientas">Herramientas transversales</a>
           <a href="#laboratorios">Laboratorios</a>
           <p>Información práctica</p>
@@ -618,7 +693,6 @@ table.cf td .chip{display:inline-block; margin-top:6px}
           <a href="https://mwrcom-urjc.github.io" target="_blank" rel="noopener">Grupo de investigación MW-RCOM ↗</a>
         </div>
       </details>
-      <a class="pill red" href="informacion.html#contacto">Contacto</a>
     </nav>
   </div>
 </header>
@@ -626,19 +700,15 @@ table.cf td .chip{display:inline-block; margin-top:6px}
   <div class="hero">
     <canvas id="beam" aria-hidden="true"></canvas>
     <div class="wrap">
-      <p class="eyebrow">Universidad Rey Juan Carlos · Escuela de Ingeniería de Fuenlabrada</p>
       <h1><b>M</b>áster <b>U</b>niversitario en <b>C</b>omunicaciones <b>M</b>óviles <b>I</b>nteligentes</h1>
       <p class="thesis">Diseña las redes que conectarán la inteligencia artificial, la robótica, la realidad virtual y extendida y las ciudades del mañana.</p>
-      <ul class="chips" aria-label="Datos clave">
-        <li>60 ECTS · orientación investigadora</li>
-        <li>20 plazas</li>
-        <li>Más del 80% virtual · en español</li>
-        <li>Tardes · 16:00–20:00</li>
-        <li class="red">Curso 2027/28</li>
-      </ul>
-      <div class="ctas">
-        <a class="pill red" href="#plan">Ver el plan de estudios</a>
-        <a class="pill ghost" href="informacion.html">Información práctica</a>
+      <div class="keyfacts">
+        <ul aria-label="Datos clave">
+          <li><b>Online</b></li>
+          <li>Duración <b>un año</b></li>
+          <li><b>20</b> plazas</li>
+        </ul>
+        <a class="pill big-cta" href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=6sSEXw03nkuDDHVvi_G1H6xl-s59oQ1Imx7OEpjxxu5URFU4OVNDVEw2SlFEWUwzVThONkdMSk45NC4u" target="_blank" rel="noopener">¡Solicita información! <span aria-hidden="true">→</span></a>
       </div>
       <div class="simcap"><span class="sc-dots" id="scene-dots" aria-label="Escenas de la simulación"></span><span id="scene-cap" aria-live="polite">MIMO masivo · un array de 16 antenas enfoca la señal en cada usuario (beamfocusing)</span><button type="button" id="beam-toggle">Pausar</button></div>
     </div>
@@ -652,35 +722,38 @@ table.cf td .chip{display:inline-block; margin-top:6px}
         <div>Más del 80% virtual<span>en español, tardes de 16:00 a 20:00</span></div>
         <div>EIF · Fuenlabrada<span>una semana presencial por cuatrimestre</span></div>
       </div>
-      <details class="glance">
-        <summary>El plan de estudios, de un vistazo <span class="plus" aria-hidden="true">+</span></summary>
-        <div class="inner">
-          <div class="ects-bars" aria-label="Reparto de créditos por semestre">
-            <div class="ects-row"><span class="lbl">Semestre 1 · 30</span>
-              <div class="bar">
-                <span class="pc-inv" style="flex:3" title="Metodología de la investigación · 3 ECTS">3</span>
-                <span class="pc-mimo" style="flex:3" title="Teoría de la información · 3 ECTS">3</span>
-                <span class="pc-mimo" style="flex:6" title="Sistemas MIMO · 6 ECTS">6</span>
-                <span class="pc-rf" style="flex:6" title="Alta frecuencia · 6 ECTS">6</span>
-                <span class="pc-ia" style="flex:6" title="Aprendizaje automático · 6 ECTS">6</span>
-                <span class="pc-rf" style="flex:6" title="Antenas · 6 ECTS">6</span>
-              </div></div>
-            <div class="ects-row"><span class="lbl">Semestre 2 · 30</span>
-              <div class="bar">
-                <span class="pc-ia" style="flex:6" title="IA en redes · 6 ECTS">6</span>
-                <span class="pc-mimo" style="flex:6" title="D-mMIMO con RIS · 6 ECTS">6</span>
-                <span style="flex:6; background:linear-gradient(90deg, var(--p-mimo), var(--p-ia), var(--p-rf))" title="Tecnologías habilitadoras · 6 ECTS">6</span>
-                <span class="pc-inv" style="flex:12" title="Trabajo Fin de Máster · 12 ECTS">TFM · 12</span>
-              </div></div>
-            <ul class="legend">
-              <li class="pc-mimo"><i></i>MIMO masivo y RIS</li>
-              <li class="pc-ia"><i></i>IA y aprendizaje automático</li>
-              <li class="pc-rf"><i></i>Alta frecuencia y antenas</li>
-              <li class="pc-inv"><i></i>Investigación y TFM</li>
-            </ul>
-          </div>
+      <div class="glance-plan"><div class="gl-head"><h2 class="gl-title">El plan de estudios, de un vistazo</h2><p class="gl-hint">Pulsa una asignatura para ver su ficha.</p></div><ul class="legend"><li class="pc-mimo"><i></i>MIMO masivo y RIS</li><li class="pc-ia"><i></i>IA y aprendizaje automático</li><li class="pc-rf"><i></i>Alta frecuencia y antenas</li><li class="pc-inv"><i></i>Investigación y TFM</li></ul><div class="gl-grid"><div class="gl-sem"><h3>Semestre 1</h3><div class="gl-wrap"><table class="gl"><thead><tr><th scope="col">Asignatura</th><th scope="col">Área</th><th scope="col" class="n">ECTS</th></tr></thead><tbody><tr class="pc-inv"><td><a href="#a-metodologia" data-open="a-metodologia">Metodología de la Investigación Científica en Comunicaciones Móviles Inteligentes</a></td><td>Investigación y TFM</td><td class="n">3</td></tr><tr class="pc-mimo"><td><a href="#a-teoria" data-open="a-teoria">Teoría de la Información en Comunicaciones Móviles Emergentes</a></td><td>MIMO masivo y RIS</td><td class="n">3</td></tr><tr class="pc-mimo"><td><a href="#a-mimo" data-open="a-mimo">Modelado y Prestaciones de Sistemas MIMO en Comunicaciones Móviles</a></td><td>MIMO masivo y RIS</td><td class="n">6</td></tr><tr class="pc-rf"><td><a href="#a-altafrecuencia" data-open="a-altafrecuencia">Tecnologías de Alta Frecuencia en Comunicaciones Móviles Emergentes</a></td><td>Alta frecuencia y antenas</td><td class="n">6</td></tr><tr class="pc-ia"><td><a href="#a-aprendizaje" data-open="a-aprendizaje">Aprendizaje Automático en Sistemas de Comunicaciones Móviles Emergentes</a></td><td>IA y aprendizaje automático</td><td class="n">6</td></tr><tr class="pc-rf"><td><a href="#a-antenas" data-open="a-antenas">Diseño Avanzado de Antenas para Comunicaciones Móviles Emergentes</a></td><td>Alta frecuencia y antenas</td><td class="n">6</td></tr></tbody><tfoot><tr><td colspan="2">Total semestre 1</td><td class="n">30</td></tr></tfoot></table></div></div><div class="gl-sem"><h3>Semestre 2</h3><div class="gl-wrap"><table class="gl"><thead><tr><th scope="col">Asignatura</th><th scope="col">Área</th><th scope="col" class="n">ECTS</th></tr></thead><tbody><tr class="pc-ia"><td><a href="#a-ia" data-open="a-ia">Inteligencia Artificial en Redes de Comunicaciones Móviles Emergentes</a></td><td>IA y aprendizaje automático</td><td class="n">6</td></tr><tr class="pc-mimo"><td><a href="#a-dmmimo" data-open="a-dmmimo">Modelado y Prestaciones en MIMO Masivo Distribuido con Superficies Reconfigurables</a></td><td>MIMO masivo y RIS</td><td class="n">6</td></tr><tr class="pc-sig"><td><a href="#a-habilitadoras" data-open="a-habilitadoras">Tecnologías Habilitadoras para Comunicaciones Móviles Emergentes</a></td><td>Integración de los tres pilares</td><td class="n">6</td></tr><tr class="pc-inv"><td><a href="#a-tfm" data-open="a-tfm">Trabajo Fin de Máster</a></td><td>Investigación y TFM</td><td class="n">12</td></tr></tbody><tfoot><tr><td colspan="2">Total semestre 2</td><td class="n">30</td></tr></tfoot></table></div></div></div></div>
+    </div>
+  </section>
+
+
+  <section class="dark has-sim" id="modalidad">
+    <canvas class="bgsim" data-scene="beam" aria-hidden="true"></canvas>
+    <div class="wrap big-split">
+      <div class="sec-head" style="margin:0">
+        <p class="eyebrow">Modalidad</p>
+        <h2>Pensado para compatibilizar <em>estudio y trabajo</em></h2>
+        <p class="lead">La docencia es virtual. Lo presencial se reserva para lo que solo puede hacerse en un laboratorio y para los exámenes.</p>
+        <div class="split" role="img" aria-label="Más del 80% virtual, menos del 20% presencial" style="margin-top:12px"><span class="v">+80% virtual</span><span class="p">&lt;20%</span></div>
+        <div class="split-legend"><span><i class="sw sw-v"></i>Más del 80% virtual: clases y trabajo en remoto</span><span><i class="sw sw-p"></i>Menos del 20% presencial: laboratorios y exámenes</span></div>
+        <ul class="plist">
+          <li><b>Trabajo guiado asíncrono</b><span>Foros, vídeos del profesorado y retroalimentación en Aula Virtual (Moodle).</span></li>
+          <li><b>Prácticas desde casa</b><span>Software de la titulación en MyApps, sin instalaciones, más licencia Campus de MATLAB.</span></li>
+          <li><b>Tiempo completo o parcial</b><span>Entre 48 y 60 ECTS, o entre 24 y 47 a tiempo parcial.</span></li>
+        </ul>
+      </div>
+      <div style="display:grid; gap:40px">
+        <div class="hour">
+          <span class="when">Lunes a viernes · clases síncronas en remoto</span>
+          <span class="huge num">16:00–20:00</span>
+          <p>Lecciones, casos y resolución de problemas en directo por videoconferencia.</p>
         </div>
-      </details>
+        <div class="hour">
+          <span class="when">Al final de cada cuatrimestre</span>
+          <span class="huge">1 semana</span>
+          <p>Laboratorios y exámenes agrupados en la Escuela de Ingeniería de Fuenlabrada: solo te desplazas dos veces en todo el curso. <a href="informacion.html#horario">Horario y calendario</a></p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -710,6 +783,159 @@ table.cf td .chip{display:inline-block; margin-top:6px}
     </div>
   </section>
 
+  <section class="band-grey" id="plan">
+    <div class="wrap">
+      <div class="split-head">
+        <div class="sec-head" style="margin:0">
+          <p class="eyebrow">Plan de estudios</p>
+          <h2>De los fundamentos a <em>un sistema 6G completo</em></h2>
+        </div>
+        <p class="lead">Nueve asignaturas obligatorias y un TFM de 12 ECTS. Cada ficha muestra contenidos, herramientas y cómo encaja; a la derecha tienes siempre el plan completo para saltar a cualquier asignatura.</p>
+      </div>
+      <div class="story">
+        <div class="cards">
+          <div class="sem-bar">Primer semestre <span>30 ECTS</span></div>
+          <div class="sem-intro"><h3>Métodos, fundamentos y <em style="font-style:normal;color:var(--accent)">tres pilares en paralelo</em></h3></div>
+          <details open class="card pc-inv" id="a-metodologia" data-short="Metodología científica" data-sem="S1" data-i="1">
+  <summary>
+    <div class="top"><span class="kind">Obligatoria · <i>Investigación</i></span><span class="ects-pill">3 ECTS</span></div>
+    <h4>Metodología de la Investigación Científica en Comunicaciones Móviles Inteligentes</h4>
+    <p class="desc">Cómo se plantea, se ejecuta y se comunica una investigación en comunicaciones móviles.</p>
+    <ul class="temas" aria-label="Temas seleccionados"><li>Hipótesis y objetivos</li><li>Revisión bibliográfica</li><li>Diseño de experimentos</li></ul>
+    <div class="foot"><span>Docencia en remoto · examen presencial</span><span class="plus" aria-hidden="true">+</span></div>
+  </summary>
+  <div class="more">
+    <div><h5>Contenidos</h5><ul><li>Métodos de investigación científica: tema, objetivos, hipótesis, método y recursos.</li><li>Búsqueda de información, fuentes y revisión bibliográfica.</li><li>Diseño de experimentos y análisis estadístico de resultados.</li><li>Aplicación a proyectos de comunicaciones móviles inteligentes.</li></ul></div>
+    <div class="side"><div><h5>Cómo encaja en el recorrido</h5><p>Da el método que se aplica en el resto de asignaturas y que culmina en el TFM.</p></div></div>
+  </div>
+</details>
+<details open class="card pc-mimo" id="a-teoria" data-short="Teoría de la Información" data-sem="S1" data-i="2">
+  <summary>
+    <div class="top"><span class="kind">Obligatoria · <i>MIMO masivo y RIS</i></span><span class="ects-pill">3 ECTS</span></div>
+    <h4>Teoría de la Información en Comunicaciones Móviles Emergentes</h4>
+    <p class="desc">Los límites fundamentales de lo que puede transmitir una red móvil multiusuario.</p>
+    <ul class="temas" aria-label="Temas seleccionados"><li>Capacidad de canal</li><li>Eficiencia espectral multiusuario</li><li>Comunicaciones semánticas</li></ul>
+    <div class="foot"><span>Docencia en remoto · examen presencial</span><span class="plus" aria-hidden="true">+</span></div>
+  </summary>
+  <div class="more">
+    <div><h5>Contenidos</h5><ul><li>Teoría de la información en comunicaciones multiusuario.</li><li>Teoría de la información en MIMO masivo y redes emergentes.</li><li>Capacidad de canal y límites de transmisión.</li><li>Comunicaciones semánticas.</li></ul></div>
+    <div class="side"><div><h5>Herramientas</h5><p>MATLAB (licencia Campus).</p></div><div><h5>Cómo encaja en el recorrido</h5><p>Fija las métricas con las que se evalúan los sistemas MIMO y D-mMIMO de las asignaturas siguientes.</p></div></div>
+  </div>
+</details>
+<details open class="card pc-mimo" id="a-mimo" data-short="Sistemas MIMO" data-sem="S1" data-i="3">
+  <summary>
+    <div class="top"><span class="kind">Obligatoria · <i>MIMO masivo y RIS</i></span><span class="ects-pill">6 ECTS</span></div>
+    <h4>Modelado y Prestaciones de Sistemas MIMO en Comunicaciones Móviles</h4>
+    <p class="desc">Del canal multiantena al MIMO masivo: modelar, estimar y optimizar.</p>
+    <ul class="temas" aria-label="Temas seleccionados"><li>Modelado de canal MIMO</li><li>Estimación de canal</li><li>Asignación de recursos</li></ul>
+    <div class="foot"><span>Incluye laboratorio en la semana presencial</span><span class="plus" aria-hidden="true">+</span></div>
+  </summary>
+  <div class="more">
+    <div><h5>Contenidos</h5><ul><li>Fundamentos matemáticos para modelado, optimización y análisis.</li><li>Modelado de canales MIMO y capacidad.</li><li>Motivación y modelado de redes con MIMO masivo.</li><li>Estimación de canal y análisis de prestaciones.</li><li>Optimización de la asignación de recursos.</li></ul></div>
+    <div class="side"><div><h5>Herramientas</h5><p>MATLAB con toolboxes de comunicaciones inalámbricas y procesamiento de señal.</p></div><div><h5>Cómo encaja en el recorrido</h5><p>Prepara directamente MIMO masivo distribuido con superficies reconfigurables, en el segundo semestre.</p></div></div>
+  </div>
+</details>
+<details open class="card pc-rf" id="a-altafrecuencia" data-short="Alta frecuencia" data-sem="S1" data-i="4">
+  <summary>
+    <div class="top"><span class="kind">Obligatoria · <i>Alta frecuencia y antenas</i></span><span class="ects-pill">6 ECTS</span></div>
+    <h4>Tecnologías de Alta Frecuencia en Comunicaciones Móviles Emergentes</h4>
+    <p class="desc">Los dispositivos que hacen posibles las bandas milimétricas y de terahercios.</p>
+    <ul class="temas" aria-label="Temas seleccionados"><li>Dispositivos pasivos para microondas y RF</li><li>Dispositivos activos para microondas y RF</li><li>Dispositivos fotónicos</li></ul>
+    <div class="foot"><span>Incluye laboratorio en la semana presencial</span><span class="plus" aria-hidden="true">+</span></div>
+  </summary>
+  <div class="more">
+    <div><h5>Contenidos</h5><ul><li>Tecnologías de alta frecuencia y procesos de fabricación.</li><li>Dispositivos pasivos: resonadores, filtros, acopladores, divisores y atenuadores.</li><li>Dispositivos activos: amplificadores, desfasadores, mezcladores y conmutación.</li><li>Generación de señal en alta frecuencia con radiofrecuencia y fotónica.</li></ul></div>
+    <div class="side"><div><h5>Herramientas</h5><p>MATLAB y AWR Microwave Office. Cámara anecoica y laboratorio de microondas.</p></div><div><h5>Cómo encaja en el recorrido</h5><p>Aporta la visión hardware de las bandas mmWave y THz que se integra en Tecnologías Habilitadoras.</p></div></div>
+  </div>
+</details>
+<details open class="card pc-ia" id="a-aprendizaje" data-short="Aprendizaje automático" data-sem="S1" data-i="5">
+  <summary>
+    <div class="top"><span class="kind">Obligatoria · <i>IA y aprendizaje automático</i></span><span class="ects-pill">6 ECTS</span></div>
+    <h4>Aprendizaje Automático en Sistemas de Comunicaciones Móviles Emergentes</h4>
+    <p class="desc">Fundamentos de aprendizaje automático trabajados con problemas propios de las telecomunicaciones.</p>
+    <ul class="temas" aria-label="Temas seleccionados"><li>Detección y clasificación</li><li>Reducción de la dimensionalidad</li><li>Generalización y <i>overfitting</i></li></ul>
+    <div class="foot"><span>Incluye laboratorio en la semana presencial</span><span class="plus" aria-hidden="true">+</span></div>
+  </summary>
+  <div class="more">
+    <div><h5>Contenidos</h5><ul><li>Aprendizaje automático desde la perspectiva de las telecomunicaciones.</li><li>Optimización y búsqueda de soluciones.</li><li>Teoría de la detección y clasificación.</li><li><i>Clustering</i> y reducción de la dimensionalidad.</li><li>Estructuras de aprendizaje, generalización y <i>overfitting</i>.</li></ul></div>
+    <div class="side"><div><h5>Herramientas</h5><p>MATLAB y Python: NumPy, SciPy, scikit-learn, Keras, TensorFlow y Jupyter.</p></div><div><h5>Cómo encaja en el recorrido</h5><p>Es la base del pilar de IA y continúa en Inteligencia Artificial en Redes.</p></div></div>
+  </div>
+</details>
+<details open class="card pc-rf" id="a-antenas" data-short="Antenas avanzadas" data-sem="S1" data-i="6">
+  <summary>
+    <div class="top"><span class="kind">Obligatoria · <i>Alta frecuencia y antenas</i></span><span class="ects-pill">6 ECTS</span></div>
+    <h4>Diseño Avanzado de Antenas para Comunicaciones Móviles Emergentes</h4>
+    <p class="desc">Diseño, síntesis y medida de las antenas de estaciones base y terminales.</p>
+    <ul class="temas" aria-label="Temas seleccionados"><li>Antenas avanzadas</li><li>Antenas reconfigurables</li><li>Diagnóstico y caracterización de antenas</li></ul>
+    <div class="foot"><span>Incluye laboratorio en la semana presencial</span><span class="plus" aria-hidden="true">+</span></div>
+  </summary>
+  <div class="more">
+    <div><h5>Contenidos</h5><ul><li>Antenas para enlaces punto a punto, estaciones base y terminales.</li><li><i>Reflectarrays</i>, <i>transmitarrays</i>, <i>phased arrays</i>, parches avanzados y antenas integradas.</li><li>Síntesis, optimización y miniaturización.</li><li>Caracterización y medida de antenas.</li></ul></div>
+    <div class="side"><div><h5>Herramientas</h5><p>MATLAB y Altair FEKO. Medida en cámara anecoica.</p></div><div><h5>Cómo encaja en el recorrido</h5><p>Las superficies reflectantes enlazan con las RIS, y el diseño de arrays con la integración hardware del segundo semestre.</p></div></div>
+  </div>
+</details>
+          <div class="sem-bar">Segundo semestre <span>30 ECTS</span></div>
+          <div class="sem-intro"><h3>Profundizar, integrar y <em style="font-style:normal;color:var(--accent)">investigar</em></h3></div>
+          <details open class="card pc-ia" id="a-ia" data-short="IA en redes" data-sem="S2" data-i="7">
+  <summary>
+    <div class="top"><span class="kind">Obligatoria · <i>IA y aprendizaje automático</i></span><span class="ects-pill">6 ECTS</span></div>
+    <h4>Inteligencia Artificial en Redes de Comunicaciones Móviles Emergentes</h4>
+    <p class="desc">Técnicas avanzadas de IA para que la red decida, prediga y se optimice.</p>
+    <ul class="temas" aria-label="Temas seleccionados"><li>Aprendizaje por refuerzo</li><li>Modelos subrogados</li><li>Seguridad en IA</li></ul>
+    <div class="foot"><span>Incluye laboratorio en la semana presencial</span><span class="plus" aria-hidden="true">+</span></div>
+  </summary>
+  <div class="more">
+    <div><h5>Contenidos</h5><ul><li>Estructuras avanzadas de aprendizaje automático.</li><li>Aplicaciones avanzadas de clasificación y predicción.</li><li>Optimización de sistemas móviles mediante modelos subrogados.</li><li>Aprendizaje por transferencia y seguridad en IA.</li><li>Sistemas de decisión y aprendizaje por refuerzo.</li></ul></div>
+    <div class="side"><div><h5>Herramientas</h5><p>MATLAB y Python con bibliotecas de aprendizaje automático.</p></div><div><h5>Cómo encaja en el recorrido</h5><p>Lleva el pilar de IA a la gestión de la red, y se combina con el resto en Tecnologías Habilitadoras.</p></div></div>
+  </div>
+</details>
+<details open class="card pc-mimo" id="a-dmmimo" data-short="D-mMIMO con RIS" data-sem="S2" data-i="8">
+  <summary>
+    <div class="top"><span class="kind">Obligatoria · <i>MIMO masivo y RIS</i></span><span class="ects-pill">6 ECTS</span></div>
+    <h4>Modelado y Prestaciones en MIMO Masivo Distribuido con Superficies Reconfigurables</h4>
+    <p class="desc">Arquitecturas cell-free y superficies reconfigurables: modelado y optimización conjunta.</p>
+    <ul class="temas" aria-label="Temas seleccionados"><li>MIMO masivo cell-free</li><li>Modelado de RIS</li><li>Optimización conjunta</li></ul>
+    <div class="foot"><span>Incluye laboratorio en la semana presencial</span><span class="plus" aria-hidden="true">+</span></div>
+  </summary>
+  <div class="more">
+    <div><h5>Contenidos</h5><ul><li>Modelado de sistemas MIMO masivo distribuido (cell-free).</li><li>Evaluación de rendimiento en distintos escenarios.</li><li>Técnicas de optimización y diseño.</li><li>Modelado de superficies reconfigurables inteligentes (RIS).</li><li>Prestaciones de MIMO masivo celular y distribuido asistido por RIS.</li><li>Optimización conjunta de MIMO masivo y RIS.</li></ul></div>
+    <div class="side"><div><h5>Herramientas</h5><p>MATLAB para modelado de canales multiantena y optimización numérica.</p></div><div><h5>Cómo encaja en el recorrido</h5><p>Es el núcleo del pilar 1 y un punto de partida habitual para el TFM.</p></div></div>
+  </div>
+</details>
+<details open class="card pc-sig" id="a-habilitadoras" data-short="Tecnologías habilitadoras" data-sem="S2" data-i="9">
+  <summary>
+    <div class="top"><span class="kind">Obligatoria · <i>Integración de los tres pilares</i></span><span class="ects-pill">6 ECTS</span></div>
+    <h4>Tecnologías Habilitadoras para Comunicaciones Móviles Emergentes</h4>
+    <p class="desc">Cómo encajan todas las piezas en una arquitectura 6G.</p>
+    <ul class="temas" aria-label="Temas seleccionados"><li>Comunicación y sensado (ISAC)</li><li>Redes terrestres y satelitales</li><li>Terahercios y óptica</li></ul>
+    <div class="foot"><span>Incluye laboratorio en la semana presencial</span><span class="plus" aria-hidden="true">+</span></div>
+  </summary>
+  <div class="more">
+    <div><h5>Contenidos</h5><ul><li>Arquitectura física con MIMO masivo distribuido asistida por RIS.</li><li>Comunicaciones en ondas milimétricas y en terahercios.</li><li>Comunicaciones ópticas avanzadas.</li><li>Integración de comunicaciones y sensado (ISAC).</li><li>Integración de redes terrestres y satelitales (NTN).</li><li>Integración de IA y aprendizaje automático en la red.</li></ul></div>
+    <div class="side"><div><h5>Herramientas</h5><p>MATLAB y Altair FEKO, aulas con software especializado.</p></div><div><h5>Cómo encaja en el recorrido</h5><p>Integra los tres pilares en un mismo sistema justo antes del TFM.</p></div></div>
+  </div>
+</details>
+<details open class="card pc-inv" id="a-tfm" data-short="Trabajo Fin de Máster" data-sem="S2" data-i="10">
+  <summary>
+    <div class="top"><span class="kind">Trabajo Fin de Máster · <i>Investigación</i></span><span class="ects-pill">12 ECTS</span></div>
+    <h4>Trabajo Fin de Máster</h4>
+    <p class="desc">Una pregunta de investigación propia, resultados reproducibles y una defensa pública.</p>
+    <ul class="temas" aria-label="Temas seleccionados"><li>Estado del arte</li><li>Modelado, simulación o experimentación</li><li>Sostenibilidad e impacto</li></ul>
+    <div class="foot"><span>Defensa pública ante tribunal</span><span class="plus" aria-hidden="true">+</span></div>
+  </summary>
+  <div class="more">
+    <div><h5>Contenidos</h5><ul><li>Trabajo de investigación original e individual: problema, estado del arte y contexto científico.</li><li>Metodología adecuada: modelado, simulación, experimentación o análisis de datos.</li><li>Memoria científica con planteamiento, resultados y conclusiones.</li><li>Análisis de sostenibilidad: eficiencia energética de las redes e impacto de las infraestructuras.</li><li>Presentación y defensa pública ante un tribunal académico.</li></ul></div>
+    <div class="side"><div><h5>Cómo encaja en el recorrido</h5><p>Reúne los tres pilares en una contribución propia y es el paso natural hacia un <a href="informacion.html#doctorado">doctorado</a>.</p></div></div>
+  </div>
+</details>
+        </div>
+        <aside class="stage" aria-label="Plan de estudios completo">
+          <div class="stage-card mini-plan"><p class="mp-title">Plan de estudios</p><p class="mp-sem">Semestre 1 <span>30 ECTS</span></p><ol><li class="pc-inv"><a href="#a-metodologia" data-open="a-metodologia" data-mp="a-metodologia"><i></i><span>Metodología de la Investigación Científica en Comunicaciones Móviles Inteligentes</span><b>3</b></a></li><li class="pc-mimo"><a href="#a-teoria" data-open="a-teoria" data-mp="a-teoria"><i></i><span>Teoría de la Información en Comunicaciones Móviles Emergentes</span><b>3</b></a></li><li class="pc-mimo"><a href="#a-mimo" data-open="a-mimo" data-mp="a-mimo"><i></i><span>Modelado y Prestaciones de Sistemas MIMO en Comunicaciones Móviles</span><b>6</b></a></li><li class="pc-rf"><a href="#a-altafrecuencia" data-open="a-altafrecuencia" data-mp="a-altafrecuencia"><i></i><span>Tecnologías de Alta Frecuencia en Comunicaciones Móviles Emergentes</span><b>6</b></a></li><li class="pc-ia"><a href="#a-aprendizaje" data-open="a-aprendizaje" data-mp="a-aprendizaje"><i></i><span>Aprendizaje Automático en Sistemas de Comunicaciones Móviles Emergentes</span><b>6</b></a></li><li class="pc-rf"><a href="#a-antenas" data-open="a-antenas" data-mp="a-antenas"><i></i><span>Diseño Avanzado de Antenas para Comunicaciones Móviles Emergentes</span><b>6</b></a></li></ol><p class="mp-sem">Semestre 2 <span>30 ECTS</span></p><ol><li class="pc-ia"><a href="#a-ia" data-open="a-ia" data-mp="a-ia"><i></i><span>Inteligencia Artificial en Redes de Comunicaciones Móviles Emergentes</span><b>6</b></a></li><li class="pc-mimo"><a href="#a-dmmimo" data-open="a-dmmimo" data-mp="a-dmmimo"><i></i><span>Modelado y Prestaciones en MIMO Masivo Distribuido con Superficies Reconfigurables</span><b>6</b></a></li><li class="pc-sig"><a href="#a-habilitadoras" data-open="a-habilitadoras" data-mp="a-habilitadoras"><i></i><span>Tecnologías Habilitadoras para Comunicaciones Móviles Emergentes</span><b>6</b></a></li><li class="pc-inv"><a href="#a-tfm" data-open="a-tfm" data-mp="a-tfm"><i></i><span>Trabajo Fin de Máster</span><b>12</b></a></li></ol></div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
   <section class="dark has-sim" id="nucleo">
     <canvas class="bgsim" data-scene="cell" aria-hidden="true"></canvas>
     <div class="wrap">
@@ -730,204 +956,6 @@ table.cf td .chip{display:inline-block; margin-top:6px}
         <article class="pillar pc-rf"><span class="n">03</span><h3>Alta frecuencia y antenas</h3>
           <p>Dispositivos de microondas, radiofrecuencia y fotónicos, generación de señal en milimétricas y terahercios, y diseño avanzado de antenas, incluidas las reconfigurables.</p>
           <div class="subs"><span class="tag-s">Alta frecuencia</span><span class="tag-s">Antenas avanzadas</span></div></article>
-      </div>
-    </div>
-  </section>
-
-  <section class="band-grey" id="plan">
-    <div class="wrap">
-      <div class="split-head">
-        <div class="sec-head" style="margin:0">
-          <p class="eyebrow">Plan de estudios</p>
-          <h2>De los fundamentos a <em>un sistema 6G completo</em></h2>
-        </div>
-        <p class="lead">Nueve asignaturas obligatorias y un TFM de 12 ECTS. A medida que avanzas, el esquema de la izquierda se completa con cada pieza de la red. Abre cada ficha para ver contenidos, herramientas y cómo encaja.</p>
-      </div>
-      <div class="story">
-        <aside class="stage" aria-label="Progreso en el recorrido">
-          <div class="stage-card">
-            <svg class="scene" id="scene" viewBox="0 0 420 330" role="img" aria-label="Ilustración de una red 6G que se completa a medida que avanzas por las asignaturas: lupa de investigación, red neuronal, satélite, puntos de acceso distribuidos con sus ondas, edificio con superficie reconfigurable, torre con array de antenas y documento del TFM." fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <g class="gr" stroke-width="1"><path d="M10 292 H410"/><path d="M10 300 H410" stroke-dasharray="2 6"/></g>
-  <!-- usuarios (neutros) -->
-  <g stroke="#94a1b2" stroke-width="1.6"><rect x="236" y="268" width="11" height="19" rx="2.5"/><rect x="300" y="270" width="11" height="19" rx="2.5"/><rect x="186" y="272" width="11" height="17" rx="2.5"/></g>
-  <!-- metodología: lupa -->
-  <g class="g" data-g="met" stroke="currentColor" stroke-width="2.4"><circle cx="52" cy="54" r="19"/><path d="M66 68 L84 86"/><path d="M42 52 h20 M42 60 h13" stroke-width="1.6"/></g>
-  <!-- aprendizaje automático: red neuronal -->
-  <g class="g" data-g="ml" stroke="currentColor" stroke-width="1.4">
-    <path d="M150 40 L195 40 M150 40 L195 70 M150 40 L195 100 M150 70 L195 40 M150 70 L195 70 M150 70 L195 100 M150 100 L195 40 M150 100 L195 70 M150 100 L195 100 M195 40 L240 55 M195 70 L240 55 M195 100 L240 55 M195 40 L240 85 M195 70 L240 85 M195 100 L240 85"/>
-    <g fill="#ffffff" stroke-width="2"><circle cx="150" cy="40" r="6"/><circle cx="150" cy="70" r="6"/><circle cx="150" cy="100" r="6"/><circle cx="195" cy="40" r="6"/><circle cx="195" cy="70" r="6"/><circle cx="195" cy="100" r="6"/><circle cx="240" cy="55" r="6"/><circle cx="240" cy="85" r="6"/></g>
-  </g>
-  <!-- IA en redes: bucle de aprendizaje por refuerzo -->
-  <g class="g" data-g="ia" stroke="currentColor" stroke-width="2.2"><path d="M252 30 C285 30 285 112 248 112"/><path d="M138 112 C108 112 108 30 140 26"/><path d="M134 20 L142 26 L134 33"/><path d="M256 106 L248 112 L256 119"/></g>
-  <!-- satélite (NTN) -->
-  <g class="g" data-g="sat" stroke="currentColor" stroke-width="2"><rect x="344" y="44" width="18" height="18" rx="2"/><rect x="314" y="48" width="24" height="10"/><rect x="368" y="48" width="24" height="10"/><path d="M353 62 V70"/><path d="M353 76 L360 146" stroke-dasharray="3 5" stroke-width="1.6"/><path d="M340 84 C330 92 330 104 340 112" stroke-width="1.4"/></g>
-  <!-- edificio con RIS -->
-  <g class="g" data-g="ris" stroke="currentColor" stroke-width="2">
-    <path d="M22 292 V150 H100 V292"/>
-    <g stroke-width="1.4"><rect x="34" y="166" width="9" height="9"/><rect x="47" y="166" width="9" height="9" fill="currentColor"/><rect x="60" y="166" width="9" height="9"/><rect x="73" y="166" width="9" height="9" fill="currentColor"/>
-      <rect x="34" y="179" width="9" height="9" fill="currentColor"/><rect x="47" y="179" width="9" height="9"/><rect x="60" y="179" width="9" height="9" fill="currentColor"/><rect x="73" y="179" width="9" height="9"/>
-      <rect x="34" y="192" width="9" height="9"/><rect x="47" y="192" width="9" height="9" fill="currentColor"/><rect x="60" y="192" width="9" height="9"/><rect x="73" y="192" width="9" height="9" fill="currentColor"/>
-      <rect x="34" y="205" width="9" height="9" fill="currentColor"/><rect x="47" y="205" width="9" height="9"/><rect x="60" y="205" width="9" height="9" fill="currentColor"/><rect x="73" y="205" width="9" height="9"/></g>
-    <path d="M40 240 h14 v20 h-14z M66 240 h14 v20 h-14z" stroke-width="1.4"/>
-    <path d="M100 196 L186 270" stroke-dasharray="4 5" stroke-width="1.6"/>
-  </g>
-  <!-- TFM: documento -->
-  <g class="g" data-g="tfm" stroke="currentColor" stroke-width="2"><path d="M114 146 H140 L150 156 V196 H114 Z"/><path d="M140 146 V156 H150"/><path d="M121 166 h20 M121 174 h20 M121 182 h12" stroke-width="1.4"/><path d="M132 188 l5 5 l10 -12" stroke-width="2.4"/></g>
-  <!-- puntos de acceso distribuidos (cell-free) -->
-  <g class="g" data-g="mimo" stroke="currentColor" stroke-width="2"><path d="M165 292 V246 M225 292 V246 M285 292 V246"/><rect x="157" y="236" width="16" height="10" rx="2"/><rect x="217" y="236" width="16" height="10" rx="2"/><rect x="277" y="236" width="16" height="10" rx="2"/></g>
-  <!-- teoría de la información: ondas -->
-  <g class="g" data-g="ti" stroke="currentColor" stroke-width="1.6"><path d="M157 226 Q165 218 173 226 M151 220 Q165 206 179 220"/><path d="M217 226 Q225 218 233 226 M211 220 Q225 206 239 220"/><path d="M277 226 Q285 218 293 226 M271 220 Q285 206 299 220"/></g>
-  <!-- alta frecuencia: torre y cadena RF -->
-  <g class="g" data-g="rf" stroke="currentColor" stroke-width="2"><path d="M344 292 L356 178 M376 292 L364 178"/><path d="M347 262 L373 250 M349 238 L371 228 M351 214 L369 204 M347 262 L371 228 M349 238 L369 204" stroke-width="1.3"/><rect x="384" y="270" width="24" height="16" rx="2"/><path d="M388 278 h4 l2 -4 l3 8 l2 -4 h5" stroke-width="1.3"/></g>
-  <!-- antenas: panel array y haces -->
-  <g class="g" data-g="ant" stroke="currentColor" stroke-width="2"><rect x="350" y="150" width="20" height="28" rx="2"/><g fill="currentColor" stroke="none"><circle cx="356" cy="156" r="1.6"/><circle cx="364" cy="156" r="1.6"/><circle cx="356" cy="164" r="1.6"/><circle cx="364" cy="164" r="1.6"/><circle cx="356" cy="172" r="1.6"/><circle cx="364" cy="172" r="1.6"/></g><path d="M348 160 C320 168 306 196 302 262" stroke-width="1.4"/><path d="M348 168 C330 190 320 230 310 266" stroke-width="1.4"/></g>
-</svg>
-
-            <div class="stage-cap"><b id="stage-name">Metodología científica</b><span id="stage-count">1 / 10 · S1</span></div>
-          </div>
-          <nav class="steps" aria-label="Etapas">
-            <a href="#a-metodologia" data-step="1"><b>01</b>Fundamentos</a>
-            <a href="#a-mimo" data-step="2"><b>02</b>Tres pilares</a>
-            <a href="#a-ia" data-step="3"><b>03</b>Profundización</a>
-            <a href="#a-tfm" data-step="4"><b>04</b>TFM</a>
-          </nav>
-        </aside>
-        <div class="cards">
-          <div class="sem-bar">Primer semestre <span>30 ECTS</span></div>
-          <div class="sem-intro"><h3>Métodos, fundamentos y <em style="font-style:normal;color:var(--accent)">tres pilares en paralelo</em></h3></div>
-          <details class="card pc-inv" id="a-metodologia" data-short="Metodología científica" data-sem="S1" data-i="1">
-  <summary>
-    <div class="top"><span class="kind">Obligatoria · <i>Investigación</i></span><span class="ects-pill">3 ECTS</span></div>
-    <h4>Metodología de la Investigación Científica en Comunicaciones Móviles Inteligentes</h4>
-    <p class="desc">Cómo se plantea, se ejecuta y se comunica una investigación en comunicaciones móviles.</p>
-    <ul class="temas" aria-label="Temas seleccionados"><li>Hipótesis y objetivos</li><li>Revisión bibliográfica</li><li>Diseño de experimentos</li></ul>
-    <div class="foot"><span>Docencia en remoto · examen presencial</span><span class="plus" aria-hidden="true">+</span></div>
-  </summary>
-  <div class="more">
-    <div><h5>Contenidos</h5><ul><li>Métodos de investigación científica: tema, objetivos, hipótesis, método y recursos.</li><li>Búsqueda de información, fuentes y revisión bibliográfica.</li><li>Diseño de experimentos y análisis estadístico de resultados.</li><li>Aplicación a proyectos de comunicaciones móviles inteligentes.</li></ul></div>
-    <div class="side"><div><h5>Cómo encaja en el recorrido</h5><p>Da el método que se aplica en el resto de asignaturas y que culmina en el TFM.</p></div></div>
-  </div>
-</details>
-<details class="card pc-mimo" id="a-teoria" data-short="Teoría de la Información" data-sem="S1" data-i="2">
-  <summary>
-    <div class="top"><span class="kind">Obligatoria · <i>MIMO masivo y RIS</i></span><span class="ects-pill">3 ECTS</span></div>
-    <h4>Teoría de la Información en Comunicaciones Móviles Emergentes</h4>
-    <p class="desc">Los límites fundamentales de lo que puede transmitir una red móvil multiusuario.</p>
-    <ul class="temas" aria-label="Temas seleccionados"><li>Capacidad de canal</li><li>Eficiencia espectral multiusuario</li><li>Comunicaciones semánticas</li></ul>
-    <div class="foot"><span>Docencia en remoto · examen presencial</span><span class="plus" aria-hidden="true">+</span></div>
-  </summary>
-  <div class="more">
-    <div><h5>Contenidos</h5><ul><li>Teoría de la información en comunicaciones multiusuario.</li><li>Teoría de la información en MIMO masivo y redes emergentes.</li><li>Capacidad de canal y límites de transmisión.</li><li>Comunicaciones semánticas.</li></ul></div>
-    <div class="side"><div><h5>Herramientas</h5><p>MATLAB (licencia Campus).</p></div><div><h5>Cómo encaja en el recorrido</h5><p>Fija las métricas con las que se evalúan los sistemas MIMO y D-mMIMO de las asignaturas siguientes.</p></div></div>
-  </div>
-</details>
-<details class="card pc-mimo" id="a-mimo" data-short="Sistemas MIMO" data-sem="S1" data-i="3">
-  <summary>
-    <div class="top"><span class="kind">Obligatoria · <i>MIMO masivo y RIS</i></span><span class="ects-pill">6 ECTS</span></div>
-    <h4>Modelado y Prestaciones de Sistemas MIMO en Comunicaciones Móviles</h4>
-    <p class="desc">Del canal multiantena al MIMO masivo: modelar, estimar y optimizar.</p>
-    <ul class="temas" aria-label="Temas seleccionados"><li>Modelado de canal MIMO</li><li>Estimación de canal</li><li>Asignación de recursos</li></ul>
-    <div class="foot"><span>Incluye laboratorio en la semana presencial</span><span class="plus" aria-hidden="true">+</span></div>
-  </summary>
-  <div class="more">
-    <div><h5>Contenidos</h5><ul><li>Fundamentos matemáticos para modelado, optimización y análisis.</li><li>Modelado de canales MIMO y capacidad.</li><li>Motivación y modelado de redes con MIMO masivo.</li><li>Estimación de canal y análisis de prestaciones.</li><li>Optimización de la asignación de recursos.</li></ul></div>
-    <div class="side"><div><h5>Herramientas</h5><p>MATLAB con toolboxes de comunicaciones inalámbricas y procesamiento de señal.</p></div><div><h5>Cómo encaja en el recorrido</h5><p>Prepara directamente MIMO masivo distribuido con superficies reconfigurables, en el segundo semestre.</p></div></div>
-  </div>
-</details>
-<details class="card pc-rf" id="a-altafrecuencia" data-short="Alta frecuencia" data-sem="S1" data-i="4">
-  <summary>
-    <div class="top"><span class="kind">Obligatoria · <i>Alta frecuencia y antenas</i></span><span class="ects-pill">6 ECTS</span></div>
-    <h4>Tecnologías de Alta Frecuencia en Comunicaciones Móviles Emergentes</h4>
-    <p class="desc">Los dispositivos que hacen posibles las bandas milimétricas y de terahercios.</p>
-    <ul class="temas" aria-label="Temas seleccionados"><li>Dispositivos pasivos para microondas y RF</li><li>Dispositivos activos para microondas y RF</li><li>Dispositivos fotónicos</li></ul>
-    <div class="foot"><span>Incluye laboratorio en la semana presencial</span><span class="plus" aria-hidden="true">+</span></div>
-  </summary>
-  <div class="more">
-    <div><h5>Contenidos</h5><ul><li>Tecnologías de alta frecuencia y procesos de fabricación.</li><li>Dispositivos pasivos: resonadores, filtros, acopladores, divisores y atenuadores.</li><li>Dispositivos activos: amplificadores, desfasadores, mezcladores y conmutación.</li><li>Generación de señal en alta frecuencia con radiofrecuencia y fotónica.</li></ul></div>
-    <div class="side"><div><h5>Herramientas</h5><p>MATLAB y AWR Microwave Office. Cámara anecoica y laboratorio de microondas.</p></div><div><h5>Cómo encaja en el recorrido</h5><p>Aporta la visión hardware de las bandas mmWave y THz que se integra en Tecnologías Habilitadoras.</p></div></div>
-  </div>
-</details>
-<details class="card pc-ia" id="a-aprendizaje" data-short="Aprendizaje automático" data-sem="S1" data-i="5">
-  <summary>
-    <div class="top"><span class="kind">Obligatoria · <i>IA y aprendizaje automático</i></span><span class="ects-pill">6 ECTS</span></div>
-    <h4>Aprendizaje Automático en Sistemas de Comunicaciones Móviles Emergentes</h4>
-    <p class="desc">Fundamentos de aprendizaje automático trabajados con problemas propios de las telecomunicaciones.</p>
-    <ul class="temas" aria-label="Temas seleccionados"><li>Detección y clasificación</li><li>Reducción de la dimensionalidad</li><li>Generalización y <i>overfitting</i></li></ul>
-    <div class="foot"><span>Incluye laboratorio en la semana presencial</span><span class="plus" aria-hidden="true">+</span></div>
-  </summary>
-  <div class="more">
-    <div><h5>Contenidos</h5><ul><li>Aprendizaje automático desde la perspectiva de las telecomunicaciones.</li><li>Optimización y búsqueda de soluciones.</li><li>Teoría de la detección y clasificación.</li><li><i>Clustering</i> y reducción de la dimensionalidad.</li><li>Estructuras de aprendizaje, generalización y <i>overfitting</i>.</li></ul></div>
-    <div class="side"><div><h5>Herramientas</h5><p>MATLAB y Python: NumPy, SciPy, scikit-learn, Keras, TensorFlow y Jupyter.</p></div><div><h5>Cómo encaja en el recorrido</h5><p>Es la base del pilar de IA y continúa en Inteligencia Artificial en Redes.</p></div></div>
-  </div>
-</details>
-<details class="card pc-rf" id="a-antenas" data-short="Antenas avanzadas" data-sem="S1" data-i="6">
-  <summary>
-    <div class="top"><span class="kind">Obligatoria · <i>Alta frecuencia y antenas</i></span><span class="ects-pill">6 ECTS</span></div>
-    <h4>Diseño Avanzado de Antenas para Comunicaciones Móviles Emergentes</h4>
-    <p class="desc">Diseño, síntesis y medida de las antenas de estaciones base y terminales.</p>
-    <ul class="temas" aria-label="Temas seleccionados"><li>Antenas avanzadas</li><li>Antenas reconfigurables</li><li>Diagnóstico y caracterización de antenas</li></ul>
-    <div class="foot"><span>Incluye laboratorio en la semana presencial</span><span class="plus" aria-hidden="true">+</span></div>
-  </summary>
-  <div class="more">
-    <div><h5>Contenidos</h5><ul><li>Antenas para enlaces punto a punto, estaciones base y terminales.</li><li><i>Reflectarrays</i>, <i>transmitarrays</i>, <i>phased arrays</i>, parches avanzados y antenas integradas.</li><li>Síntesis, optimización y miniaturización.</li><li>Caracterización y medida de antenas.</li></ul></div>
-    <div class="side"><div><h5>Herramientas</h5><p>MATLAB y Altair FEKO. Medida en cámara anecoica.</p></div><div><h5>Cómo encaja en el recorrido</h5><p>Las superficies reflectantes enlazan con las RIS, y el diseño de arrays con la integración hardware del segundo semestre.</p></div></div>
-  </div>
-</details>
-          <div class="sem-bar">Segundo semestre <span>30 ECTS</span></div>
-          <div class="sem-intro"><h3>Profundizar, integrar y <em style="font-style:normal;color:var(--accent)">investigar</em></h3></div>
-          <details class="card pc-ia" id="a-ia" data-short="IA en redes" data-sem="S2" data-i="7">
-  <summary>
-    <div class="top"><span class="kind">Obligatoria · <i>IA y aprendizaje automático</i></span><span class="ects-pill">6 ECTS</span></div>
-    <h4>Inteligencia Artificial en Redes de Comunicaciones Móviles Emergentes</h4>
-    <p class="desc">Técnicas avanzadas de IA para que la red decida, prediga y se optimice.</p>
-    <ul class="temas" aria-label="Temas seleccionados"><li>Aprendizaje por refuerzo</li><li>Modelos subrogados</li><li>Seguridad en IA</li></ul>
-    <div class="foot"><span>Incluye laboratorio en la semana presencial</span><span class="plus" aria-hidden="true">+</span></div>
-  </summary>
-  <div class="more">
-    <div><h5>Contenidos</h5><ul><li>Estructuras avanzadas de aprendizaje automático.</li><li>Aplicaciones avanzadas de clasificación y predicción.</li><li>Optimización de sistemas móviles mediante modelos subrogados.</li><li>Aprendizaje por transferencia y seguridad en IA.</li><li>Sistemas de decisión y aprendizaje por refuerzo.</li></ul></div>
-    <div class="side"><div><h5>Herramientas</h5><p>MATLAB y Python con bibliotecas de aprendizaje automático.</p></div><div><h5>Cómo encaja en el recorrido</h5><p>Lleva el pilar de IA a la gestión de la red, y se combina con el resto en Tecnologías Habilitadoras.</p></div></div>
-  </div>
-</details>
-<details class="card pc-mimo" id="a-dmmimo" data-short="D-mMIMO con RIS" data-sem="S2" data-i="8">
-  <summary>
-    <div class="top"><span class="kind">Obligatoria · <i>MIMO masivo y RIS</i></span><span class="ects-pill">6 ECTS</span></div>
-    <h4>Modelado y Prestaciones en MIMO Masivo Distribuido con Superficies Reconfigurables</h4>
-    <p class="desc">Arquitecturas cell-free y superficies reconfigurables: modelado y optimización conjunta.</p>
-    <ul class="temas" aria-label="Temas seleccionados"><li>MIMO masivo cell-free</li><li>Modelado de RIS</li><li>Optimización conjunta</li></ul>
-    <div class="foot"><span>Incluye laboratorio en la semana presencial</span><span class="plus" aria-hidden="true">+</span></div>
-  </summary>
-  <div class="more">
-    <div><h5>Contenidos</h5><ul><li>Modelado de sistemas MIMO masivo distribuido (cell-free).</li><li>Evaluación de rendimiento en distintos escenarios.</li><li>Técnicas de optimización y diseño.</li><li>Modelado de superficies reconfigurables inteligentes (RIS).</li><li>Prestaciones de MIMO masivo celular y distribuido asistido por RIS.</li><li>Optimización conjunta de MIMO masivo y RIS.</li></ul></div>
-    <div class="side"><div><h5>Herramientas</h5><p>MATLAB para modelado de canales multiantena y optimización numérica.</p></div><div><h5>Cómo encaja en el recorrido</h5><p>Es el núcleo del pilar 1 y un punto de partida habitual para el TFM.</p></div></div>
-  </div>
-</details>
-<details class="card pc-sig" id="a-habilitadoras" data-short="Tecnologías habilitadoras" data-sem="S2" data-i="9">
-  <summary>
-    <div class="top"><span class="kind">Obligatoria · <i>Integración de los tres pilares</i></span><span class="ects-pill">6 ECTS</span></div>
-    <h4>Tecnologías Habilitadoras para Comunicaciones Móviles Emergentes</h4>
-    <p class="desc">Cómo encajan todas las piezas en una arquitectura 6G.</p>
-    <ul class="temas" aria-label="Temas seleccionados"><li>Comunicación y sensado (ISAC)</li><li>Redes terrestres y satelitales</li><li>Terahercios y óptica</li></ul>
-    <div class="foot"><span>Incluye laboratorio en la semana presencial</span><span class="plus" aria-hidden="true">+</span></div>
-  </summary>
-  <div class="more">
-    <div><h5>Contenidos</h5><ul><li>Arquitectura física con MIMO masivo distribuido asistida por RIS.</li><li>Comunicaciones en ondas milimétricas y en terahercios.</li><li>Comunicaciones ópticas avanzadas.</li><li>Integración de comunicaciones y sensado (ISAC).</li><li>Integración de redes terrestres y satelitales (NTN).</li><li>Integración de IA y aprendizaje automático en la red.</li></ul></div>
-    <div class="side"><div><h5>Herramientas</h5><p>MATLAB y Altair FEKO, aulas con software especializado.</p></div><div><h5>Cómo encaja en el recorrido</h5><p>Integra los tres pilares en un mismo sistema justo antes del TFM.</p></div></div>
-  </div>
-</details>
-<details class="card pc-inv" id="a-tfm" data-short="Trabajo Fin de Máster" data-sem="S2" data-i="10">
-  <summary>
-    <div class="top"><span class="kind">Trabajo Fin de Máster · <i>Investigación</i></span><span class="ects-pill">12 ECTS</span></div>
-    <h4>Trabajo Fin de Máster</h4>
-    <p class="desc">Una pregunta de investigación propia, resultados reproducibles y una defensa pública.</p>
-    <ul class="temas" aria-label="Temas seleccionados"><li>Estado del arte</li><li>Modelado, simulación o experimentación</li><li>Sostenibilidad e impacto</li></ul>
-    <div class="foot"><span>Defensa pública ante tribunal</span><span class="plus" aria-hidden="true">+</span></div>
-  </summary>
-  <div class="more">
-    <div><h5>Contenidos</h5><ul><li>Trabajo de investigación original e individual: problema, estado del arte y contexto científico.</li><li>Metodología adecuada: modelado, simulación, experimentación o análisis de datos.</li><li>Memoria científica con planteamiento, resultados y conclusiones.</li><li>Análisis de sostenibilidad: eficiencia energética de las redes e impacto de las infraestructuras.</li><li>Presentación y defensa pública ante un tribunal académico.</li></ul></div>
-    <div class="side"><div><h5>Cómo encaja en el recorrido</h5><p>Reúne los tres pilares en una contribución propia y es el paso natural hacia un <a href="informacion.html#doctorado">doctorado</a>.</p></div></div>
-  </div>
-</details>
-        </div>
       </div>
     </div>
   </section>
@@ -976,35 +1004,6 @@ table.cf td .chip{display:inline-block; margin-top:6px}
     </div>
   </section>
 
-  <section class="dark has-sim" id="modalidad">
-    <canvas class="bgsim" data-scene="beam" aria-hidden="true"></canvas>
-    <div class="wrap big-split">
-      <div class="sec-head" style="margin:0">
-        <p class="eyebrow">Modalidad</p>
-        <h2>Pensado para compatibilizar <em>estudio y trabajo</em></h2>
-        <p class="lead">La docencia es virtual. Lo presencial se reserva para lo que solo puede hacerse en un laboratorio y para los exámenes.</p>
-        <div class="split" role="img" aria-label="Más del 80% virtual, menos del 20% presencial" style="margin-top:12px"><span class="v">+80% virtual</span><span class="p">&lt;20%</span></div>
-        <div class="split-legend"><span><i class="sw sw-v"></i>Más del 80% virtual: clases y trabajo en remoto</span><span><i class="sw sw-p"></i>Menos del 20% presencial: laboratorios y exámenes</span></div>
-        <ul class="plist">
-          <li><b>Trabajo guiado asíncrono</b><span>Foros, vídeos del profesorado y retroalimentación en Aula Virtual (Moodle).</span></li>
-          <li><b>Prácticas desde casa</b><span>Software de la titulación en MyApps, sin instalaciones, más licencia Campus de MATLAB.</span></li>
-          <li><b>Tiempo completo o parcial</b><span>Entre 48 y 60 ECTS, o entre 24 y 47 a tiempo parcial.</span></li>
-        </ul>
-      </div>
-      <div style="display:grid; gap:40px">
-        <div class="hour">
-          <span class="when">Lunes a viernes · clases síncronas en remoto</span>
-          <span class="huge num">16:00–20:00</span>
-          <p>Lecciones, casos y resolución de problemas en directo por videoconferencia.</p>
-        </div>
-        <div class="hour">
-          <span class="when">Al final de cada cuatrimestre</span>
-          <span class="huge">1 semana</span>
-          <p>Laboratorios y exámenes agrupados en la Escuela de Ingeniería de Fuenlabrada: solo te desplazas dos veces en todo el curso. <a href="informacion.html#horario">Horario y calendario</a></p>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <section class="band-white" id="herramientas">
     <div class="wrap">
@@ -1182,30 +1181,17 @@ table.cf td .chip{display:inline-block; margin-top:6px}
 (function(){
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ---------- Plan de estudios: el esquema se construye al hacer scroll ----------
-  var scene = document.getElementById('scene');
+  // ---------- Plan de estudios: plan completo fijo a la derecha + enlaces a cada ficha ----------
   var cards = Array.prototype.slice.call(document.querySelectorAll('.card[data-i]'));
-  if (scene && cards.length) {
-    var MAP = {'a-metodologia': ['met'], 'a-teoria': ['ti'], 'a-mimo': ['mimo', 'ti'], 'a-altafrecuencia': ['rf'], 'a-aprendizaje': ['ml'],
-      'a-antenas': ['ant'], 'a-ia': ['ia', 'ml'], 'a-dmmimo': ['ris', 'mimo'], 'a-habilitadoras': ['sat', 'ant', 'rf', 'mimo', 'ris', 'ia'],
-      'a-tfm': ['tfm', 'met', 'ti', 'mimo', 'rf', 'ml', 'ant', 'ia', 'ris', 'sat']};
-    var groups = Array.prototype.slice.call(scene.querySelectorAll('.g'));
-    var nameEl = document.getElementById('stage-name'), countEl = document.getElementById('stage-count');
-    var steps = Array.prototype.slice.call(document.querySelectorAll('.steps a'));
-    scene.classList.add('js');
+  var mp = Array.prototype.slice.call(document.querySelectorAll('[data-mp]'));
+  if (cards.length && mp.length) {
     var cur = -1;
     function setActive(idx) {
       if (idx === cur) return; cur = idx;
-      var seen = {}, on = {};
-      cards.forEach(function (c, i) { (MAP[c.id] || []).forEach(function (g) { if (i <= idx) seen[g] = 1; if (i === idx) on[g] = 1; }); c.classList.toggle('on', i === idx); });
-      groups.forEach(function (g) { var n = g.getAttribute('data-g'); g.classList.toggle('seen', !!seen[n]); g.classList.toggle('on', !!on[n]); });
-      var c = cards[idx];
-      if (nameEl) nameEl.textContent = c.getAttribute('data-short');
-      if (countEl) countEl.textContent = (idx + 1) + ' / ' + cards.length + ' · ' + c.getAttribute('data-sem');
-      var st = idx < 2 ? 1 : idx < 6 ? 2 : idx < 9 ? 3 : 4;
-      steps.forEach(function (s) { s.classList.toggle('on', +s.getAttribute('data-step') === st); });
+      cards.forEach(function (c, i) { c.classList.toggle('on', i === idx); });
+      var id = cards[idx].id;
+      mp.forEach(function (a) { var on = a.getAttribute('data-mp') === id; a.classList.toggle('on', on); if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
     }
-    setActive(0);
     function pick() {
       var mid = window.innerHeight * 0.45, best = 0, bd = 1e9;
       cards.forEach(function (c, i) { var r = c.getBoundingClientRect(); var d = r.top > mid ? r.top - mid : (r.bottom < mid ? mid - r.bottom : 0); if (d < bd) { bd = d; best = i; } });
@@ -1215,6 +1201,18 @@ table.cf td .chip{display:inline-block; margin-top:6px}
     window.addEventListener('scroll', function () { if (!tk) { tk = true; requestAnimationFrame(function () { tk = false; pick(); }); } }, {passive: true});
     pick();
   }
+  function openCard(id, smooth) {
+    var d = document.getElementById(id);
+    if (!d || d.tagName !== 'DETAILS') return false;
+    d.open = true;
+    d.scrollIntoView({behavior: smooth && !reduce ? 'smooth' : 'auto', block: 'start'});
+    return true;
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[data-open]'); if (!a) return;
+    if (openCard(a.getAttribute('data-open'), true)) { e.preventDefault(); try { history.replaceState(null, '', '#' + a.getAttribute('data-open')); } catch (err) {} }
+  });
+  if (location.hash && /^#a-/.test(location.hash)) setTimeout(function () { openCard(location.hash.slice(1), false); }, 60);
 
   // ---------- Menú Explorar: cerrar al elegir o al pulsar fuera ----------
   var ex = document.querySelector('.explore');

@@ -582,6 +582,80 @@ table.cf td .chip{display:inline-block; margin-top:6px}
 .urjc-logo .lg-sym{display:none}
 @media (max-width:560px){ .urjc-logo .lg-full{display:none} .urjc-logo .lg-sym{display:block; height:30px} }
 @media (max-width:400px){ .brand-sep, .brand{display:inline-flex} .brand-sep{display:block} }
+
+/* ===== Portada simplificada (propuesta del compañero) ===== */
+.topnav .pill.nav-plan{background:#9e0b24; border-color:#9e0b24; color:#fff}
+.topnav .pill.nav-info{background:#c8102e; border-color:#c8102e; color:#fff}
+.topnav .pill.nav-plan:hover, .topnav .pill.nav-info:hover{filter:brightness(1.1); border-color:inherit}
+.topnav .pill.nav-info.cur{box-shadow:0 0 0 2px #fff, 0 0 0 4px #c8102e}
+.keyfacts{display:flex; flex-wrap:wrap; align-items:center; gap:18px 28px; margin-top:clamp(4px, 1.5vh, 14px)}
+.keyfacts ul{display:flex; flex-wrap:wrap; list-style:none; margin:0; padding:0}
+.keyfacts li{font-family:var(--f-display); font-weight:700; font-size:clamp(1.35rem, 1rem + 1.2vw, 1.9rem); letter-spacing:-.02em; color:#f1f4f8; padding:6px 28px; border-left:1px solid rgba(241,244,248,.28); line-height:1.1}
+.keyfacts li:first-child{padding-left:0; border-left:0}
+.keyfacts li b{color:#ff3f58; font-weight:800}
+.hero .pill.big-cta{font-family:var(--f-display); font-weight:800; font-size:clamp(1.05rem, .9rem + .5vw, 1.3rem); padding:16px 30px; background:#fff; color:#0c1626; border-color:#fff; gap:12px}
+.hero .pill.big-cta:hover{background:#ffe3e7; border-color:#ffe3e7}
+@media (max-width:600px){
+  .keyfacts{gap:16px}
+  .keyfacts ul{gap:4px 20px}
+  .keyfacts li{padding:0; border-left:0; font-size:1.25rem}
+  .hero .pill.big-cta{width:100%}
+}
+
+/* ===== Plan de un vistazo: tablas por semestre ===== */
+#resumen{padding-block:clamp(36px, 6vh, 64px)!important}
+.glance-plan{margin-top:clamp(22px, 4vh, 40px); padding-top:clamp(18px, 3vh, 28px); border-top:1px solid var(--line)}
+.gl-head{display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px 28px}
+.gl-title{font-size:clamp(1.5rem, 1.1rem + 1.4vw, 2.2rem)!important}
+.gl-hint{color:var(--muted); font-size:.9rem; margin-top:6px}
+.gl-grid{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:24px; margin-top:clamp(14px, 2.5vh, 22px)}
+@media (max-width:1100px){ .gl-grid{grid-template-columns:1fr} }
+.gl-sem h3{font-size:1.1rem; margin-bottom:8px}
+.gl-wrap{border-radius:var(--r); overflow:hidden; background:var(--surface); border:1px solid var(--line)}
+table.gl{width:100%; border-collapse:collapse; font-size:.92rem}
+table.gl th{font-family:var(--f-mono); font-weight:500; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); text-align:left; padding:9px 14px; background:var(--surface)}
+table.gl td{padding:10px 14px; border-top:2px solid var(--surface); vertical-align:middle; line-height:1.3}
+table.gl tbody tr{background:var(--pc); color:#fff}
+table.gl tbody tr.pc-sig{background:linear-gradient(90deg, var(--p-mimo), var(--p-ia) 55%, var(--p-rf))}
+table.gl tbody td + td{border-left:1px solid rgba(255,255,255,.22)}
+table.gl tbody td:nth-child(2){font-size:.84rem; white-space:nowrap; opacity:.92}
+table.gl .n{text-align:right; font-family:var(--f-mono); width:56px; white-space:nowrap}
+table.gl tbody a{color:#fff; text-decoration:none; font-weight:600}
+table.gl tbody a::after{content:" →"; opacity:0; transition:opacity .15s}
+table.gl tbody tr:hover a{text-decoration:underline}
+table.gl tbody tr:hover a::after{opacity:1}
+table.gl tbody tr:hover{filter:brightness(1.08)}
+table.gl tfoot td{font-weight:700; padding:10px 14px; color:var(--ink)}
+@media (max-width:640px){ table.gl td:nth-child(2), table.gl th:nth-child(2){display:none} }
+.legend li.pc-inv i{background:var(--p-inv)}
+
+/* ===== Plan detallado: plan completo fijo a la derecha ===== */
+.story{grid-template-columns:minmax(0,7fr) minmax(0,4fr)}
+.story .stage{order:2}
+.mini-plan{padding:16px 18px}
+.mini-plan .mp-title{font-family:var(--f-display); font-weight:800; font-size:1.1rem}
+.mini-plan .mp-sem{display:flex; justify-content:space-between; font-size:.72rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); margin:14px 0 6px}
+.mini-plan .mp-sem span{color:var(--muted); font-family:var(--f-mono); letter-spacing:.04em}
+.mini-plan ol{list-style:none; margin:0; padding:0; display:grid; gap:2px}
+.mini-plan a{display:grid; grid-template-columns:10px 1fr auto; gap:10px; align-items:start; padding:7px 8px; border-radius:8px; color:var(--ink); text-decoration:none; font-size:.84rem; line-height:1.3; border-left:3px solid transparent}
+.mini-plan a i{width:10px; height:10px; border-radius:3px; background:var(--pc); margin-top:4px}
+.mini-plan li.pc-sig a i{background:linear-gradient(90deg, var(--p-mimo), var(--p-ia), var(--p-rf))}
+.mini-plan a b{font-family:var(--f-mono); font-weight:500; font-size:.78rem; color:var(--muted)}
+.mini-plan a:hover{background:var(--bg)}
+.mini-plan a.on{background:color-mix(in srgb, var(--pc) 12%, var(--surface)); border-left-color:var(--pc); font-weight:600}
+.mini-plan li.pc-sig a.on{border-left-color:var(--p-ia)}
+.stage{max-height:calc(100svh - 110px); overflow:auto}
+.gl-grid{grid-template-columns:1fr; gap:clamp(12px, 2.2vh, 20px)}
+table.gl td{padding:7px 14px}
+table.gl th{padding:7px 14px}
+table.gl tbody td:nth-child(2){width:240px}
+.gl-sem h3{font-size:1rem; margin-bottom:6px}
+@media (min-width:900px){ #resumen .facts-row div{padding-block:12px} .glance-plan{margin-top:18px; padding-top:18px} }
+.glance-plan{border-top:0!important; padding-top:0!important}
+.gl-head{align-items:baseline}
+.gl-hint{margin-top:0}
+.glance-plan .legend{margin-top:8px}
+@media (max-width:600px){ .glance-plan .legend{gap:4px 14px; font-size:.82rem} }
 </style>
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
@@ -592,17 +666,18 @@ table.cf td .chip{display:inline-block; margin-top:6px}
     <span class="brand-sep" aria-hidden="true"></span>
     <a class="brand" href="index.html#inicio" aria-label="MUCMI, inicio"><b>MUC</b>MI</a>
     <nav class="topnav" aria-label="Principal">
-      <a class="pill hide-s" href="index.html">El máster</a>
-      <a class="pill hide-s cur" href="informacion.html">Información práctica</a>
+      <a class="pill hide-s nav-plan" href="index.html#resumen">Plan de estudios</a>
+      <a class="pill hide-s nav-info cur" href="informacion.html">Información práctica</a>
       <details class="explore">
         <summary class="pill">Explorar <span class="burger" aria-hidden="true"><i></i><i></i><i></i></span></summary>
         <div class="menu">
           <p>El máster</p>
-          <a href="index.html#contexto">Contexto y retos</a>
-          <a href="index.html#nucleo">Tres pilares</a>
-          <a href="index.html#plan">Plan de estudios</a>
-          <a href="index.html#recorrido">Recorrido</a>
+          <a href="index.html#resumen">El plan de un vistazo</a>
           <a href="index.html#modalidad">Modalidad</a>
+          <a href="index.html#contexto">Contexto y retos</a>
+          <a href="index.html#plan">Plan de estudios detallado</a>
+          <a href="index.html#nucleo">Tres pilares</a>
+          <a href="index.html#recorrido">Recorrido</a>
           <a href="index.html#herramientas">Herramientas transversales</a>
           <a href="index.html#laboratorios">Laboratorios</a>
           <p>Información práctica</p>
@@ -618,7 +693,6 @@ table.cf td .chip{display:inline-block; margin-top:6px}
           <a href="https://mwrcom-urjc.github.io" target="_blank" rel="noopener">Grupo de investigación MW-RCOM ↗</a>
         </div>
       </details>
-      <a class="pill red" href="#contacto">Contacto</a>
     </nav>
   </div>
 </header>
@@ -1021,30 +1095,17 @@ table.cf td .chip{display:inline-block; margin-top:6px}
 (function(){
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ---------- Plan de estudios: el esquema se construye al hacer scroll ----------
-  var scene = document.getElementById('scene');
+  // ---------- Plan de estudios: plan completo fijo a la derecha + enlaces a cada ficha ----------
   var cards = Array.prototype.slice.call(document.querySelectorAll('.card[data-i]'));
-  if (scene && cards.length) {
-    var MAP = {'a-metodologia': ['met'], 'a-teoria': ['ti'], 'a-mimo': ['mimo', 'ti'], 'a-altafrecuencia': ['rf'], 'a-aprendizaje': ['ml'],
-      'a-antenas': ['ant'], 'a-ia': ['ia', 'ml'], 'a-dmmimo': ['ris', 'mimo'], 'a-habilitadoras': ['sat', 'ant', 'rf', 'mimo', 'ris', 'ia'],
-      'a-tfm': ['tfm', 'met', 'ti', 'mimo', 'rf', 'ml', 'ant', 'ia', 'ris', 'sat']};
-    var groups = Array.prototype.slice.call(scene.querySelectorAll('.g'));
-    var nameEl = document.getElementById('stage-name'), countEl = document.getElementById('stage-count');
-    var steps = Array.prototype.slice.call(document.querySelectorAll('.steps a'));
-    scene.classList.add('js');
+  var mp = Array.prototype.slice.call(document.querySelectorAll('[data-mp]'));
+  if (cards.length && mp.length) {
     var cur = -1;
     function setActive(idx) {
       if (idx === cur) return; cur = idx;
-      var seen = {}, on = {};
-      cards.forEach(function (c, i) { (MAP[c.id] || []).forEach(function (g) { if (i <= idx) seen[g] = 1; if (i === idx) on[g] = 1; }); c.classList.toggle('on', i === idx); });
-      groups.forEach(function (g) { var n = g.getAttribute('data-g'); g.classList.toggle('seen', !!seen[n]); g.classList.toggle('on', !!on[n]); });
-      var c = cards[idx];
-      if (nameEl) nameEl.textContent = c.getAttribute('data-short');
-      if (countEl) countEl.textContent = (idx + 1) + ' / ' + cards.length + ' · ' + c.getAttribute('data-sem');
-      var st = idx < 2 ? 1 : idx < 6 ? 2 : idx < 9 ? 3 : 4;
-      steps.forEach(function (s) { s.classList.toggle('on', +s.getAttribute('data-step') === st); });
+      cards.forEach(function (c, i) { c.classList.toggle('on', i === idx); });
+      var id = cards[idx].id;
+      mp.forEach(function (a) { var on = a.getAttribute('data-mp') === id; a.classList.toggle('on', on); if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
     }
-    setActive(0);
     function pick() {
       var mid = window.innerHeight * 0.45, best = 0, bd = 1e9;
       cards.forEach(function (c, i) { var r = c.getBoundingClientRect(); var d = r.top > mid ? r.top - mid : (r.bottom < mid ? mid - r.bottom : 0); if (d < bd) { bd = d; best = i; } });
@@ -1054,6 +1115,18 @@ table.cf td .chip{display:inline-block; margin-top:6px}
     window.addEventListener('scroll', function () { if (!tk) { tk = true; requestAnimationFrame(function () { tk = false; pick(); }); } }, {passive: true});
     pick();
   }
+  function openCard(id, smooth) {
+    var d = document.getElementById(id);
+    if (!d || d.tagName !== 'DETAILS') return false;
+    d.open = true;
+    d.scrollIntoView({behavior: smooth && !reduce ? 'smooth' : 'auto', block: 'start'});
+    return true;
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[data-open]'); if (!a) return;
+    if (openCard(a.getAttribute('data-open'), true)) { e.preventDefault(); try { history.replaceState(null, '', '#' + a.getAttribute('data-open')); } catch (err) {} }
+  });
+  if (location.hash && /^#a-/.test(location.hash)) setTimeout(function () { openCard(location.hash.slice(1), false); }, 60);
 
   // ---------- Menú Explorar: cerrar al elegir o al pulsar fuera ----------
   var ex = document.querySelector('.explore');
