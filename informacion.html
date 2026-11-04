@@ -695,6 +695,20 @@ table.gl tbody td:nth-child(2){width:240px}
   .card{scroll-margin-top:136px}
 }
 @media (max-width:900px){ .story{grid-template-columns:minmax(0,1fr)} .story > *{min-width:0} .stage .stage-card.mini-plan{min-width:0; max-width:100%} }
+
+/* ===== Pantallas grandes (iMac, 27"): la portada escala con el tamaño de la pantalla ===== */
+@media (min-width:1600px){
+  :root{--wrap:min(1640px, 86vw)}
+  .hero .wrap{align-content:center; gap:clamp(16px, 2.6vh, 40px)}
+  .hero h1{font-size:min(5.4vw, 11.5vh); max-width:20ch}
+  .hero .thesis{font-size:min(1.45vw, 2.9vh); max-width:56ch}
+  .hero-tabs{gap:clamp(14px, 1vw, 24px)}
+  .hero-tabs .ht{font-size:min(1.7vw, 3.3vh); padding:min(1.1vw, 2.1vh) min(1.9vw, 3.6vh); border-radius:min(1vw, 18px); gap:min(1vw, 18px)}
+  .keyfacts{gap:18px min(2.2vw, 44px)}
+  .keyfacts li{font-size:min(2.2vw, 4.2vh); padding-inline:min(2vw, 40px)}
+  .hero .pill.big-cta{font-size:min(1.45vw, 2.8vh); padding:min(1.1vw, 2vh) min(2.2vw, 4vh)}
+  .hero .simcap{font-size:.86rem}
+}
 </style>
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
