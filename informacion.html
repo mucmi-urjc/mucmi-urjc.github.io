@@ -709,6 +709,25 @@ table.gl tbody td:nth-child(2){width:240px}
   .hero .pill.big-cta{font-size:min(1.45vw, 2.8vh); padding:min(1.1vw, 2vh) min(2.2vw, 4vh)}
   .hero .simcap{font-size:.86rem}
 }
+
+/* ===== Plan de un vistazo en móvil: cabe en una pantalla ===== */
+.gl-short{display:none}
+#vistazo{scroll-margin-top:10px}
+@media (max-width:640px){
+  #vistazo{padding-top:14px!important}
+  .gl-title{font-size:1.35rem!important}
+  .gl-hint{display:none}
+  .glance-plan .legend{gap:2px 12px; font-size:.74rem; margin-top:6px}
+  .glance-plan .legend i{width:9px; height:9px}
+  .gl-grid{gap:10px; margin-top:10px}
+  .gl-sem h3{font-size:.86rem; margin-bottom:4px}
+  table.gl thead{display:none}
+  table.gl{font-size:.84rem}
+  table.gl td{padding:6px 10px; border-top-width:1px}
+  table.gl tfoot td{padding:6px 10px; font-size:.8rem}
+  table.gl .n{width:40px}
+  .gl-long{display:none} .gl-short{display:inline}
+}
 </style>
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
@@ -719,13 +738,13 @@ table.gl tbody td:nth-child(2){width:240px}
     <span class="brand-sep" aria-hidden="true"></span>
     <a class="brand" href="index.html#inicio" aria-label="MUCMI, inicio"><b>MUC</b>MI</a>
     <nav class="topnav" aria-label="Principal">
-      <a class="pill hide-s nav-plan" href="index.html#resumen"><span class="l-long">Plan de estudios</span><span class="l-short">Plan</span></a>
+      <a class="pill hide-s nav-plan" href="index.html#vistazo"><span class="l-long">Plan de estudios</span><span class="l-short">Plan</span></a>
       <a class="pill hide-s nav-info cur" href="informacion.html"><span class="l-long">Información práctica</span><span class="l-short">Info</span></a>
       <details class="explore">
         <summary class="pill" aria-label="Explorar"><span class="ex-lbl">Explorar</span> <span class="burger" aria-hidden="true"><i></i><i></i><i></i></span></summary>
         <div class="menu">
           <p>El máster</p>
-          <a href="index.html#resumen">El plan de un vistazo</a>
+          <a href="index.html#vistazo">El plan de un vistazo</a>
           <a href="index.html#modalidad">Modalidad</a>
           <a href="index.html#contexto">Contexto y retos</a>
           <a href="index.html#plan">Plan de estudios detallado</a>

@@ -709,6 +709,25 @@ table.gl tbody td:nth-child(2){width:240px}
   .hero .pill.big-cta{font-size:min(1.45vw, 2.8vh); padding:min(1.1vw, 2vh) min(2.2vw, 4vh)}
   .hero .simcap{font-size:.86rem}
 }
+
+/* ===== Plan de un vistazo en móvil: cabe en una pantalla ===== */
+.gl-short{display:none}
+#vistazo{scroll-margin-top:10px}
+@media (max-width:640px){
+  #vistazo{padding-top:14px!important}
+  .gl-title{font-size:1.35rem!important}
+  .gl-hint{display:none}
+  .glance-plan .legend{gap:2px 12px; font-size:.74rem; margin-top:6px}
+  .glance-plan .legend i{width:9px; height:9px}
+  .gl-grid{gap:10px; margin-top:10px}
+  .gl-sem h3{font-size:.86rem; margin-bottom:4px}
+  table.gl thead{display:none}
+  table.gl{font-size:.84rem}
+  table.gl td{padding:6px 10px; border-top-width:1px}
+  table.gl tfoot td{padding:6px 10px; font-size:.8rem}
+  table.gl .n{width:40px}
+  .gl-long{display:none} .gl-short{display:inline}
+}
 </style>
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
@@ -719,13 +738,13 @@ table.gl tbody td:nth-child(2){width:240px}
     <span class="brand-sep" aria-hidden="true"></span>
     <a class="brand" href="index.html#inicio" aria-label="MUCMI, inicio"><b>MUC</b>MI</a>
     <nav class="topnav" aria-label="Principal">
-      <a class="pill hide-s nav-plan" href="#resumen"><span class="l-long">Plan de estudios</span><span class="l-short">Plan</span></a>
+      <a class="pill hide-s nav-plan" href="#vistazo"><span class="l-long">Plan de estudios</span><span class="l-short">Plan</span></a>
       <a class="pill hide-s nav-info" href="informacion.html"><span class="l-long">Información práctica</span><span class="l-short">Info</span></a>
       <details class="explore">
         <summary class="pill" aria-label="Explorar"><span class="ex-lbl">Explorar</span> <span class="burger" aria-hidden="true"><i></i><i></i><i></i></span></summary>
         <div class="menu">
           <p>El máster</p>
-          <a href="#resumen">El plan de un vistazo</a>
+          <a href="#vistazo">El plan de un vistazo</a>
           <a href="#modalidad">Modalidad</a>
           <a href="#contexto">Contexto y retos</a>
           <a href="#plan">Plan de estudios detallado</a>
@@ -756,7 +775,7 @@ table.gl tbody td:nth-child(2){width:240px}
       <h1><b>M</b>áster <b>U</b>niversitario en <b>C</b>omunicaciones <b>M</b>óviles <b>I</b>nteligentes</h1>
       <p class="thesis">Diseña las redes que conectarán la inteligencia artificial, la robótica, la realidad virtual y extendida y las ciudades del mañana.</p>
       <nav class="hero-tabs" aria-label="Accesos principales">
-        <a class="ht ht-plan" href="#resumen">Plan de estudios <span aria-hidden="true">→</span></a>
+        <a class="ht ht-plan" href="#vistazo">Plan de estudios <span aria-hidden="true">→</span></a>
         <a class="ht ht-info" href="informacion.html">Información práctica <span aria-hidden="true">→</span></a>
       </nav>
       <div class="keyfacts">
@@ -779,7 +798,7 @@ table.gl tbody td:nth-child(2){width:240px}
         <div>Más del 80% virtual<span>en español, tardes de 16:00 a 20:00</span></div>
         <div>EIF · Fuenlabrada<span>una semana presencial por cuatrimestre</span></div>
       </div>
-      <div class="glance-plan"><div class="gl-head"><h2 class="gl-title">El plan de estudios, de un vistazo</h2><p class="gl-hint">Pulsa una asignatura para ver su ficha.</p></div><ul class="legend"><li class="pc-mimo"><i></i>MIMO masivo y RIS</li><li class="pc-ia"><i></i>IA y aprendizaje automático</li><li class="pc-rf"><i></i>Alta frecuencia y antenas</li><li class="pc-inv"><i></i>Investigación y TFM</li></ul><div class="gl-grid"><div class="gl-sem"><h3>Semestre 1</h3><div class="gl-wrap"><table class="gl"><thead><tr><th scope="col">Asignatura</th><th scope="col">Área</th><th scope="col" class="n">ECTS</th></tr></thead><tbody><tr class="pc-inv"><td><a href="#a-metodologia" data-open="a-metodologia">Metodología de la Investigación Científica en Comunicaciones Móviles Inteligentes</a></td><td>Investigación y TFM</td><td class="n">3</td></tr><tr class="pc-mimo"><td><a href="#a-teoria" data-open="a-teoria">Teoría de la Información en Comunicaciones Móviles Emergentes</a></td><td>MIMO masivo y RIS</td><td class="n">3</td></tr><tr class="pc-mimo"><td><a href="#a-mimo" data-open="a-mimo">Modelado y Prestaciones de Sistemas MIMO en Comunicaciones Móviles</a></td><td>MIMO masivo y RIS</td><td class="n">6</td></tr><tr class="pc-rf"><td><a href="#a-altafrecuencia" data-open="a-altafrecuencia">Tecnologías de Alta Frecuencia en Comunicaciones Móviles Emergentes</a></td><td>Alta frecuencia y antenas</td><td class="n">6</td></tr><tr class="pc-ia"><td><a href="#a-aprendizaje" data-open="a-aprendizaje">Aprendizaje Automático en Sistemas de Comunicaciones Móviles Emergentes</a></td><td>IA y aprendizaje automático</td><td class="n">6</td></tr><tr class="pc-rf"><td><a href="#a-antenas" data-open="a-antenas">Diseño Avanzado de Antenas para Comunicaciones Móviles Emergentes</a></td><td>Alta frecuencia y antenas</td><td class="n">6</td></tr></tbody><tfoot><tr><td colspan="2">Total semestre 1</td><td class="n">30</td></tr></tfoot></table></div></div><div class="gl-sem"><h3>Semestre 2</h3><div class="gl-wrap"><table class="gl"><thead><tr><th scope="col">Asignatura</th><th scope="col">Área</th><th scope="col" class="n">ECTS</th></tr></thead><tbody><tr class="pc-ia"><td><a href="#a-ia" data-open="a-ia">Inteligencia Artificial en Redes de Comunicaciones Móviles Emergentes</a></td><td>IA y aprendizaje automático</td><td class="n">6</td></tr><tr class="pc-mimo"><td><a href="#a-dmmimo" data-open="a-dmmimo">Modelado y Prestaciones en MIMO Masivo Distribuido con Superficies Reconfigurables</a></td><td>MIMO masivo y RIS</td><td class="n">6</td></tr><tr class="pc-sig"><td><a href="#a-habilitadoras" data-open="a-habilitadoras">Tecnologías Habilitadoras para Comunicaciones Móviles Emergentes</a></td><td>Integración de los tres pilares</td><td class="n">6</td></tr><tr class="pc-inv"><td><a href="#a-tfm" data-open="a-tfm">Trabajo Fin de Máster</a></td><td>Investigación y TFM</td><td class="n">12</td></tr></tbody><tfoot><tr><td colspan="2">Total semestre 2</td><td class="n">30</td></tr></tfoot></table></div></div></div></div>
+      <div class="glance-plan" id="vistazo"><div class="gl-head"><h2 class="gl-title">El plan de estudios, de un vistazo</h2><p class="gl-hint">Pulsa una asignatura para ver su ficha.</p></div><ul class="legend"><li class="pc-mimo"><i></i>MIMO masivo y RIS</li><li class="pc-ia"><i></i>IA y aprendizaje automático</li><li class="pc-rf"><i></i>Alta frecuencia y antenas</li><li class="pc-inv"><i></i>Investigación y TFM</li></ul><div class="gl-grid"><div class="gl-sem"><h3>Semestre 1</h3><div class="gl-wrap"><table class="gl"><thead><tr><th scope="col">Asignatura</th><th scope="col">Área</th><th scope="col" class="n">ECTS</th></tr></thead><tbody><tr class="pc-inv"><td><a href="#a-metodologia" data-open="a-metodologia"><span class="gl-long">Metodología de la Investigación Científica en Comunicaciones Móviles Inteligentes</span><span class="gl-short">Metodología de la Investigación</span></a></td><td>Investigación y TFM</td><td class="n">3</td></tr><tr class="pc-mimo"><td><a href="#a-teoria" data-open="a-teoria"><span class="gl-long">Teoría de la Información en Comunicaciones Móviles Emergentes</span><span class="gl-short">Teoría de la Información</span></a></td><td>MIMO masivo y RIS</td><td class="n">3</td></tr><tr class="pc-mimo"><td><a href="#a-mimo" data-open="a-mimo"><span class="gl-long">Modelado y Prestaciones de Sistemas MIMO en Comunicaciones Móviles</span><span class="gl-short">Sistemas MIMO</span></a></td><td>MIMO masivo y RIS</td><td class="n">6</td></tr><tr class="pc-rf"><td><a href="#a-altafrecuencia" data-open="a-altafrecuencia"><span class="gl-long">Tecnologías de Alta Frecuencia en Comunicaciones Móviles Emergentes</span><span class="gl-short">Tecnologías de Alta Frecuencia</span></a></td><td>Alta frecuencia y antenas</td><td class="n">6</td></tr><tr class="pc-ia"><td><a href="#a-aprendizaje" data-open="a-aprendizaje"><span class="gl-long">Aprendizaje Automático en Sistemas de Comunicaciones Móviles Emergentes</span><span class="gl-short">Aprendizaje Automático</span></a></td><td>IA y aprendizaje automático</td><td class="n">6</td></tr><tr class="pc-rf"><td><a href="#a-antenas" data-open="a-antenas"><span class="gl-long">Diseño Avanzado de Antenas para Comunicaciones Móviles Emergentes</span><span class="gl-short">Diseño Avanzado de Antenas</span></a></td><td>Alta frecuencia y antenas</td><td class="n">6</td></tr></tbody><tfoot><tr><td>Total semestre 1</td><td></td><td class="n">30</td></tr></tfoot></table></div></div><div class="gl-sem"><h3>Semestre 2</h3><div class="gl-wrap"><table class="gl"><thead><tr><th scope="col">Asignatura</th><th scope="col">Área</th><th scope="col" class="n">ECTS</th></tr></thead><tbody><tr class="pc-ia"><td><a href="#a-ia" data-open="a-ia"><span class="gl-long">Inteligencia Artificial en Redes de Comunicaciones Móviles Emergentes</span><span class="gl-short">IA en Redes</span></a></td><td>IA y aprendizaje automático</td><td class="n">6</td></tr><tr class="pc-mimo"><td><a href="#a-dmmimo" data-open="a-dmmimo"><span class="gl-long">Modelado y Prestaciones en MIMO Masivo Distribuido con Superficies Reconfigurables</span><span class="gl-short">MIMO Masivo Distribuido con RIS</span></a></td><td>MIMO masivo y RIS</td><td class="n">6</td></tr><tr class="pc-sig"><td><a href="#a-habilitadoras" data-open="a-habilitadoras"><span class="gl-long">Tecnologías Habilitadoras para Comunicaciones Móviles Emergentes</span><span class="gl-short">Tecnologías Habilitadoras</span></a></td><td>Integración de los tres pilares</td><td class="n">6</td></tr><tr class="pc-inv"><td><a href="#a-tfm" data-open="a-tfm"><span class="gl-long">Trabajo Fin de Máster</span><span class="gl-short">Trabajo Fin de Máster</span></a></td><td>Investigación y TFM</td><td class="n">12</td></tr></tbody><tfoot><tr><td>Total semestre 2</td><td></td><td class="n">30</td></tr></tfoot></table></div></div></div></div>
     </div>
   </section>
 
